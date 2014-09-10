@@ -1,0 +1,26 @@
+{
+    "name": "nimetu/ryzom_extra",
+    "type": "library",
+    "description": "Functions and data for ryzom sheet files",
+    "keywords": ["ryzom"],
+    "homepage": "http://bmsite.net",
+    "license": "LGPL",
+    "authors": [
+        {
+            "name": "Meelis Mägi",
+            "email": "nimetu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "php": ">=5.4.0",
+        "nimetu/ryzom_sheets": "1.*",
+        "pimple/pimple": "1.*"
+    },
+    "autoload": {
+        "psr-0": { "RyzomExtra": "lib" },
+		"files": ["ryzom_extra.php"]
+    }
+}
