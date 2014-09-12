@@ -1,0 +1,42 @@
+msgid "Compétences des membres de"
+msgstr ""
+
+msgid "arrondies par tranches de 25"
+msgstr ""
+
+msgid "Compétences de forages"
+msgstr ""
+
+msgid "Nom"
+msgstr ""
+
+msgid "Forage"
+msgstr ""
+
+msgid "Forage en désert"
+msgstr ""
+
+msgid "Forage en forêt"
+msgstr ""
+
+msgid "Forage en jungle"
+msgstr ""
+
+msgid "Forage lacustre"
+msgstr ""
+
+msgid "Forage en primes racines"
+msgstr ""
+
+msgid "Compétences d'artisanat"
+msgstr ""
+
+msgid "Artisanat"
+msgstr ""
+
+msgid "Accueil"
+msgstr ""
+
+msgid "objets"
+msgstr ""
+
