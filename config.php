@@ -1,6 +1,6 @@
 <?php
 $dbname="competences";
 $dbuser="lafirme";
-$dbpassword="KledroofOch3";
+$dbpassword="";
 $dbhost="localhost";
 $dbprefixe="gi_";
