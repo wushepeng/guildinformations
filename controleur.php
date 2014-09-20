@@ -24,15 +24,16 @@
 
 /* Controleur */
 /* Situations possibles :
- * 	appel depuis l'extérieur des wabapps : message d'ereur sybilin
- * 	appel depuis un compte hors "La Firme" : message de refus
- * 	appel depuis un compte membre : apprentissage
- * 	appel depuis un compte officier : apprentissage ou inventaire de La Firme
- *	appel depuis un compte offsup ou chef : apprentissage + tous les inventaires
- *  appel depuis le formulaire config : enregistrement de la config avant de faire le reste
+ * 	appel depuis l'extérieur des wabapps : message d'erreur sybilin
+ * 	appel depuis un compte ryzom :
+ * 		appel depuis un compte membre : compétences des membres de sa propre guilde, possibilité de saisir ou modifier sa propre clé api
+ * 		appel depuis un compte officier : compte membre + inventaire de sa propre guilde
+ *		appel depuis un compte offsup ou chef : compte membre + inventaire de tous les GH configurés + insertion ou modification de clé de guilde
+ *  	appel depuis le formulaire config : enregistrement de la config avant de faire le reste
 */
 
 // Début de la récupération des infos : GET ou POST ?
+
 
 if (empty($_GET['checksum'])){
 	if (empty($_POST['checksum'])){
@@ -83,9 +84,9 @@ session_start();
 require_once( "ryapi.php" );
 require_once( "ryzom_extra.php" );
 // enregistrer une variable pour protéger la config
-$confighash=''; // mettre la meme chaine que dans le config
-require_once('config.php');
-ryapi_init();		
+require_once('config.php'); // config de la BDD
+require_once('config.inc.php'); // récup des infos d'utilisateur et de la config (RYAPI_APP_KEY, etc)
+ryapi_init();
 // vérification de la checksum
 $hashmac=hash_hmac('sha1', $user, RYAPI_APP_KEY);
 if ($hashmac!==$checksum){
@@ -106,61 +107,65 @@ if ($inventaire){
 } else {
 	$logstring.="\n";
 }
-$logfile=fopen("connexionscompetences.log","a");
-if (fwrite($logfile,$logstring)===False){
-	//print("Erreur d'écriture de fichier");
-}
-fclose($logfile);
 
-if ($data['guild_id']!==GUILDID){
-	require_once('erreurguild.php');
+// une fonction de modele avec acces bdd pour le log
+include('log.inc.php');
+
+
+// membre d'une guilde, récupérer son id de guilde
+$guildid=$data['guild_id'];
+// écupérer les infos de guilde principale
+$guildapikeys=array();
+require_once('mainguild.inc.php'); // définit $mainguild et $guildapikeys 
+// A FAIRE : la création de guilde n'est pas faite
+$apikeys=array();
+require_once('chars.inc.php'); // definit $apikeys
+require_once('header.inc.php');
+$grade=$data['grade'];
+if ($enregistrerconfig){
+	include_once('enregistrer_config.inc.php');
+}
+if ($ingame && !$inventaire){
+	// Afficher un avertissement, un bout de vue dans le controleur
+	// A FAIRE basculer en vue
+	echo "<h3>Attention, l'affichage en jeu est un peu dégradé</h3>\n";
+}
+if ($grade=="Member"){
+	// directement les apprentissages
+	include_once('apprentissage.inc.php');
 } else {
-	// membre de la firme
-	require_once('header.inc.php');
-	$grade=$data['grade'];
-	if ($enregistrerconfig){
-		include_once('enregistrer_config.inc.php');
-	}
-	if ($ingame && !$inventaire){
-		// Afficher un avertissement, un bout de vue dans le controleur
-		echo "<h3>Attention, l'affichage en jeu est un peu dégradé</h3>\n";
-	}
-	if ($grade=="Member"){
-		// directement les apprentissages
-		include_once('apprentissage.inc.php');
+	// Officier ou Off sup ou chef
+	// A modifier
+	if ($grade == "Officer"){
+		// menu
+		if ($inventaire){
+			include_once('menuoff.inc.php');
+			require_once('inventaire.inc.php'); // défini une fonction d'affichage
+			
+			//inventaire('La Firme',$guildapikeys['La Firme'],$tri);
+			inventaire($mainguild,$guildapikeys[$mainguild],$tri);
+		} else {
+			include_once('menuoff.inc.php');
+			include_once('apprentissage.inc.php');
+		}
 	} else {
-		// Officier ou Off sup ou chef
-		// A modifier
-		if ($grade == "Officer"){
-			// menu
-			if ($inventaire){
-				include_once('menuoff.inc.php');
-				require_once('inventaire.inc.php'); // défini une fonction d'affichage
-				
-				inventaire('La Firme',$guildapikeys['La Firme'],$tri);
-			} else {
-				include_once('menuoff.inc.php');
-				include_once('apprentissage.inc.php');
+		if ($inventaire){				
+			include_once('menusup.inc.php');
+			require_once('inventaire.inc.php'); // défini une fonction d'affichage
+			foreach($guildapikeys as $guilde => $apikey){
+				inventaire($guilde,$apikey,$tri);
 			}
 		} else {
-			if ($inventaire){				
-				include_once('menusup.inc.php');
-				require_once('inventaire.inc.php'); // défini une fonction d'affichage
-				foreach($guildapikeys as $guilde => $apikey){
-					inventaire($guilde,$apikey,$tri);
-				}
-			} else {
-				include_once('menusup.inc.php');
-				include_once('apprentissage.inc.php');
-			}
+			include_once('menusup.inc.php');
+			include_once('apprentissage.inc.php');
 		}
 	}
-	// trace pour debug
-	if ($ingame){
-		//var_dump($_POST);
-		//var_dump($_GET);
-	}
-	require_once('footer.inc.php');
 }
+// trace pour debug
+if ($ingame){
+	//var_dump($_POST);
+	//var_dump($_GET);
+}
+require_once('footer.inc.php');
 
 ?>
