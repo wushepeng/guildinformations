@@ -26,6 +26,7 @@ idperso integer NOT NULL,
 codecomp varchar(15) NOT NULL,
 visible boolean NOT NULL DEFAULT true
 );
+<<<<<<< HEAD
 
 CREATE TABLE gi_logs(
 idlog integer AUTO_INCREMENT PRIMARY KEY,
@@ -33,3 +34,5 @@ texte text
 );
 
 INSERT INTO gi_general_config VALUES("clé de l'application","URL de l'application",0);
+=======
+>>>>>>> a0f24843a789957ce068d816436850711c0e7c0b
