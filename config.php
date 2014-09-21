@@ -1,6 +1,6 @@
 <?php
 $dbname="competences";
 $dbuser="lafirme";
-$dbpassword="geehobShat4";
+$dbpassword="Movtehapop5";
 $dbhost="localhost";
 $dbprefixe="gi_";
