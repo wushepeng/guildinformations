@@ -60,6 +60,11 @@ if (empty($_GET['checksum'])){
 				} else {
 					$enregistrerconfig=False;
 				}
+				if (!empty($_POST['savekeys']) || ($_POST['savekeys_x']=="0")){
+					$enregistrer=True;
+				} else {
+					$enregistrer=False;
+				}
 				//echo "Dans inventaire faux";
 				//var_dump($_POST);
 			}
@@ -125,6 +130,9 @@ $grade=$data['grade'];
 if ($enregistrerconfig){
 	include_once('enregistrer_config.inc.php');
 }
+if ($enregistrer){
+	include_once('enregistrer_mainconfig.inc.php');
+}
 if ($ingame && !$inventaire){
 	// Afficher un avertissement, un bout de vue dans le controleur
 	// A FAIRE basculer en vue
@@ -158,6 +166,9 @@ if ($grade=="Member"){
 		} else {
 			include_once('menusup.inc.php');
 			include_once('apprentissage.inc.php');
+			if ($grade=="Leader"){
+				include_once('mainconfigform.inc.php');
+			}
 		}
 	}
 }

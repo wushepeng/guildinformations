@@ -36,7 +36,7 @@ function apprentissage($nomutilisateur,$apikey,$sigle,$floor){
 	$lignetableau .= '</tr>';
 	return $lignetableau;
 }
-function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum){
+function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum,$dbconn){
 	// $nomutilisateur : chaine de carcactère, nom du perso
 	// $apikey : chaine de caractère, clé api à utiliser
 	// $sigle est le sigle du premier cran de la branche
@@ -77,12 +77,15 @@ function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum){
 			}
 		}
 	}
-	if (file_exists($nomutilisateur.".cfg")){
+	$afficher=Array();
+	include('lireconfig.inc.php');
+	//if (file_exists($nomutilisateur.".cfg")){
 		// défini une variable $afficher
-		include($nomutilisateur.".cfg");
+		//include('lireconfig.inc.php');
+		//include($nomutilisateur.".cfg");
 	//} else {
 	//	echo "<h2>Pas de config $nomutilisateur</h2>";
-	}
+	//}
 	foreach ($forages as $forage=>$valeur){
 		if (! $pasmoi){
 			if (empty($afficher) || ($afficher[str_replace(' ','_',$forage)] == 'on')){
@@ -108,7 +111,7 @@ function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum){
 	return $lignetableau;
 }
 
-echo "<h1>Compétences des membres de La Firme, arrondies par tranches de 25</h1>\n<h2>Compétences de forages</h2>\n";
+echo "<h1>Compétences des membres de ".$data['guild_name'].", arrondies par tranches de 25</h1>\n<h2>Compétences de forages</h2>\n";
 echo "<table><tr><td>Nom</td><td>Forage</td><td>Forage en désert</td><td>Forage en for&ecirc;t</td><td>Forage en jungle</td><td>Forage lacustre</td><td>Forage en primes racines</td></tr>\n";
 foreach ($apikeys as $apinom => $apikey){
 	if ($data['char_name']==$apinom){
@@ -122,10 +125,16 @@ echo "<h2>Compétences d'artisanat</h2>\n";
 echo "<table><tr><td>Nom</td><td>Artisanat</td></tr>\n";
 
 foreach ($apikeys as $apinom => $apikey){
-	if ($data['char_name']==$apinom){
-		echo artisanat($apinom,$apikey,'sc',false,$user,$checksum);
-	} else {
-		echo artisanat($apinom,$apikey,'sc',true,"","");
+	// faire une boucle sur la requete SQL de recherche de config
+	$dbconn = new mysqli($dbhost,$dbuser,$dbpassword,$dbname);	
+	if ($dbconn->connect_errno){
+		require('noconfig.php');
 	}
+	if ($data['char_name']==$apinom){
+		echo artisanat($apinom,$apikey,'sc',false,$user,$checksum,$dbconn);
+	} else {
+		echo artisanat($apinom,$apikey,'sc',true,"","",$dbconn);
+	}
+	$dbconn->close();
 }
 echo "</table>\n";

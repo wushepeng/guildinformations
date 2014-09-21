@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
 <head>
-	<title>Informations pour les membres de La Firme</title>
+	<title>Informations pour les membres de <?php echo $data['guild_name']; ?></title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<meta name="generator" content="Geany 1.22" />
 	<link rel="stylesheet" type="text/css" href="baluchon_main.css">
