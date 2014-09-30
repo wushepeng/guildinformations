@@ -7,13 +7,13 @@
 		echo"$name : $key<br/>\n";
 	}
 ?>	
-	Ajouter une clé : <input type="text" name="nomnouvelle" id="nomnouvelle" /> <input type="text" size="41" name="clenouvelle" id="clenouvelle"/><br/>
+	Ajouter une clé : <input type="text" name="nomnouvelle" id="nomnouvelle" /> <input type="text" <?php if ($ingame){ echo "size=\"300\"";} else { echo "size=\"41\"";} ?> name="clenouvelle" id="clenouvelle"/><br/>
 	<h2>Clés API de membres</h2>
 <?php
 	foreach ($apikeys as $name=>$key){
 		echo"$name : $key<br/>\n";
 	}
 ?>	
-	Ajouter une clé : <input type="text" name="nomnouveau" id="nomnouveau" /> <input type="text" size="41" name="clenouveau" id="clenouveau"/><br/>
+	Ajouter une clé : <input type="text" name="nomnouveau" id="nomnouveau" /> <input type="text" <?php if ($ingame){ echo "size=\"300\"";} else { echo "size=\"41\"";} ?>  name="clenouveau" id="clenouveau"/><br/>
 	<input type="submit" value="Enregistrer" name="savekeys" id="savekeys" />
 </form>

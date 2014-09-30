@@ -140,6 +140,7 @@ if ($ingame && !$inventaire){
 }
 if ($grade=="Member"){
 	// directement les apprentissages
+	include_once('menumembre.inc.php');
 	include_once('apprentissage.inc.php');
 } else {
 	// Officier ou Off sup ou chef

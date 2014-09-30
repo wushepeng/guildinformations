@@ -31,7 +31,16 @@ function apprentissage($nomutilisateur,$apikey,$sigle,$floor){
 			}
 		}
 	}
-	$lignetableau .= "<td class=\"c".$forages['Forage']."\">".$forages['Forage']."</td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+	if ($ingame){
+		$lignetableau .= "<td border=\"1\" style=\"solid\" color=\"white\"><font color=\"red\">".$forages['Forage']."</font></td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+	} else {
+		//$lignetableau .= "<td style=\"color:rgb(".(255-$forages['Forage']).",".($forages['Forage']-50).",0)\">".$forages['Forage']."</td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+		if ($sigle=='sh'){ // forage
+			$lignetableau .= "<td class=\"c".$forages['Forage']."\">".$forages['Forage']."</td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+		} else { // magie
+			$lignetableau .= "<td class=\"c".$forages['Magie']."\">".$forages['Forage']."</td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+		}
+	}
 	
 	$lignetableau .= '</tr>';
 	return $lignetableau;
@@ -99,7 +108,12 @@ function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum,$dbcon
 			}
 		} else {
 			if (empty($afficher) || ($afficher[str_replace(' ','_',$forage)] == 'on')){
-				$lignetableau .=  $forage." : <span class=\"c".$valeur."\">".$valeur . "</span> - ";
+				//if ($ingame){
+					//$lignetableau .=  $forage." : <span style=\"color:rgb(".$valeur.",".$valeur.",0);\" class=\"c".$valeur."\">".$valeur . "</span> - ";
+					//$lignetableau .=  $forage." : <span style=\"color:red;\" >".$valeur . "</span> - ";
+				//} else {
+					$lignetableau .=  $forage." : <span class=\"c".$valeur."\">".$valeur . "</span> - ";
+				//}
 			}
 		}
 	}
@@ -111,7 +125,49 @@ function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum,$dbcon
 	return $lignetableau;
 }
 
-echo "<h1>Compétences des membres de ".$data['guild_name'].", arrondies par tranches de 25</h1>\n<h2>Compétences de forages</h2>\n";
+function magie($nomutilisateur,$apikey,$sigle,$floor){
+	// $nomutilisateur : chaine de carcactère, nom du perso
+	// $apikey : chaine de caractère, clé api à utiliser
+	// $sigle est le sigle du premier cran de la branche
+	// $floor : booléen, détermine si on arrondi les valeurs ou non
+	# colonnes dutableau : nom, forage (foret,lac,desert,jungle,primes)
+	require_once('fonctions_perso.php');
+	require_once('ryzom_extra.php');
+	$lignetableau = '<tr>';
+	$lignetableau .= "<td>$nomutilisateur</td>\n";
+	$result = ryzom_character_api($apikey);
+	$xml=$result[$apikey];
+	$skills=(Array)$xml->skills;
+	$forages=array();
+	foreach ($skills as $titre=>$valeur){
+		// On s'assure que le skill soit de la bonne branche avant de travailler dessus
+		if (substr_compare($titre,$sigle,0,2)==0){//ryzom_translate((string)$item->sheet,,'fr',0).'(Q'.(int)$item->quality.$details.')" /> ');
+			// d'abord faire un tableau des forages pour éviter les doublons
+			if ($floor){
+				$forages[magietrad($titre)]=floor((floor($valeur) / 25))*25;
+			} else {
+				$forages[magietrad($titre)]=$valeur;
+			}
+		}
+	}
+	if ($ingame){
+		$lignetableau .= "<td border=\"1\" style=\"solid\" color=\"white\"><font color=\"red\">".$forages['Forage']."</font></td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+	} else {
+		//$lignetableau .= "<td style=\"color:rgb(".(255-$forages['Forage']).",".($forages['Forage']-50).",0)\">".$forages['Forage']."</td><td class=\"c".$forages['Forage en désert']."\">".$forages['Forage en désert']."</td><td class=\"c".$forages['Forage en foret']."\">".$forages['Forage en foret']."</td><td class=\"c".$forages['Forage en jungle']."\">".$forages['Forage en jungle']."</td><td class=\"c".$forages['Forage lacustre']."\">".$forages['Forage lacustre']."</td><td class=\"c".$forages['Forage en primes racines']."\">".$forages['Forage en primes racines']."</td>\n";
+		//var_dump($forages);
+		$lignetableau .= "<td class=\"c".$forages['Curative']."\">".$forages['Curative']."</td><td class=\"c".$forages['Neutralisante']."\">".$forages['Neutralisante']."</td><td class=\"c".$forages['Elémentaire']."\">".$forages['Elémentaire']."</td><td class=\"c".$forages['Débilitante']."\">".$forages['Débilitante']."</td>\n";
+		
+	}
+	
+	$lignetableau .= '</tr>';
+	return $lignetableau;
+}
+
+if ($ingame){
+	echo "<h1><font color=\"red\">Compétences des membres de ".$data['guild_name'].", arrondies par tranches de 25</font></h1>\n<h2>Compétences de forages</h2>\n";
+} else {
+	echo "<h1>Compétences des membres de ".$data['guild_name'].", arrondies par tranches de 25</h1>\n<h2>Compétences de forages</h2>\n";
+}
 echo "<table><tr><td>Nom</td><td>Forage</td><td>Forage en désert</td><td>Forage en for&ecirc;t</td><td>Forage en jungle</td><td>Forage lacustre</td><td>Forage en primes racines</td></tr>\n";
 foreach ($apikeys as $apinom => $apikey){
 	if ($data['char_name']==$apinom){
@@ -136,5 +192,16 @@ foreach ($apikeys as $apinom => $apikey){
 		echo artisanat($apinom,$apikey,'sc',true,"","",$dbconn);
 	}
 	$dbconn->close();
+}
+echo "</table>\n";
+
+echo "<h2>Compétences de magie</h2>\n";
+echo "<table><tr><td>Nom</td><td>Soin</td><td>Neutralisante</td><td>Élémentaire</td><td>Débilitante</td></tr>\n";
+foreach ($apikeys as $apinom => $apikey){
+	if ($data['char_name']==$apinom){
+		echo magie($apinom,$apikey,'sm',false);
+	} else {
+		echo magie($apinom,$apikey,'sm',true);
+	}
 }
 echo "</table>\n";

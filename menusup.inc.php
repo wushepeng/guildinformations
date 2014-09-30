@@ -4,5 +4,10 @@
 	Inventaires : <input type="submit" value="Tri par matière ou type d'objet" name="inventairemat" id="inventairemat" />
 	<input type="submit" value="Tri par qualité" name="inventaireQ" id="inventaireQ" /><br/>
 	Votre clé API personnelle : <br/>
-	<input type="text" value="<?php $name=$data['char_name'];echo $apikeys["$name"]; ?>" name="apikey" id="apikey" size="41"/>	<input type="submit" value="Enregistrer" name="savekey" id="savekey" />
+	<input type="text" value="<?php $name=$data['char_name'];echo $apikeys["$name"]."\" name=\"apikey\" id=\"apikey\" ";
+	if ($ingame){
+		echo "size=\"300\"/>";
+	} else {
+		echo "size=\"41\"/>";
+	}?>	<input type="submit" value="Enregistrer" name="savekey" id="savekey" />
 </form>
