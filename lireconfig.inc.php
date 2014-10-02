@@ -6,7 +6,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.*/
 	include('config.php');
-	$SQL="SELECT * FROM ".$dbprefixe."perso_config WHERE nomperso=\"".$nomutilisateur."\";";
+	$SQL="SELECT * FROM ".$dbprefixe."perso_config WHERE nomperso=\"".$nomutilisateur."\" AND sigle='".$sigle."';";
 	//echo $SQL;
 	$result=$dbconn->query($SQL);
 	if (!$result=$dbconn->query($SQL)){

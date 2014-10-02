@@ -65,6 +65,12 @@ if (empty($_GET['checksum'])){
 				} else {
 					$enregistrer=False;
 				}
+				// enregistrement d'une clé perso
+				if (!empty($_POST['savekey']) || ($_POST['savekey_x']=="0")){
+					$savekey=True;
+				} else {
+					$savekey=False;
+				}
 				//echo "Dans inventaire faux";
 				//var_dump($_POST);
 			}
@@ -120,6 +126,12 @@ include('log.inc.php');
 // membre d'une guilde, récupérer son id de guilde
 $guildid=$data['guild_id'];
 // écupérer les infos de guilde principale
+if ($enregistrer){
+	include_once('enregistrer_mainconfig.inc.php');
+}
+if ($savekey){
+	include_once('enregistrer_cle_perso.inc.php');
+}
 $guildapikeys=array();
 require_once('mainguild.inc.php'); // définit $mainguild et $guildapikeys 
 // A FAIRE : la création de guilde n'est pas faite
@@ -129,9 +141,6 @@ require_once('header.inc.php');
 $grade=$data['grade'];
 if ($enregistrerconfig){
 	include_once('enregistrer_config.inc.php');
-}
-if ($enregistrer){
-	include_once('enregistrer_mainconfig.inc.php');
 }
 if ($ingame && !$inventaire){
 	// Afficher un avertissement, un bout de vue dans le controleur

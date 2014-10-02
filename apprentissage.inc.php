@@ -71,8 +71,8 @@ function artisanat($nomutilisateur,$apikey,$sigle,$pasmoi,$user,$checksum,$dbcon
 	//var_dump($fofotrans);
 	$forages=array();
 	if (! $pasmoi){
-		$lignetableau.="<form name=\"config\" action=\"controleur.php\" method=\"POST\">	<input type=\"hidden\" value=\"".$user."\" id=\"user\" name=\"user\" />
-	<input type=\"hidden\" value=\"".$checksum."\" id=\"checksum\" name=\"checksum\" />
+		$lignetableau.="<form name=\"config".$sigle."\" action=\"controleur.php\" method=\"POST\">	<input type=\"hidden\" value=\"".$user."\" id=\"user".$sigle."\" name=\"user\" />
+	<input type=\"hidden\" value=\"".$checksum."\" id=\"checksum".$sigle."\" name=\"checksum\" /><input type=\"hidden\" value=\"".$sigle."\" name=\"sigle\" />
 \n";
 	}
 	foreach ($skills as $titre=>$valeur){
@@ -180,18 +180,17 @@ echo "</table>\n";
 echo "<h2>Compétences d'artisanat</h2>\n";
 echo "<table><tr><td>Nom</td><td>Artisanat</td></tr>\n";
 
+$dbconn = new mysqli($dbhost,$dbuser,$dbpassword,$dbname);	
+if ($dbconn->connect_errno){
+	require('noconfig.php');
+}
 foreach ($apikeys as $apinom => $apikey){
 	// faire une boucle sur la requete SQL de recherche de config
-	$dbconn = new mysqli($dbhost,$dbuser,$dbpassword,$dbname);	
-	if ($dbconn->connect_errno){
-		require('noconfig.php');
-	}
 	if ($data['char_name']==$apinom){
 		echo artisanat($apinom,$apikey,'sc',false,$user,$checksum,$dbconn);
 	} else {
 		echo artisanat($apinom,$apikey,'sc',true,"","",$dbconn);
 	}
-	$dbconn->close();
 }
 echo "</table>\n";
 
@@ -204,4 +203,18 @@ foreach ($apikeys as $apinom => $apikey){
 		echo magie($apinom,$apikey,'sm',true);
 	}
 }
+echo "</table>\n";
+
+echo "<h2>Compétences de combat</h2>\n";
+echo "<table><tr><td>Nom</td><td>Compétences</td></tr>\n";
+
+foreach ($apikeys as $apinom => $apikey){
+	// faire une boucle sur la requete SQL de recherche de config
+	if ($data['char_name']==$apinom){
+		echo artisanat($apinom,$apikey,'sf',false,$user,$checksum,$dbconn);
+	} else {
+		echo artisanat($apinom,$apikey,'sf',true,"","",$dbconn);
+	}
+}
+$dbconn->close();
 echo "</table>\n";
