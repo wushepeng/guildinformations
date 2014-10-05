@@ -81,13 +81,17 @@ if (empty($_GET['checksum'])){
 			$ingame=False;
 		}
 	}
-} else {
+} else { // GET
 	$user=$_GET['user'];
 	$checksum=$_GET['checksum'];
 	if ($_GET['ig']==1){
 		$ingame=True;
 	} else {
 		$ingame=False;
+	}
+	if ($_GET['mode']=='aide'){
+		require('aide.php');
+		exit(0);
 	}
 }
 
@@ -114,9 +118,9 @@ if ($ingame){
 	$logstring.=" - ingame";
 }
 if ($inventaire){
-	$logstring.=" - Inventaire\n";
+	$logstring.=" - Inventaire";
 } else {
-	$logstring.="\n";
+	$logstring.="";
 }
 
 // une fonction de modele avec acces bdd pour le log

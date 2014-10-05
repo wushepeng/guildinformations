@@ -27,5 +27,5 @@ td{border-bottom-width: 1px;border-bottom-style: solid;border-bottom-color: whit
 </style>';
 } 	?>	
 	<div id="corps">
-	<div id="bordH" class="ryzom-ui-t"><?php echo $data["char_name"]; ?><span style="float:right;margin-right:12px;"><a href="http://app.ryzom.com//index.php" class="ryzom-ui-text-button">Accueil</a></span></div>
+	<div id="bordH" class="ryzom-ui-t"><?php echo $data["char_name"]; ?><span style="float:right;margin-right:12px;"><a href="?checksum=<?php echo $checksum ?>&user=<?php echo $user ?>&mode=aide" class="ryzom-ui-text-button">Aide</a> | <a href="http://app.ryzom.com//index.php" class="ryzom-ui-text-button">Accueil</a></span></div>
 	<div id="centre">

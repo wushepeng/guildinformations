@@ -29,5 +29,6 @@ if ($dbconn->connect_errno){
 	exit();
 }
 $SQL = "INSERT INTO ".$dbprefixe."logs(texte) VALUES(\"".$logstring."\")";
+//$SQL=mysqli_real_escape_string($dbconn,$SQL);
 $result=$dbconn->query($SQL);
 $dbconn->close();
