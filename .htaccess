@@ -1,0 +1,12 @@
+<Files *>
+    Order deny,allow
+    Deny from all
+</Files>
+<Files controleur.php>
+    Order allow,deny
+    allow from all
+</Files>
+<Files logolafirme32.png>
+    Order allow,deny
+    allow from all
+</Files>
