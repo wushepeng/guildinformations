@@ -13,11 +13,13 @@
 	//fclose($configfile);
 	// faire une une boucle - $data['id'] est l'id utilisateur
 	//var_dump($_POST);
-	$SQL="BEGIN;\nDELETE FROM ".$dbprefixe."perso_api WHERE nomperso=\"".$data['char_name']."\";\n";
-	$SQL.="INSERT INTO ".$dbprefixe."perso_api VALUES(\"".$data['id']."\",\"".$data['char_name']."\",\"".$_POST['apikey']."\",\"".$data['guild_id']."\");\n";
-	$SQL.="COMMIT;\n";
 	//echo $SQL;
 	$dbconn = new mysqli($dbhost,$dbuser,$dbpassword,$dbname);	
+	$cleapi=$dbconn->real_escape_string($_POST['apikey']);
+	$SQL="BEGIN;\nDELETE FROM ".$dbprefixe."perso_api WHERE nomperso=\"".$data['char_name']."\";\n";
+	$SQL.="INSERT INTO ".$dbprefixe."perso_api VALUES(\"".$data['id']."\",\"".$data['char_name']."\",\"".$cleapi."\",\"".$data['guild_id']."\");\n";
+	$SQL.="COMMIT;\n";
+	//$SQL=mysqli_real_escape_string($dbconn,$SQL);
 	if ($dbconn->connect_errno){
 		require('noconfig.php');
 	} else {

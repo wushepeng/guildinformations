@@ -22,6 +22,7 @@
 	$SQL.="COMMIT;\n";
 	//echo $SQL;
 	$dbconn = new mysqli($dbhost,$dbuser,$dbpassword,$dbname);	
+	//$SQL=mysqli_real_escape_string($dbconn,$SQL);
 	if ($dbconn->connect_errno){
 		require('noconfig.php');
 	} else {
