@@ -8,9 +8,23 @@ $app->get('/', function() use ($app) {
 })->name('home');
 
 /*
+ * Route appelée par Ryzom
+ */
+$app->get('/ryzom/app(/)', function() use ($app) {
+
+})->name('ryzomApp-Home');
+
+/*
+ * Affichage des inventaires
+ */
+$app->get('/ryzom/app/inventory(/)', function() use ($app) {
+
+})->name('ryzomApp-Inventory');
+
+/*
  * Stuff
  */
-/*$app->get('/a/route(/)', function() use ($app) {
+/*$app->post('/a/route(/)', function() use ($app) {
 $app->get('/a/route/with/:aParam(/)', function($aParam) use ($app, $entityResource) {
 	$app->request()->params('paramName');
 	$entityResource->getEntityManager()->getRepository('App\Entity\anEntity')->function();

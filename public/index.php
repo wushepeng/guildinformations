@@ -1,6 +1,9 @@
 <?php
 require '../vendor/autoload.php';
 
+session_cache_limiter(false);
+session_start();
+
 // Prepare app
 $app = new \Slim\Slim(array(
     'templates.path' => '../templates',
