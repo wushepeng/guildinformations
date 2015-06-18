@@ -13,13 +13,25 @@ $app->get('/', function() use ($app) {
 $app->get('/ryzom/app(/)', function() use ($app) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
-	$hashmac = hash_hmac('sha1', $user, RYAPI_APP_KEY);
-	if($hashmac!=$checksum) {
-		$data = array('errorText' => "Erreur de somme de contrôle");
+	if($user==null || $checksum==null) {
+		$data = array('errorText' => "L'application ne marche pas sur appels directs, veuillez passer par ryzom (ig ou webapp)");
 		echo $app->view->render("error.html.twig", $data);
 	}
 	else {
-		$userData = unserialize(base64_decode($user));
+		$hashmac = hash_hmac('sha1', $user, "RYAPI_APP_KEY");
+		if($hashmac!=$checksum) {
+			$data = array('errorText' => "Erreur de somme de contrôle");
+			echo $app->view->render("error.html.twig", $data);
+		}
+		else {
+			$userData = unserialize(base64_decode($user));
+			$hominId = $userData['id'];
+			$hominName = $userData['char_name'];
+			$guildId = $userData['guild_id'];
+			$guildName = $userData['guild_name'];
+			$grade = $userData['grade'];
+			// index en plus: timestamp, app_url, race, civilisation, cult, civ, organization, guild_icon, lang
+		}
 	}
 })->name('ryzomApp-Home');
 
