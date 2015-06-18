@@ -11,7 +11,16 @@ $app->get('/', function() use ($app) {
  * Route appelée par Ryzom
  */
 $app->get('/ryzom/app(/)', function() use ($app) {
-
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$hashmac = hash_hmac('sha1', $user, RYAPI_APP_KEY);
+	if($hashmac!=$checksum) {
+		$data = array('errorText' => "Erreur de somme de contrôle");
+		echo $app->view->render("error.html.twig", $data);
+	}
+	else {
+		$userData = unserialize(base64_decode($user));
+	}
 })->name('ryzomApp-Home');
 
 /*
