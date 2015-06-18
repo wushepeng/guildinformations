@@ -1,8 +1,8 @@
 <?php
 require '../vendor/autoload.php';
 
-session_cache_limiter(false);
-session_start();
+//session_cache_limiter(false);
+//session_start();
 
 // Prepare app
 $app = new \Slim\Slim(array(
@@ -20,5 +20,10 @@ $app->view->parserOptions = array(
 );
 $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
+$generalConfigResource = new \App\Resource\GeneralConfigResource();
+
+include_once "../App/Router.php";
+
 // Run app
 $app->run();
+?>

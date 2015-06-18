@@ -12,26 +12,26 @@ class Guild {
 	/**
 	 * @Id
 	 * @var integer
-	 * @Column(name="idguilde", nullable=false, type="integer")
+	 * @Column(name="id", nullable=false, type="integer")
 	 */
 	protected $id;
 
 	/**
 	 * @var string
-	 * @Column(name="nomguilde", nullable=true, type="string")
+	 * @Column(name="name", nullable=true, type="string")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(name="apikey", nullable=true, type="string")
+	 * @Column(name="apiKey", nullable=true, type="string")
 	 */
 	protected $apiKey;
 
 	/**
 	 * @OneTOne(targetEntity="Guild")
-	 * @JoinColumn(name="mainguild", referencedColumnName="idguilde")
-	 * @Column(name="mainguild", nullable=true)
+	 * @JoinColumn(name="id", referencedColumnName="id")
+	 * @Column(name="mainGuildId", nullable=true)
 	 */
 	protected $mainGuildId;
 

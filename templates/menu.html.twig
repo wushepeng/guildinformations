@@ -1,0 +1,13 @@
+{% block content %}
+<form name="off" id="off" method="POST">
+	<input type="hidden" value="{{ user }}" id="user" name="user" />
+	<input type="hidden" value="{{ checksum }}" id="checksum" name="checksum" />
+	{% if grade=="officier" or grade=="offsup" %}
+		Inventaire : <input type="submit" value="Tri par matière ou type d'objet" name="inventairemat" id="inventairemat" />
+	<input type="submit" value="Tri par qualité" name="inventaireQ" id="inventaireQ" /><br/>
+	{% endif %}
+	Votre clé API personnelle : <br/>
+	<input type="text" value="{{ apiKey }}" name="apikey" id="apikey"/>
+	<input type="submit" value="Enregistrer" name="savekey" id="savekey" />
+</form>
+{% endblock %}
