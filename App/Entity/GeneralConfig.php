@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping;
 class GeneralConfig {
 
 	/**
+	 * @Id
 	 * @var string
 	 * @Column(name="RYAPI_APP_KEY", nullable=false, type="string")
 	 */

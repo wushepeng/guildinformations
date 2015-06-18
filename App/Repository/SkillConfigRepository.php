@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\SkillConfigRepository;
+use Doctrine\ORM\EntityRepository;
 
 class SkillConfigRepository extends EntityRepository {
 

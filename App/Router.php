@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Page d'accueil
+ * Page d'accueil du site
  */
 $app->get('/', function() use ($app) {
 	echo $app->view->render("home.html.twig");
@@ -20,6 +20,34 @@ $app->get('/ryzom/app(/)', function() use ($app) {
 $app->get('/ryzom/app/inventory(/)', function() use ($app) {
 
 })->name('ryzomApp-Inventory');
+
+/*
+ * Création/mise à jour de la clé api d'un homin
+ */
+$app->post('/ryzom/app/homin/apiKey(/)', function() use ($app) {
+
+})->name('ryzomApp-HominKey');
+
+/*
+ * Création/mise à jour de la clé api d'une guilde
+ */
+$app->post('/ryzom/app/guild/apiKey(/)', function() use ($app) {
+
+})->name('ryzomApp-GuildKey');
+
+/*
+ * Création/mise à jour de la configuration pour l'affichage des compétences
+ */
+$app->post('/ryzom/app/homin/configuration(/)', function() use ($app) {
+
+})->name('ryzomApp-HominConfiguration');
+
+/*
+ * Création/mise à jour de la configuration d'une guilde
+ */
+$app->post('/ryzom/app/guild/configuration(/)', function() use ($app) {
+
+})->name('ryzomApp-GuildConfiguration');
 
 /*
  * Stuff

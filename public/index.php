@@ -21,6 +21,9 @@ $app->view->parserOptions = array(
 $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
 $generalConfigResource = new \App\Resource\GeneralConfigResource();
+$guildResource = new \App\Resource\GuildResource();
+$hominResource = new \App\Resource\HominResource();
+$skillConfigResource = new \App\Resource\SkillConfigResource();
 
 include_once "../App/Router.php";
 

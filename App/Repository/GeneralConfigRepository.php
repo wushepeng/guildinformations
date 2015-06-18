@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\GeneralConfigRepository;
+use Doctrine\ORM\EntityRepository;
 
 class GeneralConfigRepository extends EntityRepository {
 
