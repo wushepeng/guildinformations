@@ -27,8 +27,13 @@ $app->get('/', function() use ($app) {
 /*
  * Route appelée par Ryzom
  */
-$app->get('/ryzom/app(/)', 'checkRequest', function() use ($app) {
+$app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum
+	);
 	$userData = unserialize(base64_decode($user));
 	$hominId = $userData['id'];
 	$hominName = $userData['char_name'];
@@ -36,12 +41,19 @@ $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app) {
 	$guildName = $userData['guild_name'];
 	$grade = $userData['grade'];
 	// index en plus: timestamp, app_url, race, civilisation, cult, civ, organization, guild_icon, lang
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/home.ig.html.twig");
+	$homin = $hominResource->get($hominId);
+	if($homin==null) {
+		$hominResource->post($hominId, $hominName, null, $guildId);
 	}
 	else {
-		echo $app->view->render("home.app.html.twig");
+		$hominResource->put($hominId, $hominName, null, $guildId);
+	}
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/home.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("home.app.html.twig", $data);
 	}
 })->name('ryzomApp-Home');
 
@@ -52,12 +64,50 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app) {
 	
 })->name('ryzomApp-Inventory');
 
+/**
+ * Affichage du formulaire pour la clé api d'un homin
+ */
+$app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$homin = $hominResource->get($userData['id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'apiKey' => $homin['apiKey']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("hominKey.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("hominKey.app.html.twig", $data);
+	}
+})->name('ryzomApp-HominKey');
+
 /*
  * Création/mise à jour de la clé api d'un homin
  */
-$app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app) {
-
-})->name('ryzomApp-HominKey');
+$app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$apiKey = $app->request()->params('apiKey');
+	$userData = unserialize(base64_decode($user));
+	$homin = $hominResource->put($userData['id'], $userData['char_name'], $apiKey, $userData['guild_id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'apiKey' => $apiKey
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("hominKey.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("hominKey.app.html.twig", $data);
+	}
+});
 
 /*
  * Création/mise à jour de la clé api d'une guilde

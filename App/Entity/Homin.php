@@ -18,7 +18,7 @@ class Homin {
 
 	/**
 	 * @var string
-	 * @Column(name="name", nullable=true, type="string")
+	 * @Column(name="name", nullable=false, type="string")
 	 */
 	protected $name;
 

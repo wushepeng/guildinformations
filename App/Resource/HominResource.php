@@ -11,13 +11,36 @@ use App\Entity\Homin;
  */
 class HominResource extends AbstractResource {
 
-    public function post() {
-        /*$homin = new Homin($id, $name, $apiKey, $guildId);
+    public function post($id, $name, $apiKey, $guildId) {
+        $homin = new Homin($id, $name, $apiKey, $guildId);
         $this->getEntityManager()->persist($homin);
         $this->getEntityManager()->flush();
-        return convertToArray($homin);
+    }
+
+    public function get($id) {
         $homin = $this->getEntityManager()->find('App\Entity\Homin', array("id" => $id));
-        $this->getEntityManager()->remove($homin);*/
+        if($homin==null) {
+            return null;
+        }
+        else {
+            return $this->convertToArray($homin);
+        }
+    }
+
+    public function put($id, $name, $apiKey, $guildId) {
+        $homin = $this->getEntityManager()->find('App\Entity\Homin', array("id" => $id));
+        $homin->setName($name);
+        if($apiKey!=null) {
+            $homin->setApiKey($apiKey);
+        }
+        $homin->setGuildId($guildId);
+        $this->getEntityManager()->flush();
+    }
+
+    public function delete($id) {
+        $homin = $this->getEntityManager()->find('App\Entity\Homin', array("id" => $id));
+        $this->getEntityManager()->remove($homin);
+        $this->getEntityManager()->flush();
     }
 
     private function convertToArray(Homin $homin) {

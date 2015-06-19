@@ -1,0 +1,11 @@
+{% extends "ingame/content.ig.html.twig" %}
+
+{% block content %}
+<form name="off" id="off" method="POST">
+	<input type="hidden" value="{{ user }}" id="user" name="user" />
+	<input type="hidden" value="{{ checksum }}" id="checksum" name="checksum" />
+	Votre clé API personnelle : <br/>
+	<input type="text" value="{{ apiKey }}" name="apikey" id="apikey"/>
+	<input type="submit" value="Enregistrer" name="savekey" id="savekey" />
+</form>
+{% endblock %}
