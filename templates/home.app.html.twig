@@ -6,5 +6,8 @@
 
 {% block content %}
 	<h2></h2>
-	<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api</a>
+	<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api personnelle</a>
+	{% if grade=="Leader" or grade=="HighOfficer" %}
+		<a href="{{ urlFor('ryzomApp-GuildKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api de guilde</a>
+	{% endif %}
 {% endblock content %}

@@ -27,19 +27,20 @@ $app->get('/', function() use ($app) {
 /*
  * Route appelée par Ryzom
  */
-$app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource) {
+$app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum
-	);
 	$userData = unserialize(base64_decode($user));
 	$hominId = $userData['id'];
 	$hominName = $userData['char_name'];
 	$guildId = $userData['guild_id'];
 	$guildName = $userData['guild_name'];
 	$grade = $userData['grade'];
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'grade' => $grade
+	);
 	// index en plus: timestamp, app_url, race, civilisation, cult, civ, organization, guild_icon, lang
 	$homin = $hominResource->get($hominId);
 	if($homin==null) {
@@ -47,6 +48,13 @@ $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource)
 	}
 	else {
 		$hominResource->put($hominId, $hominName, null, $guildId);
+	}
+	$guild = $guildResource->get($guildId);
+	if($guild==null) {
+		$guildResource->post($guildId, $guildName, null, $guildId);
+	}
+	else {
+		$guildResource->put($guildId, $guildName, null, $guild['mainGuildId']);
 	}
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -110,11 +118,55 @@ $app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $
 });
 
 /*
+ * Affichage du formulaire pour la clé api d'une guilde
+ */
+$app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+		//@TODO: que pour le leader de la guilde, rediriger
+	}
+	$guild = $guildResource->get($userData['guild_id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'apiKey' => $guild['apiKey']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("guildKey.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("guildKey.app.html.twig", $data);
+	}
+})->name('ryzomApp-GuildKey');
+
+/*
  * Création/mise à jour de la clé api d'une guilde
  */
-$app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app) {
-
-})->name('ryzomApp-GuildKey');
+$app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$apiKey = $app->request()->params('apiKey');
+	$userData = unserialize(base64_decode($user));
+	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+		//@TODO: que pour le leader de la guilde, rediriger
+	}
+	$guild = $guildResource->put($userData['guild_id'], $userData['guild_name'], $apiKey, $userData['guild_id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'apiKey' => $apiKey
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("guildKey.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("guildKey.app.html.twig", $data);
+	}
+});
 
 /*
  * Création/mise à jour de la configuration pour l'affichage des compétences

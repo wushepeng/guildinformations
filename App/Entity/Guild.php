@@ -18,7 +18,7 @@ class Guild {
 
 	/**
 	 * @var string
-	 * @Column(name="name", nullable=true, type="string")
+	 * @Column(name="name", nullable=false, type="string")
 	 */
 	protected $name;
 
@@ -55,7 +55,7 @@ class Guild {
 	}
 
 	public function getMainGuildId() {
-		return $this->guildId;
+		return $this->mainGuildId;
 	}
 
 	public function setId($id) {
