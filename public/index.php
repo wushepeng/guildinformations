@@ -1,9 +1,6 @@
 <?php
 require '../vendor/autoload.php';
 
-//session_cache_limiter(false);
-//session_start();
-
 // Prepare app
 $app = new \Slim\Slim(array(
     'templates.path' => '../templates',
@@ -24,6 +21,11 @@ $generalConfigResource = new \App\Resource\GeneralConfigResource();
 $guildResource = new \App\Resource\GuildResource();
 $hominResource = new \App\Resource\HominResource();
 $skillConfigResource = new \App\Resource\SkillConfigResource();
+
+$generalConf = $generalConfigResource->getEntityManager()->getRepository('\App\Entity\GeneralConfig')-> getGeneralConfig();
+define('RYAPI_APP_KEY',$generalConf['appKey']);
+define('RYAPI_APP_URL',$generalConf['appUrl']);
+define('RYAPI_APP_MAXAGE',$generalConf['appMaxAge']);
 
 include_once "../App/Router.php";
 

@@ -9,7 +9,7 @@ function checkRequest(\Slim\Route $route) {
 		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
 	}
 	else {
-		$hashmac = hash_hmac('sha1', $user, "RYAPI_APP_KEY");
+		$hashmac = hash_hmac('sha1', $user, RYAPI_APP_KEY);
 		if($hashmac!=$checksum) {
 			$message = "Erreur de somme de contrôle";
 			$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
