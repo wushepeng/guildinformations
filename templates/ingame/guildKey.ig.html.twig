@@ -1,10 +1,10 @@
-{% extends "content.html.twig" %}
+{% extends "ingame/content.ig.html.twig" %}
 
 {% block content %}
-<form method="POST">
+<form action="{{ urlFor('ryzomApp-GuildKey.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
-	Votre clé API personnelle : <br/>
+	Votre clé de guilde : <br/>
 	<input type="text" value="{{ apiKey }}" name="apiKey"/>
 	{% set value = "Mettre à jour" %}
 	{% if apiKey is null %}

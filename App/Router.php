@@ -87,7 +87,7 @@ $app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $h
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
-		echo $app->view->render("hominKey.ig.html.twig", $data);
+		echo $app->view->render("ingame/hominKey.ig.html.twig", $data);
 	}
 	else {
 		echo $app->view->render("hominKey.app.html.twig", $data);
@@ -110,12 +110,12 @@ $app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
-		echo $app->view->render("hominKey.ig.html.twig", $data);
+		echo $app->view->render("ingame/hominKey.ig.html.twig", $data);
 	}
 	else {
 		echo $app->view->render("hominKey.app.html.twig", $data);
 	}
-});
+})->name('ryzomApp-HominKey.post');
 
 /*
  * Affichage du formulaire pour la clé api d'une guilde
@@ -135,7 +135,7 @@ $app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $g
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
-		echo $app->view->render("guildKey.ig.html.twig", $data);
+		echo $app->view->render("ingame/guildKey.ig.html.twig", $data);
 	}
 	else {
 		echo $app->view->render("guildKey.app.html.twig", $data);
@@ -161,12 +161,12 @@ $app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
-		echo $app->view->render("guildKey.ig.html.twig", $data);
+		echo $app->view->render("ingame/guildKey.ig.html.twig", $data);
 	}
 	else {
 		echo $app->view->render("guildKey.app.html.twig", $data);
 	}
-});
+})->name('ryzomApp-GuildKey.post');
 
 /*
  * Création/mise à jour de la configuration pour l'affichage des compétences
