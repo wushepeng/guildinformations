@@ -4,16 +4,15 @@
 {% for guild in guilds %}
 	<div>
 		<p>{{ guild.name }}</p>
-		<input type="text" value="{{ guild.apiKey }}"/>
 		<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>
 	</div>
 {% endfor %}
 
-<form action="{{ urlFor('ryzomApp-GuildConf.post') }}" method="POST">
+<form action="{{ urlFor('ryzomApp-GuildConfiguration.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
 	<div>
-		<p>Ajouter un entrepôt: </p>
+		<p>Ajouter un entrepot: </p>
 		<input type="text" name="newApiKey"/>
 		<input type="submit" value="Enregistrer"/>
 	</div>
