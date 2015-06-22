@@ -65,13 +65,6 @@ $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource,
 	}
 })->name('ryzomApp-Home');
 
-/*
- * Affichage des inventaires
- */
-$app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app) {
-	
-})->name('ryzomApp-Inventory');
-
 /**
  * Affichage du formulaire pour la clé api d'un homin
  */
@@ -169,13 +162,6 @@ $app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $
 })->name('ryzomApp-GuildKey.post');
 
 /*
- * Création/mise à jour de la configuration pour l'affichage des compétences
- */
-$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app) {
-
-})->name('ryzomApp-HominConfiguration');
-
-/*
  * Affichage de la configuration d'une guilde
  */
 $app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($app, $guildResource) {
@@ -255,6 +241,47 @@ $app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function
 		echo $app->view->render("guildConf.app.html.twig", $data);
 	}
 })->name('ryzomApp-GuildConfiguration.delete');
+
+/*
+ * Affichage des inventaires
+ */
+$app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+
+	$guild = $guildResource->get($userData['guild_id']);
+	$xml = ryzom_guild_api($guild['apiKey']);
+	$infos = $xml[$guild['apiKey']];
+	$items = array();
+	foreach($infos->room->item as $item) {
+		$url = ryzom_item_icon_url((string) $item->sheet, (int) $item->craftparameters->color, (int) $item->quality, (int) $item->stack);
+		$stack = (int) $item->stack;
+		$name = ryzom_translate((string) $item->sheet, 'fr', 0);
+		$quality = (int) $item->quality;
+		array_push($items, array('iconUrl' => $url, 'name' => $name, 'quality' => $quality, 'stack'=> $stack));
+	}
+
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'items' => $items
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/inventory.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("inventory.app.html.twig", $data);
+	}
+})->name('ryzomApp-Inventory');
+
+/*
+ * Création/mise à jour de la configuration pour l'affichage des compétences
+ */
+$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app) {
+
+})->name('ryzomApp-HominConfiguration');
 
 /*
  * Route d'affichage des erreurs
