@@ -1,0 +1,22 @@
+{% extends "content.html.twig" %}
+
+{% block content %}
+{% for guild in guilds %}
+	<div>
+		<p>{{ guild.name }}</p>
+		<input type="text" value="{{ guild.apiKey }}"/>
+		<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>
+	</div>
+{% endfor %}
+
+<form method="POST">
+	<input type="hidden" value="{{ user }}" name="user"/>
+	<input type="hidden" value="{{ checksum }}" name="checksum"/>
+	<div>
+		<p>Ajouter un entrepôt:</p>
+		<input type="text" placeholder="Clé api" name="newApiKey"/>
+		<input type="submit" value="Enregistrer"/>
+	</div>
+</form>
+<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+{% endblock %}

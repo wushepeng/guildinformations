@@ -176,11 +176,85 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 })->name('ryzomApp-HominConfiguration');
 
 /*
+ * Affichage de la configuration d'une guilde
+ */
+$app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+		//@TODO: que pour le leader de la guilde, rediriger
+	}
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'guilds' => $guilds
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/guildConf.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("guildConf.app.html.twig", $data);
+	}
+})->name('ryzomApp-GuildConfiguration');
+
+/*
  * Création/mise à jour de la configuration d'une guilde
  */
-$app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($app) {
+$app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$apiKey = $app->request()->params('newApiKey');
+	$userData = unserialize(base64_decode($user));
+	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+		//@TODO: que pour le leader de la guilde, rediriger
+	}
+	$xml = ryzom_guild_api($apiKey);
+	$id = $xml[$apiKey]->gid;
+	$name = $xml[$apiKey]->name;
+	$guildResource->post($id, $name, $apiKey, $userData['guild_id']);
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'guilds' => $guilds
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/guildConf.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("guildConf.app.html.twig", $data);
+	}
+})->name('ryzomApp-GuildConfiguration.post');
 
-})->name('ryzomApp-GuildConfiguration');
+/*
+ * Suppression d'une guilde secondaire
+ */
+$app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function($guildId) use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+		//@TODO: que pour le leader de la guilde, rediriger
+	}
+	$guildResource->delete($guildId);
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'guilds' => $guilds
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/guildConf.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("guildConf.app.html.twig", $data);
+	}
+})->name('ryzomApp-GuildConfiguration.delete');
 
 /*
  * Route d'affichage des erreurs

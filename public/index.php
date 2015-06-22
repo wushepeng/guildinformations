@@ -1,5 +1,7 @@
 <?php
 require '../vendor/autoload.php';
+require '../libs/ryapi.php';
+require '../libs/ryzom_extra.php';
 
 // Prepare app
 $app = new \Slim\Slim(array(
@@ -26,6 +28,8 @@ $generalConf = $generalConfigResource->getEntityManager()->getRepository('\App\E
 define('RYAPI_APP_KEY',$generalConf['appKey']);
 define('RYAPI_APP_URL',$generalConf['appUrl']);
 define('RYAPI_APP_MAXAGE',$generalConf['appMaxAge']);
+
+ryapi_init();
 
 include_once "../App/Router.php";
 

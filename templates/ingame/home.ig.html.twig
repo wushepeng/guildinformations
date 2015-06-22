@@ -9,5 +9,6 @@
 	<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api</a>
 	{% if grade=="Leader" or grade=="HighOfficer" %}
 		<a href="{{ urlFor('ryzomApp-GuildKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api de guilde</a>
+		<a href="{{ urlFor('ryzomApp-GuildConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Gérer les entrepôts de guilde</a>
 	{% endif %}
 {% endblock content %}
