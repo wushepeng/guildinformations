@@ -1,5 +1,7 @@
 <?php
 
+include 'Utilities.php';
+
 function checkRequest(\Slim\Route $route) {
 	$app = \Slim\Slim::getInstance();
 	$user = $app->request()->params('user');
@@ -249,23 +251,11 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guil
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-
-	$guild = $guildResource->get($userData['guild_id']);
-	$xml = ryzom_guild_api($guild['apiKey']);
-	$infos = $xml[$guild['apiKey']];
-	$items = array();
-	foreach($infos->room->item as $item) {
-		$url = ryzom_item_icon_url((string) $item->sheet, (int) $item->craftparameters->color, (int) $item->quality, (int) $item->stack);
-		$stack = (int) $item->stack;
-		$name = ryzom_translate((string) $item->sheet, 'fr', 0);
-		$quality = (int) $item->quality;
-		array_push($items, array('iconUrl' => $url, 'name' => $name, 'quality' => $quality, 'stack'=> $stack));
-	}
-
+	$guildsItems = getItems($userData['guild_id'], $userData['grade']);
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'items' => $items
+		'guilds' => $guildsItems
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
