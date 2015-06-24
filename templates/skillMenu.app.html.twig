@@ -1,0 +1,8 @@
+{% block skillMenu %}
+	<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+	<a href="{{ urlFor('ryzomApp-Skills/Harvest') }}?checksum={{ checksum }}&user={{ user }}">Forage</a>
+	<a href="{{ urlFor('ryzomApp-Skills/Craft') }}?checksum={{ checksum }}&user={{ user }}">Artisanat</a>
+	<a href="{{ urlFor('ryzomApp-Skills/Magic') }}?checksum={{ checksum }}&user={{ user }}">Magie</a>
+	<a href="{{ urlFor('ryzomApp-Skills/Fight') }}?checksum={{ checksum }}&user={{ user }}">Combat</a>
+	<a href="{{ urlFor('ryzomApp-Skills') }}?checksum={{ checksum }}&user={{ user }}">Retour</a>
+{% endblock %}

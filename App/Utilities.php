@@ -34,4 +34,85 @@ function getGuildItems($guildKey) {
 	return $items;
 }
 
+function getHominLevels($apiKey, $branch) {
+	$xml = ryzom_character_api($apiKey);
+	$infos = $xml[$apiKey];
+	$skills = (Array) $infos->skills;
+	$lvl;
+	if($branch=='h') { // forage
+		$lvl = getHarvestLevels($skills, "sh");
+	}
+	else if($branch=='c') { // craft
+		$lvl = getCraftLevels($skills, "sc");
+	}
+	else if($branch=='m') { // magie
+		$lvl = getMagicLevels($skills, "sm");
+	}
+	else if($branch=='f') { // combat
+		$lvl = getFightLevels($skills, "sf");
+	}
+	return $lvl;
+}
+
+function getHarvestLevels($skills, $branchCode) {
+	$lvls = array(
+		'desert' => 0,
+		'forest' => 0,
+		'jungle' => 0,
+		'lakes' => 0,
+		'primes' =>0
+	);
+	foreach($skills as $name => $value) {
+		if(substr_compare($name, $branchCode, 0, 2)==0) {
+			if($name == "sh" || $name == "shf") {
+				if($value > $lvls['desert'] && $value > $lvls['forest'] && $value > $lvls['jungle'] && $value > $lvls['lakes'] && $value > $lvls['primes']) {
+					foreach($lvls as $lvlName => $lvlValue) {
+						$lvls[$lvlName] = $value;
+					}
+				}
+			}
+			else {
+				if(substr_compare($name, 'd', 3, 1)==0) {
+					if($value > $lvls['desert']) {
+						$lvls['desert'] = $value;
+					}
+				}
+				else if(substr_compare($name, 'f', 3, 1)==0) {
+					if($value > $lvls['forest']) {
+						$lvls['forest'] = $value;
+					}
+				}
+				else if(substr_compare($name, 'j', 3, 1)==0) {
+					if($value > $lvls['jungle']) {
+						$lvls['jungle'] = $value;
+					}
+				}
+				else if(substr_compare($name, 'l', 3, 1)==0) {
+					if($value > $lvls['lakes']) {
+						$lvls['lakes'] = $value;
+					}
+				}
+				else {
+					if($value > $lvls['primes']) {
+						$lvls['primes'] = $value;
+					}
+				}
+			}
+		}
+	}
+	return $lvls;
+}
+
+function getCraftLevels($skills, $branchCode) {
+
+}
+
+function getMagicLevels($skills, $branchCode) {
+
+}
+
+function getFightLevels($skills, $branchCode) {
+
+}
+
 ?>

@@ -267,6 +267,117 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guil
 })->name('ryzomApp-Inventory');
 
 /*
+ * Page d'accueil pour voir les compétences des membres
+ */
+$app->get('/ryzom/app/skills(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	// @TODO
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/skills.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("skills.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills');
+
+/*
+ * Affichage des compétences de forage
+ */
+$app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getHominLevels($homin['apiKey'], 'h');
+		array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+	}
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'homins' => $homins
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/harvest.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("harvest.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Harvest');
+
+/*
+ * Affichage des compétences d'artisanat
+ */
+$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	// @TODO
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/craft.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("craft.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Craft');
+
+/*
+ * Affichage des compétences de magie
+ */
+$app->get('/ryzom/app/skills/magic(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	// @TODO
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/magic.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("magic.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Magic');
+
+/*
+ * Affichage des compétences de combat
+ */
+$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	// @TODO
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/fight.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("fight.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Fight');
+
+/*
  * Création/mise à jour de la configuration pour l'affichage des compétences
  */
 $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app) {
