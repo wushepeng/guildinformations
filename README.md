@@ -89,6 +89,19 @@ CREATE TABLE `gi_SkillConfigs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
 
+Enfin, initialisez la configuration générale:
+
+```sql
+INSERT INTO `guildinf`.`gi_GeneralConfig` (
+`RYAPI_APP_KEY` ,
+`RYAPI_APP_URL` ,
+`RYAPI_APP_MAXAGE`
+)
+VALUES (
+'yourAppKey', 'yourAppUrl', '0'
+);
+```
+
 Une fois que vous avez votre base de données, il reste une dernière étape, à savoir, configurer la connexion de l'application à la base de données. Pour cela, il suffit de changer les informations de connexion dans le fichier `App/AbstractResource.php:38`.
 
 ```php
