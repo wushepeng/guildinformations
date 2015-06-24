@@ -342,10 +342,16 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', function() use ($app, $g
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	// @TODO
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getHominLevels($homin['apiKey'], 'm');
+		array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+	}
 	$data = array(
 		'user' => $user,
-		'checksum' => $checksum
+		'checksum' => $checksum,
+		'homins' => $homins
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {

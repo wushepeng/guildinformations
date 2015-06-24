@@ -108,7 +108,58 @@ function getCraftLevels($skills, $branchCode) {
 }
 
 function getMagicLevels($skills, $branchCode) {
-
+	$lvls = array(
+		'heal' => 0,
+		'neutra' => 0,
+		'debi' => 0,
+		'off' => 0
+	);
+	foreach($skills as $name => $value) {
+		if(substr_compare($name, $branchCode, 0, 2)==0) {
+			if($name == "sm") {
+				if($value > $lvls['heal'] && $value > $lvls['neutra'] && $value > $lvls['debi'] && $value > $lvls['off']) {
+					foreach($lvls as $lvlName => $lvlValue) {
+						$lvls[$lvlName] = $value;
+					}
+				}
+			}
+			else if($name == "smd") {
+				if($value > $lvls['heal'] && $value > $lvls['neutra']) {
+					$lvls['heal'] = $value;
+					$lvls['neutra'] = $value;
+				}
+			}
+			else if($name == "smo") {
+				if($value > $lvls['debi'] && $value > $lvls['off']) {
+					$lvls['debi'] = $value;
+					$lvls['off'] = $value;
+				}
+			}
+			else {
+				if(substr_compare($name, 'dh', 2, 2)==0) {
+					if($value > $lvls['heal']) {
+						$lvls['heal'] = $value;
+					}
+				}
+				else if(substr_compare($name, 'da', 2, 2)==0) {
+					if($value > $lvls['neutra']) {
+						$lvls['neutra'] = $value;
+					}
+				}
+				else if(substr_compare($name, 'oa', 2, 2)==0) {
+					if($value > $lvls['debi']) {
+						$lvls['debi'] = $value;
+					}
+				}
+				else {
+					if($value > $lvls['off']) {
+						$lvls['off'] = $value;
+					}
+				}
+			}
+		}
+	}
+	return $lvls;
 }
 
 function getFightLevels($skills, $branchCode) {
