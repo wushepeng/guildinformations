@@ -2,5 +2,14 @@
 
 {% block skillContent %}
 	<h2>Niveau de combat</h2>
-
+	{% for homin in homins %}
+		<div>
+			<h4>{{ homin.name }}</h4>
+		{% for lvls in homin.lvls %}
+			{% if lvls.visible == true %}
+				<p>{{ lvls.code }}: {{ lvls.value }}</p>
+			{% endif %}
+		{% endfor %}
+		</div>
+	{% endfor %}
 {% endblock %}

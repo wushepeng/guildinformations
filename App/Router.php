@@ -317,14 +317,29 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', function() use ($app, 
 /*
  * Affichage des compétences d'artisanat
  */
-$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	// @TODO
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getHominLevels($homin['apiKey'], 'c');
+		$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
+		$levels = array();
+		foreach($lvl as $comp) {
+			foreach($confs as $conf) {
+				if($conf['skillCode']==$comp['code']) {
+					array_push($levels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible']));
+				}
+			}
+		}
+		array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
+	}
 	$data = array(
 		'user' => $user,
-		'checksum' => $checksum
+		'checksum' => $checksum,
+		'homins' => $homins
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -365,14 +380,29 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', function() use ($app, $g
 /*
  * Affichage des compétences de combat
  */
-$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource) {
+$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $guildResource, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	// @TODO
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getHominLevels($homin['apiKey'], 'f');
+		$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
+		$levels = array();
+		foreach($lvl as $comp) {
+			foreach($confs as $conf) {
+				if($conf['skillCode']==$comp['code']) {
+					array_push($levels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible']));
+				}
+			}
+		}
+		array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
+	}
 	$data = array(
 		'user' => $user,
-		'checksum' => $checksum
+		'checksum' => $checksum,
+		'homins' => $homins
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -384,11 +414,99 @@ $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $g
 })->name('ryzomApp-Skills/Fight');
 
 /*
+ * Affichage de la page de configuration d'affichage des compétences
+ */
+$app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app, $hominResource, $skillConfigResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$homin = $hominResource->get($userData['id']);
+	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
+	$craftLvl = getHominLevels($homin['apiKey'], 'c');
+	$fightLvl = getHominLevels($homin['apiKey'], 'f');
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'confs' => $confs,
+		'lvls' => array('craft' => $craftLvl, 'fight' => $fightLvl)
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/skillConf.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("skillConf.app.html.twig", $data);
+	}
+})->name('ryzomApp-HominConfiguration');
+
+/*
  * Création/mise à jour de la configuration pour l'affichage des compétences
  */
-$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app) {
-
-})->name('ryzomApp-HominConfiguration');
+$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app, $hominResource, $skillConfigResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	// @TODO: avoir la liste des codes de compétence possibles 
+	$homin = $hominResource->get($userData['id']);
+	$craftLvl = getHominLevels($homin['apiKey'], 'c');
+	foreach($craftLvl as $name => $value) {
+		$param = $app->request()->params($value['code']);
+		if($param!=null) {
+			$conf = $skillConfigResource->get($userData['id'], $value['code']);
+			if($conf!=null) {
+				$skillConfigResource->put($userData['id'], $value['code'], true);
+			}
+			else {
+				$skillConfigResource->post($userData['id'], $value['code'], true);
+			}
+		}
+		else {
+			$conf = $skillConfigResource->get($userData['id'], $value['code']);
+			if($conf!=null) {
+				$skillConfigResource->put($userData['id'], $value['code'], false);
+			}
+			else {
+				$skillConfigResource->post($userData['id'], $value['code'], false);
+			}
+		}
+	}
+	$fightLvl = getHominLevels($homin['apiKey'], 'f');
+	foreach($fightLvl as $name => $value) {
+		$param = $app->request()->params($value['code']);
+		if($param!=null) {
+			$conf = $skillConfigResource->get($userData['id'], $value['code']);
+			if($conf!=null) {
+				$skillConfigResource->put($userData['id'], $value['code'], true);
+			}
+			else {
+				$skillConfigResource->post($userData['id'], $value['code'], true);
+			}
+		}
+		else {
+			$conf = $skillConfigResource->get($userData['id'], $value['code']);
+			if($conf!=null) {
+				$skillConfigResource->put($userData['id'], $value['code'], false);
+			}
+			else {
+				$skillConfigResource->post($userData['id'], $value['code'], false);
+			}
+		}
+	}
+	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'confs' => $confs,
+		'lvls' => array('craft' => $craftLvl, 'fight' => $fightLvl)
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/skillConf.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("skillConf.app.html.twig", $data);
+	}
+})->name('ryzomApp-HominConfiguration.post');
 
 /*
  * Route d'affichage des erreurs
@@ -397,20 +515,5 @@ $app->get('/ryzom/app/error/:message(/)', function($message) use ($app) {
 	$data = array('errorText' => urldecode($message));
 	echo $app->view->render("error.html.twig", $data);
 })->name('ryzomApp-Error');
-
-/*
- * Stuff
- */
-/*$app->post('/a/route(/)', function() use ($app) {
-$app->get('/a/route/with/:aParam(/)', function($aParam) use ($app, $entityResource) {
-	$app->request()->params('paramName');
-	$entityResource->getEntityManager()->getRepository('App\Entity\anEntity')->function();
-	$app->redirect($app->urlFor('routeName'));
-	$data = array(
-		'x' => $x,
-		'y' => $y
-	);
-	echo $app->view->render("aTemplate.html.twig", $data);
-})->name('aName');*/
 
 ?>

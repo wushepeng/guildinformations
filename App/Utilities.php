@@ -43,13 +43,13 @@ function getHominLevels($apiKey, $branch) {
 		$lvl = getHarvestLevels($skills, "sh");
 	}
 	else if($branch=='c') { // craft
-		$lvl = getCraftLevels($skills, "sc");
+		$lvl = getConfigurableLevels($skills, "sc");
 	}
 	else if($branch=='m') { // magie
 		$lvl = getMagicLevels($skills, "sm");
 	}
 	else if($branch=='f') { // combat
-		$lvl = getFightLevels($skills, "sf");
+		$lvl = getConfigurableLevels($skills, "sf");
 	}
 	return $lvl;
 }
@@ -103,8 +103,14 @@ function getHarvestLevels($skills, $branchCode) {
 	return $lvls;
 }
 
-function getCraftLevels($skills, $branchCode) {
-
+function getConfigurableLevels($skills, $branchCode) {
+	$lvls = array();
+	foreach($skills as $name => $value) {
+		if(substr_compare($name, $branchCode, 0, 2)==0) {
+			array_push($lvls, array('code' => $name, 'value' => $value));
+		}
+	}
+	return $lvls;
 }
 
 function getMagicLevels($skills, $branchCode) {
@@ -160,10 +166,6 @@ function getMagicLevels($skills, $branchCode) {
 		}
 	}
 	return $lvls;
-}
-
-function getFightLevels($skills, $branchCode) {
-
 }
 
 ?>

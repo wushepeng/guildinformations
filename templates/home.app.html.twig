@@ -7,6 +7,7 @@
 {% block content %}
 	<h2></h2>
 	<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api personnelle</a>
+	<a href="{{ urlFor('ryzomApp-HominConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Configuration personnelle</a>
 	<a href="{{ urlFor('ryzomApp-Inventory') }}?checksum={{ checksum }}&user={{ user }}">Inventaire</a>
 	<a href="{{ urlFor('ryzomApp-Skills') }}?checksum={{ checksum }}&user={{ user }}">Compétences des membres</a>
 	{% if grade=="Leader" or grade=="HighOfficer" %}
