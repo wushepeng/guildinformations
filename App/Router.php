@@ -330,7 +330,7 @@ $app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $g
 		foreach($lvl as $comp) {
 			foreach($confs as $conf) {
 				if($conf['skillCode']==$comp['code']) {
-					array_push($levels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible']));
+					array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
 				}
 			}
 		}
@@ -393,7 +393,7 @@ $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $g
 		foreach($lvl as $comp) {
 			foreach($confs as $conf) {
 				if($conf['skillCode']==$comp['code']) {
-					array_push($levels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible']));
+					array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
 				}
 			}
 		}
