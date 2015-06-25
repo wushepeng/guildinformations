@@ -1,0 +1,25 @@
+{% extends "ingame/skills.ig.html.twig" %}
+
+{% block skillContent %}
+	<h2>Niveau de forage</h2>
+	<table>
+		<tr>
+			<td>Nom</td>
+			<td>Forage en désert</td>
+			<td>Forage en forêt</td>
+			<td>Forage en jungle</td>
+			<td>Forage lacustre</td>
+			<td>Forage en primes racines</td>
+		</tr>
+	{% for homin in homins %}
+		<tr>
+			<td>{{ homin.name }}</td>
+			<td>{{ homin.lvls.desert }}</td>
+			<td>{{ homin.lvls.forest }}</td>
+			<td>{{ homin.lvls.jungle }}</td>
+			<td>{{ homin.lvls.lakes }}</td>
+			<td>{{ homin.lvls.primes }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

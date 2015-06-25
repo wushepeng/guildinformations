@@ -1,0 +1,36 @@
+{% extends "ingame/content.ig.html.twig" %}
+
+{% block content %}
+<form action="{{ urlFor('ryzomApp-HominConfiguration.post')}}" method="POST">
+	<input type="hidden" value="{{ user }}" name="user"/>
+	<input type="hidden" value="{{ checksum }}" name="checksum"/>
+	<div>
+		<div>
+			<h2>Config artisanat</h2>
+		{% for craft in lvls.craft %}
+			{% set check = 'checked="checked"' %}
+			{% for conf in confs %}
+				{% if conf.skillCode == craft.code and conf.visible == false %}
+					{% set check = "" %}
+				{% endif %}
+			{% endfor %}
+			<p>{{ craft.code }}: {{ craft.value }} <input type="checkbox" name="{{ craft.code }}" {{ check }}/></p>
+		{% endfor %}
+		</div>
+		<div>
+			<h2>Config combat</h2>
+		{% for fight in lvls.fight %}
+			{% set check = 'checked="checked"' %}
+			{% for conf in confs %}
+				{% if conf.skillCode == fight.code and conf.visible == false %}
+					{% set check = "" %}
+				{% endif %}
+			{% endfor %}
+			<p>{{ fight.code }}: {{ fight.value }} <input type="checkbox" name="{{ fight.code }}" {{ check }}/></p>
+		{% endfor %}
+		</div>
+		<input type="submit" value="Mettre à jour"/>
+	</div>
+</form>
+<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+{% endblock %}

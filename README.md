@@ -6,7 +6,7 @@ Les fonctionnalités proposées sont:
 - [x] Stockage des clés API en base de données
 - [x] Affichage du contenu des Hall de Guilde
 - [ ] Tri et recherches dans les inventaires
-- [ ] Listes des compétences des membres
+- [x] Listes des compétences des membres
 
 ##Mettre en place le projet
 
@@ -89,7 +89,9 @@ CREATE TABLE `gi_SkillConfigs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
 
-Enfin, initialisez la configuration générale:
+Avant d'aller plus loin il vous faut vous connecter sur l'application [ryzom](http://app.ryzom.com), et ajouter une nouvelle app dans l'AppZone. Entrez un nom, indiquez l'url `http://127.0.0.1/ryzom/app`, copiez la clé api et enregistrez.
+
+Enfin, revenez sur la base de données et initialisez la configuration générale:
 
 ```sql
 INSERT INTO `guildinf`.`gi_GeneralConfig` (
@@ -98,7 +100,7 @@ INSERT INTO `guildinf`.`gi_GeneralConfig` (
 `RYAPI_APP_MAXAGE`
 )
 VALUES (
-'yourAppKey', 'yourAppUrl', '0'
+'yourAppKey', 'yourAppUrl/ryzom/app', '0'
 );
 ```
 
@@ -128,7 +130,7 @@ Enjoy.
       * `GeneralConfig.php`: objet encapsulant les configurations de l'application
       * `Guild.php`: objet représentant une guilde
       * `Homin.php`: objet représentant un homin
-      * `SkillConfig.php`: non utilisé, préférences utilisateur pour l'affichage des compétences
+      * `SkillConfig.php`: préférences utilisateur pour l'affichage des compétences
     * `Repository/`: les requêtes sql customs sur les entités sont définies dans ce dossier
     * `Resource/`: CRUD pour chaque entité
     * `oldStuff/`: non utilisé, ancien code, pour exemple
