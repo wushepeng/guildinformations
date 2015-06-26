@@ -18,40 +18,76 @@ function getItems($guildId, $grade) {
 
 function getGuildItems($guildKey) {
 	$xml = ryzom_guild_api($guildKey);
-	$infos = $xml[$guildKey];
-	$items = array();
-	foreach($infos->room->item as $item) {
-		$url = ryzom_item_icon_url((string) $item->sheet, (int) $item->craftparameters->color, (int) $item->quality, (int) $item->stack);
-		$stack = (int) $item->stack;
-		$name = ryzom_translate((string) $item->sheet, 'fr', 0);
-		$quality = (int) $item->quality;
-		$details = "";
-		foreach((array) $item->craftparameters as $nom => $detail) {
-			$details .= " - ".$nom." : ".$detail;
+	if(isset($xml[$guildKey])) {
+		$infos = $xml[$guildKey];
+		if($infos === false || isset($infos->error)) {
+			$error = array('error' => true, 'message' => "Guild Key Error", 'code' => -2);
+			if(isset($infos->error)) {
+				$error['code'] = (int) $infos->error['code'];
+				$error['message'] = (string) $infos->error;
+			}
+			return $error;
 		}
-		array_push($items, array('iconUrl' => $url, 'name' => $name, 'quality' => $quality, 'stack'=> $stack, 'details' => $details));
+		$items = array();
+		foreach($infos->room->item as $item) {
+			$url = ryzom_item_icon_url((string) $item->sheet, (int) $item->craftparameters->color, (int) $item->quality, (int) $item->stack);
+			$stack = (int) $item->stack;
+			$name = ryzom_translate((string) $item->sheet, 'fr', 0);
+			$quality = (int) $item->quality;
+			$details = "";
+			foreach((array) $item->craftparameters as $nom => $detail) {
+				$details .= " - ".$nom." : ".$detail;
+			}
+			array_push($items, array('iconUrl' => $url, 'name' => $name, 'quality' => $quality, 'stack'=> $stack, 'details' => $details));
+		}
+		return $items;
 	}
-	return $items;
+	else {
+		$error = array('error' => true, 'message' => "Character Key Error", 'code' => -2);
+		if(isset($infos->error)) {
+			$error['code'] = (int) $xml->error['code'];
+			$error['message'] = (string) $xml->error;
+		}
+		return $error;
+	}
 }
 
 function getHominLevels($apiKey, $branch) {
 	$xml = ryzom_character_api($apiKey);
-	$infos = $xml[$apiKey];
-	$skills = (Array) $infos->skills;
-	$lvl;
-	if($branch=='h') { // forage
-		$lvl = getHarvestLevels($skills, "sh");
+	if(isset($xml[$apiKey])) {
+		$infos = $xml[$apiKey];
+		if($infos === false || isset($infos->error)) {
+			$error = array('error' => true, 'message' => "Character Key Error", 'code' => -2);
+			if(isset($infos->error)) {
+				$error['code'] = (int) $infos->error['code'];
+				$error['message'] = (string) $infos->error;
+			}
+			return $error;
+		}
+		$skills = (Array) $infos->skills;
+		$lvl;
+		if($branch=='h') { // forage
+			$lvl = getHarvestLevels($skills, "sh");
+		}
+		else if($branch=='c') { // craft
+			$lvl = getConfigurableLevels($skills, "sc");
+		}
+		else if($branch=='m') { // magie
+			$lvl = getMagicLevels($skills, "sm");
+		}
+		else if($branch=='f') { // combat
+			$lvl = getConfigurableLevels($skills, "sf");
+		}
+		return $lvl;
 	}
-	else if($branch=='c') { // craft
-		$lvl = getConfigurableLevels($skills, "sc");
+	else {
+		$error = array('error' => true, 'message' => "Character Key Error", 'code' => -2);
+		if(isset($infos->error)) {
+			$error['code'] = (int) $xml->error['code'];
+			$error['message'] = (string) $xml->error;
+		}
+		return $error;
 	}
-	else if($branch=='m') { // magie
-		$lvl = getMagicLevels($skills, "sm");
-	}
-	else if($branch=='f') { // combat
-		$lvl = getConfigurableLevels($skills, "sf");
-	}
-	return $lvl;
 }
 
 function getHarvestLevels($skills, $branchCode) {

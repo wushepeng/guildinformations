@@ -13,10 +13,17 @@
 	{% for homin in homins %}
 		<tr>
 			<td>{{ homin.name }}</td>
+		{% if homin.error %}
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+		{% else %}
 			<td>{{ homin.lvls.heal }}</td>
 			<td>{{ homin.lvls.neutra }}</td>
 			<td>{{ homin.lvls.off }}</td>
 			<td>{{ homin.lvls.debi }}</td>
+		{% endif %}
 		</tr>
 	{% endfor %}
 	</table>

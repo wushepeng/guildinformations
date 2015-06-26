@@ -5,11 +5,15 @@
 	{% for homin in homins %}
 		<div>
 			<h4>{{ homin.name }}</h4>
-		{% for lvls in homin.lvls %}
-			{% if lvls.visible == true %}
-				<p>{{ lvls.name }}: {{ lvls.value }}</p>
-			{% endif %}
-		{% endfor %}
+		{% if homin.error %}
+			<p>Problème de clé</p>
+		{% else %}
+			{% for lvls in homin.lvls %}
+				{% if lvls.visible == true %}
+					<p>{{ lvls.name }}: {{ lvls.value }}</p>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
 		</div>
 	{% endfor %}
 {% endblock %}

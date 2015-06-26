@@ -1,6 +1,11 @@
 {% extends "ingame/content.ig.html.twig" %}
 
 {% block content %}
+{% if addError %}
+	<div>
+		<p>Problème lors de la récupération des informations. Vérifiez la clé api et re-essayez.</p>
+	</div>
+{% endif %}
 {% for guild in guilds %}
 	<div>
 		<p>{{ guild.name }}</p>

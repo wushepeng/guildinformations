@@ -200,14 +200,21 @@ $app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use (
 		//@TODO: que pour le leader de la guilde, rediriger
 	}
 	$xml = ryzom_guild_api($apiKey);
-	$id = $xml[$apiKey]->gid;
-	$name = $xml[$apiKey]->name;
-	$guildResource->post($id, $name, $apiKey, $userData['guild_id']);
+	$error = false;
+	if(!isset($xml[$apiKey]->gid) || !isset($xml[$apiKey]->name)) {
+		$error = true;
+	}
+	else {
+		$id = $xml[$apiKey]->gid;
+		$name = $xml[$apiKey]->name;
+		$guildResource->post($id, $name, $apiKey, $userData['guild_id']);
+	}
 	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guilds' => $guilds
+		'guilds' => $guilds,
+		'addError' => $error
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -298,7 +305,12 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', function() use ($app, 
 	$homins = array();
 	foreach($guildMembers as $homin) {
 		$lvl = getHominLevels($homin['apiKey'], 'h');
-		array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
 	}
 	$data = array(
 		'user' => $user,
@@ -325,16 +337,21 @@ $app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $g
 	$homins = array();
 	foreach($guildMembers as $homin) {
 		$lvl = getHominLevels($homin['apiKey'], 'c');
-		$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
-		$levels = array();
-		foreach($lvl as $comp) {
-			foreach($confs as $conf) {
-				if($conf['skillCode']==$comp['code']) {
-					array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
+			$levels = array();
+			foreach($lvl as $comp) {
+				foreach($confs as $conf) {
+					if($conf['skillCode']==$comp['code']) {
+						array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+					}
 				}
 			}
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
 		}
-		array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
 	}
 	$data = array(
 		'user' => $user,
@@ -361,7 +378,12 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', function() use ($app, $g
 	$homins = array();
 	foreach($guildMembers as $homin) {
 		$lvl = getHominLevels($homin['apiKey'], 'm');
-		array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
 	}
 	$data = array(
 		'user' => $user,
@@ -388,16 +410,21 @@ $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $g
 	$homins = array();
 	foreach($guildMembers as $homin) {
 		$lvl = getHominLevels($homin['apiKey'], 'f');
-		$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
-		$levels = array();
-		foreach($lvl as $comp) {
-			foreach($confs as $conf) {
-				if($conf['skillCode']==$comp['code']) {
-					array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
+			$levels = array();
+			foreach($lvl as $comp) {
+				foreach($confs as $conf) {
+					if($conf['skillCode']==$comp['code']) {
+						array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+					}
 				}
 			}
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
 		}
-		array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
 	}
 	$data = array(
 		'user' => $user,
@@ -424,6 +451,10 @@ $app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($
 	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
 	$craftLvl = getHominLevels($homin['apiKey'], 'c');
 	$fightLvl = getHominLevels($homin['apiKey'], 'f');
+	if(isset($craftLvl['error']) || isset($fightLvl['error'])) {
+		$message = $craftLvl['message'];
+		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
@@ -449,6 +480,10 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 	// @TODO: avoir la liste des codes de compétence possibles 
 	$homin = $hominResource->get($userData['id']);
 	$craftLvl = getHominLevels($homin['apiKey'], 'c');
+	if(isset($craftLvl['error'])) {
+		$message = $craftLvl['message'];
+		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
+	}
 	foreach($craftLvl as $name => $value) {
 		$param = $app->request()->params($value['code']);
 		if($param!=null) {
@@ -471,6 +506,10 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 		}
 	}
 	$fightLvl = getHominLevels($homin['apiKey'], 'f');
+	if(isset($fightLvl['error'])) {
+		$message = $fightLvl['message'];
+		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
+	}
 	foreach($fightLvl as $name => $value) {
 		$param = $app->request()->params($value['code']);
 		if($param!=null) {
