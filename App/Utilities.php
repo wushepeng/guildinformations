@@ -210,4 +210,14 @@ function generalTrad($index){
 	return $traduction[$index]['name'];
 }
 
+function getAllSkillCodes() {
+	$codes = array(
+		"sc", "sca", "scah", "scahb", "scahbe", "scahbem", "scahg", "scahge", "scahgem", "scahh", "scahhe", "scahhem", "scahp", "scahpe", "scahpem", "scahs", "scahse", "scahsem", "scahv", "scahve", "scahvem", "scal", "scalb", "scalbe", "scalbem", "scalg", "scalge", "scalgem", "scalp", "scalpe", "scalpem", "scals", "scalse", "scalsem", "scalv", "scalve", "scalvem", "scam", "scamb", "scambe", "scambem", "scamg", "scamge", "scamgem", "scamp", "scampe", "scampem", "scams", "scamse", "scamsem", "scamv", "scamve", "scamvem", "scas", "scasb", "scasbe", "scasbem", "scass", "scasse", "scassem", "scj", "scja", "scjaa", "scjaae", "scjaaem", "scjb", "scjba", "scjbae", "scjbaem", "scjd", "scjda", "scjdae", "scjdaem", "scje", "scjea", "scjeae", "scjeaem", "scjp", "scjpa", "scjpae", "scjpaem", "scjr", "scjra", "scjrae", "scjraem", "scm", "scm1", "scm1a", "scm1ae", "scm1aem", "scm1d", "scm1de", "scm1dem", "scm1m", "scm1me", "scm1mem", "scm1p", "scm1pe", "scm1pem", "scm1s", "scm1se", "scm1sem", "scm1t", "scm1te", "scm1tem", "scm2", "scm2a", "scm2ae", "scm2aem", "scm2m", "scm2me", "scm2mem", "scm2p", "scm2pe", "scm2pem", "scm2s", "scm2se", "scm2sem", "scmc", "scmca", "scmcae", "scmcaem", "scr", "scr1", "scr1p", "scr1pe", "scr1pem", "scr2", "scr2a", "scr2ae", "scr2aem", "scr2l", "scr2le", "scr2lem", "scr2r", "scr2re", "scr2rem",
+		"sf", "sfm", "sfm1", "sfm1b", "sfm1bm", "sfm1bmm", "sfm1bs", "sfm1bsm", "sfm1p", "sfm1ps", "sfm1psm", "sfm1s", "sfm1sa", "sfm1sam", "sfm1ss", "sfm1ssm", "sfm2", "sfm2b", "sfm2bm", "sfm2bmm", "sfm2p", "sfm2pp", "sfm2ppm", "sfm2s", "sfm2sa", "sfm2sam", "sfm2ss", "sfm2ssm", "sfmc", "sfmca", "sfmcad", "sfmcadm", "sfmcah", "sfmcahm", "sfr", "sfr1", "sfr1a", "sfr1ap", "sfr1apm", "sfr2", "sfr2a", "sfr2aa", "sfr2aam", "sfr2al", "sfr2alm", "sfr2ar", "sfr2arm"
+		//"sh", "shf", "shfd", "shfda", "shfdae", "shfdaem", "shff", "shffa", "shffae", "shffaem", "shfj", "shfja", "shfjae", "shfjaem", "shfl", "shfla", "shflae", "shflaem", "shfp", "shfpa", "shfpae", "shfpaem",
+		//"sm", "smd", "smda", "smdaa", "smdaae", "smdaaem", "smdh", "smdha", "smdhae", "smdhaem", "smo", "smoa", "smoaa", "smoaae", "smoaaem", "smoe", "smoea", "smoeae", "smoeaem"
+	);
+	return $codes;
+}
+
 ?>

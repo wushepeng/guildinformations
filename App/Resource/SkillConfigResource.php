@@ -11,7 +11,7 @@ use App\Entity\SkillConfig;
  */
 class SkillConfigResource extends AbstractResource {
 
-    public function post($hominId, $skillCode, $visible) {
+    private function post($hominId, $skillCode, $visible) {
         $skillConf = new SkillConfig($hominId, $skillCode, $visible);
         $this->getEntityManager()->persist($skillConf);
         $this->getEntityManager()->flush();
@@ -29,6 +29,10 @@ class SkillConfigResource extends AbstractResource {
 
     public function put($hominId, $skillCode, $visible) {
         $skillConf = $this->getEntityManager()->find('App\Entity\SkillConfig', array("hominId" => $hominId, "skillCode" => $skillCode));
+        if($skillConf==null) {
+            $this->post($hominId, $skillCode, $visible);
+            return;
+        }
         $skillConf->setVisible($visible);
         $this->getEntityManager()->flush();
     }

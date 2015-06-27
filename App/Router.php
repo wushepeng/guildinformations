@@ -452,22 +452,32 @@ $app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($
 	$craftLvl = getHominLevels($homin['apiKey'], 'c');
 	$fightLvl = getHominLevels($homin['apiKey'], 'f');
 	if(isset($craftLvl['error']) || isset($fightLvl['error'])) {
-		$message = $craftLvl['message'];
+		$message = isset($craftLvl['error'])?$craftLvl['message']:$fightLvl['message'];
 		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
 	}
 	$clevels = array();
-	foreach($craftLvl as $comp) {
-		foreach($confs as $conf) {
-			if($conf['skillCode']==$comp['code']) {
-				array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-			}
+	$flevels = array();
+	if(empty($confs)) {
+		foreach($craftLvl as $comp) {
+			array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => true, 'name' => generalTrad($comp['code'])));
+		}
+		foreach($fightLvl as $comp) {
+			array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => true, 'name' => generalTrad($comp['code'])));
 		}
 	}
-	$flevels = array();
-	foreach($fightLvl as $comp) {
-		foreach($confs as $conf) {
-			if($conf['skillCode']==$comp['code']) {
-				array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+	else {
+		foreach($craftLvl as $comp) {
+			foreach($confs as $conf) {
+				if($conf['skillCode']==$comp['code']) {
+					array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+				}
+			}
+		}
+		foreach($fightLvl as $comp) {
+			foreach($confs as $conf) {
+				if($conf['skillCode']==$comp['code']) {
+					array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+				}
 			}
 		}
 	}
@@ -492,62 +502,42 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	// @TODO: avoir la liste des codes de compétence possibles 
+	$codes = getAllSkillCodes();
 	$homin = $hominResource->get($userData['id']);
-	$craftLvl = getHominLevels($homin['apiKey'], 'c');
-	if(isset($craftLvl['error'])) {
-		$message = $craftLvl['message'];
-		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
-	}
-	foreach($craftLvl as $name => $value) {
-		$param = $app->request()->params($value['code']);
-		if($param!=null) {
-			$conf = $skillConfigResource->get($userData['id'], $value['code']);
-			if($conf!=null) {
-				$skillConfigResource->put($userData['id'], $value['code'], true);
+	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
+	foreach($codes as $code) {
+		if(empty($confs)) {
+			$param = $app->request()->params($code);
+			if($param!=null) {
+				$skillConfigResource->put($userData['id'], $code, true);
 			}
 			else {
-				$skillConfigResource->post($userData['id'], $value['code'], true);
+				$skillConfigResource->put($userData['id'], $code, false);
 			}
 		}
 		else {
-			$conf = $skillConfigResource->get($userData['id'], $value['code']);
-			if($conf!=null) {
-				$skillConfigResource->put($userData['id'], $value['code'], false);
-			}
-			else {
-				$skillConfigResource->post($userData['id'], $value['code'], false);
-			}
-		}
-	}
-	$fightLvl = getHominLevels($homin['apiKey'], 'f');
-	if(isset($fightLvl['error'])) {
-		$message = $fightLvl['message'];
-		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
-	}
-	foreach($fightLvl as $name => $value) {
-		$param = $app->request()->params($value['code']);
-		if($param!=null) {
-			$conf = $skillConfigResource->get($userData['id'], $value['code']);
-			if($conf!=null) {
-				$skillConfigResource->put($userData['id'], $value['code'], true);
-			}
-			else {
-				$skillConfigResource->post($userData['id'], $value['code'], true);
-			}
-		}
-		else {
-			$conf = $skillConfigResource->get($userData['id'], $value['code']);
-			if($conf!=null) {
-				$skillConfigResource->put($userData['id'], $value['code'], false);
-			}
-			else {
-				$skillConfigResource->post($userData['id'], $value['code'], false);
+			foreach($confs as $conf) {
+				if($conf['skillCode']==$code) {
+					$param = $app->request()->params($code);
+					if($param!=null) {
+						$conf['visible']==true?:$skillConfigResource->put($userData['id'], $code, true);
+					}
+					else {
+						$conf['visible']==false?:$skillConfigResource->put($userData['id'], $code, false);
+					}
+				}
 			}
 		}
 	}
 	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
+	$craftLvl = getHominLevels($homin['apiKey'], 'c');
+	$fightLvl = getHominLevels($homin['apiKey'], 'f');
+	if(isset($craftLvl['error']) || isset($fightLvl['error'])) {
+		$message = isset($craftLvl['error'])?$craftLvl['message']:$fightLvl['message'];
+		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
+	}
 	$clevels = array();
+	$flevels = array();
 	foreach($craftLvl as $comp) {
 		foreach($confs as $conf) {
 			if($conf['skillCode']==$comp['code']) {
@@ -555,7 +545,6 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 			}
 		}
 	}
-	$flevels = array();
 	foreach($fightLvl as $comp) {
 		foreach($confs as $conf) {
 			if($conf['skillCode']==$comp['code']) {
