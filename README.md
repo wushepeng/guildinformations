@@ -60,7 +60,7 @@ CREATE TABLE `gi_GeneralConfig` (
   `RYAPI_APP_URL` text NOT NULL,
   `RYAPI_APP_MAXAGE` int(11) NOT NULL DEFAULT '0',
   UNIQUE KEY `RYAPI_APP_KEY` (`RYAPI_APP_KEY`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `gi_Guilds`;
 CREATE TABLE `gi_Guilds` (
@@ -69,7 +69,7 @@ CREATE TABLE `gi_Guilds` (
   `apiKey` varchar(41) DEFAULT NULL,
   `mainGuildId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `gi_Homins`;
 CREATE TABLE `gi_Homins` (
@@ -78,7 +78,7 @@ CREATE TABLE `gi_Homins` (
   `apiKey` varchar(41) DEFAULT NULL,
   `guildId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `gi_SkillConfigs`;
 CREATE TABLE `gi_SkillConfigs` (
@@ -86,15 +86,15 @@ CREATE TABLE `gi_SkillConfigs` (
   `skillCode` varchar(10) NOT NULL,
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   UNIQUE KEY `unique` (`hominId`,`skillCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-Avant d'aller plus loin il vous faut vous connecter sur l'application [ryzom](http://app.ryzom.com), et ajouter une nouvelle app dans l'AppZone. Entrez un nom, indiquez l'url `http://127.0.0.1/ryzom/app`, copiez la clé api et enregistrez.
+Avant d'aller plus loin il vous faut vous connecter sur l'application [Ryzom](http://app.ryzom.com), et ajouter une nouvelle app dans l'AppZone. Entrez un nom, indiquez l'url `http://127.0.0.1/ryzom/app`, copiez la clé api et enregistrez.
 
 Enfin, revenez sur la base de données et initialisez la configuration générale:
 
 ```sql
-INSERT INTO `guildinf`.`gi_GeneralConfig` (
+INSERT INTO `gi_GeneralConfig` (
 `RYAPI_APP_KEY` ,
 `RYAPI_APP_URL` ,
 `RYAPI_APP_MAXAGE`
