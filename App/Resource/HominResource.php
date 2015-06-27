@@ -11,7 +11,7 @@ use App\Entity\Homin;
  */
 class HominResource extends AbstractResource {
 
-    public function post($id, $name, $apiKey, $guildId) {
+    private function post($id, $name, $apiKey, $guildId) {
         $homin = new Homin($id, $name, $apiKey, $guildId);
         $this->getEntityManager()->persist($homin);
         $this->getEntityManager()->flush();
@@ -29,6 +29,10 @@ class HominResource extends AbstractResource {
 
     public function put($id, $name, $apiKey, $guildId) {
         $homin = $this->getEntityManager()->find('App\Entity\Homin', array("id" => $id));
+        if($homin==null) {
+            $this->post($id, $name, $apiKey, $guildId);
+            return;
+        }
         $homin->setName($name);
         if($apiKey!=null) {
             $homin->setApiKey($apiKey);

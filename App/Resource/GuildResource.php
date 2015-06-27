@@ -29,11 +29,15 @@ class GuildResource extends AbstractResource {
 
     public function put($id, $name, $apiKey, $mainGuildId) {
         $guild = $this->getEntityManager()->find('App\Entity\Guild', array("id" => $id));
-        $guild->setName($name);
+        if($name!=null) {
+            $guild->setName($name);
+        }
         if($apiKey!=null) {
             $guild->setApiKey($apiKey);
         }
-        $guild->setMainGuildId($mainGuildId);
+        if($mainGuildId!=null) {
+            $guild->setMainGuildId($mainGuildId);
+        }
         $this->getEntityManager()->flush();
     }
 
