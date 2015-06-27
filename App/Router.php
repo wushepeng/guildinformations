@@ -455,11 +455,26 @@ $app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($
 		$message = $craftLvl['message'];
 		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
 	}
+	$clevels = array();
+	foreach($craftLvl as $comp) {
+		foreach($confs as $conf) {
+			if($conf['skillCode']==$comp['code']) {
+				array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+			}
+		}
+	}
+	$flevels = array();
+	foreach($fightLvl as $comp) {
+		foreach($confs as $conf) {
+			if($conf['skillCode']==$comp['code']) {
+				array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+			}
+		}
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'confs' => $confs,
-		'lvls' => array('craft' => $craftLvl, 'fight' => $fightLvl)
+		'lvls' => array('craft' => $clevels, 'fight' => $flevels)
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -532,11 +547,26 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 		}
 	}
 	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
+	$clevels = array();
+	foreach($craftLvl as $comp) {
+		foreach($confs as $conf) {
+			if($conf['skillCode']==$comp['code']) {
+				array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+			}
+		}
+	}
+	$flevels = array();
+	foreach($fightLvl as $comp) {
+		foreach($confs as $conf) {
+			if($conf['skillCode']==$comp['code']) {
+				array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
+			}
+		}
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'confs' => $confs,
-		'lvls' => array('craft' => $craftLvl, 'fight' => $fightLvl)
+		'lvls' => array('craft' => $clevels, 'fight' => $flevels)
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
