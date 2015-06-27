@@ -49,7 +49,7 @@ sudo a2ensite fileName
 
 L'application est à présent disponible en [local](http://localhost).
 
-De plus pour le bon fonctionnement, vous avez besoin d'une base de données mysql actives. Vous pouvez installer [phpmyadmin](http://doc.ubuntu-fr.org/phpmyadmin) pour gérer la base de données par exemple.
+De plus pour le bon fonctionnement, vous avez besoin d'une base de données mysql active. Vous pouvez installer [phpmyadmin](http://doc.ubuntu-fr.org/phpmyadmin) pour gérer la base de données par exemple.
 
 Une fois que vous avez installé votre gestionnaire de base de données préféré, créez une nouvelle base de données et exécutez le script suivant pour créer les différentes tables.
 
@@ -112,7 +112,7 @@ $connectionOptions = array(
 	'host'     => '...',
 	'dbname'   => '...',
 	'user'     => '...',
-	'password' => '...',
+	'password' => '...'
 );
 ```
 
