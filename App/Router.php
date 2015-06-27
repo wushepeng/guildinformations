@@ -27,7 +27,7 @@ $app->get('/', function() use ($app) {
 })->name('home');
 
 /*
- * Route appelée par Ryzom
+ * Route appelée par Ryzom, page d'accueil de l'application
  */
 $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource, $guildResource) {
 	$user = $app->request()->params('user');
@@ -89,18 +89,7 @@ $app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $
 	$apiKey = $app->request()->params('apiKey');
 	$userData = unserialize(base64_decode($user));
 	$homin = $hominResource->put($userData['id'], $userData['char_name'], $apiKey, $userData['guild_id']);
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum,
-		'apiKey' => $apiKey
-	);
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/hominKey.ig.html.twig", $data);
-	}
-	else {
-		echo $app->view->render("hominKey.app.html.twig", $data);
-	}
+	$app->redirect('/ryzom/app/homin/apiKey?checksum='.$checksum.'&user='.$user);
 })->name('ryzomApp-HominKey.post');
 
 /*
@@ -111,7 +100,7 @@ $app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $g
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
-		//@TODO: que pour le leader de la guilde, rediriger
+		$app->redirect('/ryzom/app?checksum='.$checksum.'&user='.$user);
 	}
 	$guild = $guildResource->get($userData['guild_id']);
 	$data = array(
@@ -137,21 +126,10 @@ $app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $
 	$apiKey = $app->request()->params('apiKey');
 	$userData = unserialize(base64_decode($user));
 	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
-		//@TODO: que pour le leader de la guilde, rediriger
+		$app->redirect('/ryzom/app?checksum='.$checksum.'&user='.$user);
 	}
 	$guild = $guildResource->put($userData['guild_id'], $userData['guild_name'], $apiKey, null);
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum,
-		'apiKey' => $apiKey
-	);
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/guildKey.ig.html.twig", $data);
-	}
-	else {
-		echo $app->view->render("guildKey.app.html.twig", $data);
-	}
+	$app->redirect('/ryzom/app/guild/apiKey?checksum='.$checksum.'&user='.$user);
 })->name('ryzomApp-GuildKey.post');
 
 /*
@@ -162,7 +140,7 @@ $app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
-		//@TODO: que pour le leader de la guilde, rediriger
+		$app->redirect('/ryzom/app?checksum='.$checksum.'&user='.$user);
 	}
 	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
 	$data = array(
@@ -188,7 +166,7 @@ $app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use (
 	$apiKey = $app->request()->params('newApiKey');
 	$userData = unserialize(base64_decode($user));
 	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
-		//@TODO: que pour le leader de la guilde, rediriger
+		$app->redirect('/ryzom/app?checksum='.$checksum.'&user='.$user);
 	}
 	$xml = ryzom_guild_api($apiKey);
 	$error = false;
@@ -206,20 +184,7 @@ $app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use (
 			$guildResource->put($id, $name, $apiKey, $userData['guild_id']);
 		}
 	}
-	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum,
-		'guilds' => $guilds,
-		'addError' => $error
-	);
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/guildConf.ig.html.twig", $data);
-	}
-	else {
-		echo $app->view->render("guildConf.app.html.twig", $data);
-	}
+	$app->redirect('/ryzom/app/guild/configuration?checksum='.$checksum.'&user='.$user);
 })->name('ryzomApp-GuildConfiguration.post');
 
 /*
@@ -230,22 +195,10 @@ $app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
-		//@TODO: que pour le leader de la guilde, rediriger
+		$app->redirect('/ryzom/app?checksum='.$checksum.'&user='.$user);
 	}
 	$guildResource->delete($guildId);
-	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum,
-		'guilds' => $guilds
-	);
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/guildConf.ig.html.twig", $data);
-	}
-	else {
-		echo $app->view->render("guildConf.app.html.twig", $data);
-	}
+	$app->redirect('/ryzom/app/guild/configuration?checksum='.$checksum.'&user='.$user);
 })->name('ryzomApp-GuildConfiguration.delete');
 
 /*
@@ -526,45 +479,11 @@ $app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use (
 			}
 		}
 	}
-	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
-	$craftLvl = getHominLevels($homin['apiKey'], 'c');
-	$fightLvl = getHominLevels($homin['apiKey'], 'f');
-	if(isset($craftLvl['error']) || isset($fightLvl['error'])) {
-		$message = isset($craftLvl['error'])?$craftLvl['message']:$fightLvl['message'];
-		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
-	}
-	$clevels = array();
-	$flevels = array();
-	foreach($craftLvl as $comp) {
-		foreach($confs as $conf) {
-			if($conf['skillCode']==$comp['code']) {
-				array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-			}
-		}
-	}
-	foreach($fightLvl as $comp) {
-		foreach($confs as $conf) {
-			if($conf['skillCode']==$comp['code']) {
-				array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-			}
-		}
-	}
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum,
-		'lvls' => array('craft' => $clevels, 'fight' => $flevels)
-	);
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/skillConf.ig.html.twig", $data);
-	}
-	else {
-		echo $app->view->render("skillConf.app.html.twig", $data);
-	}
+	$app->redirect('/ryzom/app/homin/configuration?checksum='.$checksum.'&user='.$user);
 })->name('ryzomApp-HominConfiguration.post');
 
 /*
- * Route d'affichage des erreurs
+ * Route d'affichage pour les erreurs critiques
  */
 $app->get('/ryzom/app/error/:message(/)', function($message) use ($app) {
 	$data = array('errorText' => urldecode($message));
