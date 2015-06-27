@@ -204,15 +204,61 @@ $app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function
 /*
  * Affichage des inventaires
  */
-$app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app) {
+$app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	$guildsItems = getItems($userData['guild_id'], $userData['grade']);
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guilds' => $guildsItems
+		'guilds' => $guilds
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/inventoryHome.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("inventoryHome.app.html.twig", $data);
+	}
+})->name('ryzomApp-Inventory');
+
+/*
+ * Affichage de l'inventaire d'une guilde
+ */
+$app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId) use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guild = $guildResource->get($guildId);
+	if($guild==null) {
+		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+	}
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	if($userData['guild_id']!=$guildId) {
+		if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+			$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+		}
+		$isRelated = false;
+		foreach($guilds as $g) {
+			if($g['id']==$guildId) {
+				$isRelated = true;
+				break;
+			}
+		}
+		if(!$isRelated) {
+			$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+		}
+	}
+	$guildItems = getGuildItems($guild['apiKey']);
+	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'guildName' => $guild['name'],
+		'guilds' => $guilds,
+		'items' => $guildItems
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -221,7 +267,7 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app) {
 	else {
 		echo $app->view->render("inventory.app.html.twig", $data);
 	}
-})->name('ryzomApp-Inventory');
+})->name('ryzomApp-Inventory/guild');
 
 /*
  * Page d'accueil pour voir les compétences des membres
