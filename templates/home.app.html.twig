@@ -5,13 +5,19 @@
 {% endblock title %}
 
 {% block content %}
-	<h2></h2>
-	<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api personnelle</a>
-	<a href="{{ urlFor('ryzomApp-HominConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Configuration personnelle</a>
-	<a href="{{ urlFor('ryzomApp-Inventory') }}?checksum={{ checksum }}&user={{ user }}">Inventaire</a>
-	<a href="{{ urlFor('ryzomApp-Skills') }}?checksum={{ checksum }}&user={{ user }}">Compétences des membres</a>
-	{% if grade=="Leader" or grade=="HighOfficer" %}
-		<a href="{{ urlFor('ryzomApp-GuildKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api de guilde</a>
-		<a href="{{ urlFor('ryzomApp-GuildConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Gérer les entrepôts de guilde</a>
+	{% if grade=="NoGuild" %}
+		<div>
+			<p>L'application est réservée aux membres d'une guilde.</p>
+			<p>Retour sur <a href="http://app.ryzom.com">Ryzom</a>.</p>
+		</div>
+	{% else %}
+		<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api personnelle</a>
+		<a href="{{ urlFor('ryzomApp-HominConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Configuration personnelle</a>
+		<a href="{{ urlFor('ryzomApp-Inventory') }}?checksum={{ checksum }}&user={{ user }}">Inventaire</a>
+		<a href="{{ urlFor('ryzomApp-Skills') }}?checksum={{ checksum }}&user={{ user }}">Compétences des membres</a>
+		{% if grade=="Leader" or grade=="HighOfficer" %}
+			<a href="{{ urlFor('ryzomApp-GuildKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api de guilde</a>
+			<a href="{{ urlFor('ryzomApp-GuildConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Gérer les entrepôts de guilde</a>
+		{% endif %}
 	{% endif %}
 {% endblock content %}

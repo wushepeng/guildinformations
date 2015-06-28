@@ -40,15 +40,15 @@ $app->get('/', function() use ($app) {
 /*
  * Route appelée par Ryzom, page d'accueil de l'application
  */
-$app->get('/ryzom/app(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $guildResource) {
+$app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$hominId = $userData['id'];
 	$hominName = $userData['char_name'];
 	$guildId = $userData['guild_id'];
-	$guildName = $userData['guild_name'];
-	$grade = $userData['grade'];
+	$guildName = $userData['guild_id']!=0?$userData['guild_name']:"NoGuild";
+	$grade = $userData['guild_id']!=0?$userData['grade']:"NoGuild";
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
@@ -56,9 +56,11 @@ $app->get('/ryzom/app(/)', 'checkRequest', 'isGuilded', function() use ($app, $h
 	);
 	// index en plus: timestamp, app_url, race, civilisation, cult, civ, organization, guild_icon, lang
 	$hominResource->put($hominId, $hominName, null, $guildId);
-	$guild = $guildResource->get($guildId);
-	if($guild==null) {
-		$guildResource->post($guildId, $guildName, null, $guildId);
+	if($userData['guild_id']!=0) {
+		$guild = $guildResource->get($guildId);
+		if($guild==null) {
+			$guildResource->post($guildId, $guildName, null, $guildId);
+		}
 	}
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
