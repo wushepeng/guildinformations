@@ -139,7 +139,8 @@ Enjoy.
   * `libs/`: les différentes librairies utilisées sont dans ce dossier
   * `locales/`: non utilisé pour le moment
   * `public/`: dossier racine du site web
-    * `images`: non utilisé pour le moment
+    * `css/`: ici les feuilles de style css
+    * `images/`: ici les images
     * `.htaccess`: règles pour une application Slim
     * `index.php`: point d'entrée
   * `templates/`: contient toutes les vues de l'application
