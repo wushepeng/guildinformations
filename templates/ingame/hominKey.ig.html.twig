@@ -1,6 +1,9 @@
 {% extends "ingame/content.ig.html.twig" %}
 
 {% block content %}
+{% if error is not null %}
+	<p>Votre clé est invalide, veuillez la mettre à jour.</p>
+{% endif %}
 <form action="{{ urlFor('ryzomApp-HominKey.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />

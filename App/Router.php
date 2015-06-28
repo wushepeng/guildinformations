@@ -82,7 +82,8 @@ $app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', 'isGuilded', function() 
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'apiKey' => $homin['apiKey']
+		'apiKey' => $homin['apiKey'],
+		'error' => $app->request()->params('error')
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -563,7 +564,7 @@ $app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', 'isGuilded', func
 	$fightLvl = getHominLevels($homin['apiKey'], 'f');
 	if(isset($craftLvl['error']) || isset($fightLvl['error'])) {
 		$message = isset($craftLvl['error'])?$craftLvl['message']:$fightLvl['message'];
-		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
+		$app->redirect('/ryzom/app/homin/apiKey?checksum='.$checksum.'&user='.$user."&error=".$message);
 	}
 	$clevels = array();
 	$flevels = array();
