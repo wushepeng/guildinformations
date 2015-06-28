@@ -19,6 +19,17 @@ function checkRequest(\Slim\Route $route) {
 	}
 }
 
+function isGuilded(\Slim\Route $route) {
+	$app = \Slim\Slim::getInstance();
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	if($userData['guild_id']==0) {
+		$message = "Cette application est réservée aux membres d'une guilde";
+		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
+	}
+}
+
 /*
  * Page d'accueil du site
  */
@@ -29,7 +40,7 @@ $app->get('/', function() use ($app) {
 /*
  * Route appelée par Ryzom, page d'accueil de l'application
  */
-$app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource, $guildResource) {
+$app->get('/ryzom/app(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -61,7 +72,7 @@ $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource,
 /**
  * Affichage du formulaire pour la clé api d'un homin
  */
-$app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $hominResource) {
+$app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -83,7 +94,7 @@ $app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $h
 /*
  * Création/mise à jour de la clé api d'un homin
  */
-$app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $hominResource) {
+$app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$apiKey = $app->request()->params('apiKey');
@@ -95,7 +106,7 @@ $app->post('/ryzom/app/homin/apiKey(/)', 'checkRequest', function() use ($app, $
 /*
  * Affichage du formulaire pour la clé api d'une guilde
  */
-$app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $guildResource) {
+$app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', 'isGuilded', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -120,7 +131,7 @@ $app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $g
 /*
  * Création/mise à jour de la clé api d'une guilde
  */
-$app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $guildResource) {
+$app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', 'isGuilded', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$apiKey = $app->request()->params('apiKey');
@@ -135,7 +146,7 @@ $app->post('/ryzom/app/guild/apiKey(/)', 'checkRequest', function() use ($app, $
 /*
  * Affichage de la configuration d'une guilde
  */
-$app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($app, $guildResource) {
+$app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', 'isGuilded', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -160,7 +171,7 @@ $app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($
 /*
  * Création/mise à jour de la configuration d'une guilde
  */
-$app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use ($app, $guildResource) {
+$app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', 'isGuilded', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$apiKey = $app->request()->params('newApiKey');
@@ -190,7 +201,7 @@ $app->post('/ryzom/app/guild/configuration(/)', 'checkRequest', function() use (
 /*
  * Suppression d'une guilde secondaire
  */
-$app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function($guildId) use ($app, $guildResource) {
+$app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', 'isGuilded', function($guildId) use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -204,7 +215,7 @@ $app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function
 /*
  * Page d'accueil des inventaires
  */
-$app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guildResource) {
+$app->get('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -228,7 +239,7 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guil
 /*
  * Recherche d'un objet dans les inventaires
  */
-$app->post('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guildResource) {
+$app->post('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -261,7 +272,7 @@ $app->post('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $gui
 /*
  * Affichage de l'inventaire d'une guilde
  */
-$app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId) use ($app, $guildResource) {
+$app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', function($guildId) use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -308,7 +319,7 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId)
 /*
  * Demande d'un tri spécifique pour l'inventaire
  */
-$app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId) use ($app, $guildResource) {
+$app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', function($guildId) use ($app, $guildResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -371,7 +382,7 @@ $app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId
 /*
  * Page d'accueil pour voir les compétences des membres
  */
-$app->get('/ryzom/app/skills(/)', 'checkRequest', function() use ($app) {
+$app->get('/ryzom/app/skills(/)', 'checkRequest', 'isGuilded', function() use ($app) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -392,7 +403,7 @@ $app->get('/ryzom/app/skills(/)', 'checkRequest', function() use ($app) {
 /*
  * Affichage des compétences de forage
  */
-$app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', function() use ($app, $hominResource) {
+$app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -424,7 +435,7 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', function() use ($app, 
 /*
  * Affichage des compétences d'artisanat
  */
-$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -465,7 +476,7 @@ $app->get('/ryzom/app/skills/craft(/)', 'checkRequest', function() use ($app, $h
 /*
  * Affichage des compétences de magie
  */
-$app->get('/ryzom/app/skills/magic(/)', 'checkRequest', function() use ($app, $hominResource) {
+$app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -497,7 +508,7 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', function() use ($app, $h
 /*
  * Affichage des compétences de combat
  */
-$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -538,7 +549,7 @@ $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', function() use ($app, $h
 /*
  * Affichage de la page de configuration d'affichage des compétences
  */
-$app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
@@ -593,7 +604,7 @@ $app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($
 /*
  * Création/mise à jour de la configuration pour l'affichage des compétences
  */
-$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', function() use ($app, $hominResource, $skillConfigResource) {
+$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
