@@ -213,7 +213,8 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guil
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guilds' => $guilds
+		'guilds' => $guilds,
+		'grade' => $userData['grade']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -223,6 +224,39 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guil
 		echo $app->view->render("inventoryHome.app.html.twig", $data);
 	}
 })->name('ryzomApp-Inventory');
+
+/*
+ * Recherche d'un objet dans les inventaires
+ */
+$app->post('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	if($userData['grade']=="Member") {
+		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+	}
+	$search = $app->request()->params('search');
+	if($search==null || $search=="") {
+		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+	}
+	$searchResult = searchItem($search, $userData['guild_id'], $userData['grade']);
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'guilds' => $guilds,
+		'searchResult' => $searchResult,
+		'grade' => $userData['grade']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/inventoryHome.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("inventoryHome.app.html.twig", $data);
+	}
+})->name('ryzomApp-Inventory.post');
 
 /*
  * Affichage de l'inventaire d'une guilde

@@ -1,7 +1,9 @@
 {% extends "ingame/inventoryHome.ig.html.twig" %}
 
 {% block inventoryContent %}
-	<form action="{{ urlFor('ryzomApp-Inventory/guild.post', {'guildId': guild.id}) }}?checksum={{ checksum }}&user={{ user }}" method="POST">
+	<form action="{{ urlFor('ryzomApp-Inventory/guild.post', {'guildId': guild.id}) }}" method="POST">
+		<input type="hidden" value="{{ user }}" name="user"/>
+		<input type="hidden" value="{{ checksum }}" name="checksum"/>
 		{% set checkType = '' %}
 		{% set checkQuality = '' %}
 		{% if sort == 'type' %}

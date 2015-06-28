@@ -1,5 +1,23 @@
 <?php
 
+function searchItem($searchText, $guildId, $grade) {
+	$allItems = getItems($guildId, $grade);
+	$searchResult = array();
+	foreach($allItems as $key => $value) {
+		$found = array();
+		foreach($value['items'] as $item) {
+			$pos = stripos($item['name'], $searchText);
+			if($pos!==false) {
+				array_push($found, $item);
+			}
+		}
+		if(!empty($found)) {
+			array_push($searchResult, array('guild' => $allItems[$key]['guild'], 'items' => $found));
+		}
+	}
+	return $searchResult;
+}
+
 function getItems($guildId, $grade) {
 	$guildResource = new \App\Resource\GuildResource();
 	$mainGuild = $guildResource->get($guildId);
@@ -10,7 +28,9 @@ function getItems($guildId, $grade) {
 		$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($guildId);
 		foreach($guilds as $guild) {
 			$guildItems = getGuildItems($guild['apiKey']);
-			array_push($stuff, array('guild' => $guild, 'items' => $guildItems));
+			if(!isset($guildItems['error'])) {
+				array_push($stuff, array('guild' => $guild, 'items' => $guildItems));
+			}
 		}
 	}
 	return $stuff;

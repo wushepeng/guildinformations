@@ -5,7 +5,7 @@ Ce projet consiste en une application destinée aux guildes pour le jeu [Ryzom](
 Les fonctionnalités proposées sont:
 - [x] Stockage des clés API en base de données
 - [x] Affichage du contenu des Hall de Guilde
-- [ ] Tri et recherches dans les inventaires
+- [x] Tri et recherches dans les inventaires
 - [x] Listes des compétences des membres
 
 ##Mettre en place le projet
