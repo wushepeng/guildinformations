@@ -133,7 +133,6 @@ Enjoy.
       * `SkillConfig.php`: préférences utilisateur pour l'affichage des compétences
     * `Repository/`: les requêtes sql customs sur les entités sont définies dans ce dossier
     * `Resource/`: CRUD pour chaque entité
-    * `oldStuff/`: non utilisé, ancien code, pour exemple
     * `AbstractResource.php`: connexion de l'ORM à la base de données
     * `Router.php`: définition des routes de l'application
     * `Utilities.php`: fonctions utiles
