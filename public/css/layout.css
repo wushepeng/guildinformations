@@ -1,0 +1,33 @@
+body {
+	background-image: url(/images/background.jpg);
+	background-repeat: no-repeat;
+	color: white;
+	background-color: black;
+	font-family: arial;
+	font-size: 13px
+}
+
+#main {
+	width: 95%;
+	min-height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left
+}
+
+a, a:visited {
+	color: orange;
+	font-size: 13px
+}
+
+.black {
+	background-color: black;
+}
+
+.right {
+	float: right;
+}
+
+.padding {
+	padding: 3px 5px;
+}
