@@ -1,7 +1,21 @@
 {% extends "inventoryHome.app.html.twig" %}
 
 {% block inventoryContent %}
-	<h2>{{ guildName }}</h2>
+	<form method="POST">
+		{% set checkType = '' %}
+		{% set checkQuality = '' %}
+		{% if sort == 'type' %}
+			{% set checkType = 'checked="checked"' %}
+		{% else %}
+			{% set checkQuality = 'checked="checked"' %}
+		{% endif %}
+		<input type="checkbox" name="type" {{ checkType }}/>Type
+		<input type="checkbox" name="quality" {{ checkQuality }}/>Qualité
+		<input type="submit" value="Trier"/>
+		<p>Ne cocher qu'une case, sinon le tri par défaut sera utilisé</p>
+		<!-- @TODO: sur la page web on peut faire un peu de javascript pour simuler le comportement radio -->
+	</form>
+	<h2>{{ guild.name }}</h2>
 	<div>
 	{% if items.error %}
 		<p>Problème de clé</p>

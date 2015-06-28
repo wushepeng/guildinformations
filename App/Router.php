@@ -202,7 +202,7 @@ $app->get('/ryzom/app/guild/configuration/:guildId(/)', 'checkRequest', function
 })->name('ryzomApp-GuildConfiguration.delete');
 
 /*
- * Affichage des inventaires
+ * Page d'accueil des inventaires
  */
 $app->get('/ryzom/app/inventory(/)', 'checkRequest', function() use ($app, $guildResource) {
 	$user = $app->request()->params('user');
@@ -252,13 +252,15 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId)
 		}
 	}
 	$guildItems = getGuildItems($guild['apiKey']);
+	usort($guildItems, 'sortByType');
 	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guildName' => $guild['name'],
+		'guild' => array('name' => $guild['name'], 'id' => $guildId),
 		'guilds' => $guilds,
-		'items' => $guildItems
+		'items' => $guildItems,
+		'sort' => 'type'
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -268,6 +270,69 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId)
 		echo $app->view->render("inventory.app.html.twig", $data);
 	}
 })->name('ryzomApp-Inventory/guild');
+
+/*
+ * Demande d'un tri spécifique pour l'inventaire
+ */
+$app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', function($guildId) use ($app, $guildResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guild = $guildResource->get($guildId);
+	if($guild==null) {
+		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+	}
+	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+	if($userData['guild_id']!=$guildId) {
+		if($userData['grade']!="Leader" && $userData['grade']!="HighOfficer") {
+			$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+		}
+		$isRelated = false;
+		foreach($guilds as $g) {
+			if($g['id']==$guildId) {
+				$isRelated = true;
+				break;
+			}
+		}
+		if(!$isRelated) {
+			$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
+		}
+	}
+	$guildItems = getGuildItems($guild['apiKey']);
+	$sortType = $app->request()->params('type');
+	$sortQuality = $app->request()->params('quality');
+	$sort = "";
+	if(($sortType==null && $sortQuality==null) || ($sortType!=null && $sortQuality!=null)) {
+		usort($guildItems, 'sortByType');
+		$sort = "type";
+	}
+	else {
+		if($sortType!=null) {
+			usort($guildItems, 'sortByType');
+			$sort = "type";
+		}
+		if($sortQuality!=null) {
+			usort($guildItems, 'sortByQuality');
+			$sort = "quality";
+		}
+	}
+	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'guild' => array('name' => $guild['name'], 'id' => $guildId),
+		'guilds' => $guilds,
+		'items' => $guildItems,
+		'sort' => $sort
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/inventory.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("inventory.app.html.twig", $data);
+	}
+})->name('ryzomApp-Inventory/guild.post');
 
 /*
  * Page d'accueil pour voir les compétences des membres

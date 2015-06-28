@@ -52,6 +52,54 @@ function getGuildItems($guildKey) {
 	}
 }
 
+function sortByType($a, $b) {
+	$value = strcmp($a['name'], $b['name']);
+	if($value==0) {
+		if($a['quality']>$b['quality']) {
+			$value = 1;
+		}
+		else if($a['quality']<$b['quality']) {
+			$value = -1;
+		}
+		else {
+			if($a['stack']>$b['stack']) {
+				$value = 1;
+			}
+			else if($a['stack']<$b['stack']) {
+				$value = -1;
+			}
+			else {
+				$value = 0;
+			}
+		}
+	}
+	return $value;
+}
+
+function sortByQuality($a, $b) {
+	if($a['quality']>$b['quality']) {
+		return 1;
+	}
+	else if($a['quality']<$b['quality']) {
+		return -1;
+	}
+	else {
+		$value = strcmp($a['name'], $b['name']);
+		if($value==0) {
+			if($a['stack']>$b['stack']) {
+				$value = 1;
+			}
+			else if($a['stack']<$b['stack']) {
+				$value = -1;
+			}
+			else {
+				$value = 0;
+			}
+		}
+		return $value;
+	}
+}
+
 function getHominLevels($apiKey, $branch) {
 	$xml = ryzom_character_api($apiKey);
 	if(isset($xml[$apiKey])) {
