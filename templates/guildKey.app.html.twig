@@ -1,16 +1,24 @@
 {% extends "content.html.twig" %}
 
+{% block title %}
+	{{ parent() }} - Clé Api de guilde
+{% endblock title %}
+
+{% block pageTitle %}Clé Api de guilde{% endblock pageTitle %}
+
 {% block content %}
-<form method="POST">
-	<input type="hidden" value="{{ user }}" name="user"/>
-	<input type="hidden" value="{{ checksum }}" name="checksum"/>
-	Votre clé de guilde : <br/>
-	<input type="text" value="{{ apiKey }}" name="apiKey"/>
-	{% set value = "Mettre à jour" %}
-	{% if apiKey is null %}
-		{% set value = "Enregistrer" %}
-	{% endif %}
-	<input type="submit" value="{{ value }}"/>
-</form>
-<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+	<form method="POST">
+		<input type="hidden" value="{{ user }}" name="user"/>
+		<input type="hidden" value="{{ checksum }}" name="checksum"/>
+		<p>Entrez votre clé api* de guilde:</p>
+		<input type="text" value="{{ apiKey }}" name="apiKey"/>
+		{% set value = "Mettre à jour" %}
+		{% if apiKey is null %}
+			{% set value = "Enregistrer" %}
+		{% endif %}
+		<input type="submit" value="{{ value }}"/>
+	</form>
+	<div>
+		* clé avec l'option "G03 Inventaire"
+	</div>
 {% endblock %}

@@ -1,5 +1,11 @@
 {% extends "inventoryHome.app.html.twig" %}
 
+{% block title %}
+	{{ parent() }} - Inventaire de la guilde {{ guild.name }}
+{% endblock title %}
+
+{% block pageTitle %}Inventaire de la guilde {{ guild.name }}{% endblock pageTitle %}
+
 {% block inventoryContent %}
 	<form method="POST">
 		{% set checkType = '' %}

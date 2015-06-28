@@ -1,27 +1,35 @@
 {% extends "content.html.twig" %}
 
-{% block content %}
-{% if addError %}
-	<div>
-		<p>Problème lors de la récupération des informations. Vérifiez la clé api et re-essayez.</p>
-	</div>
-{% endif %}
-{% for guild in guilds %}
-	<div>
-		<p>{{ guild.name }}</p>
-		<input type="text" value="{{ guild.apiKey }}"/>
-		<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>
-	</div>
-{% endfor %}
+{% block title %}
+	{{ parent() }} - Gérer les entrepôts de guilde
+{% endblock title %}
 
-<form method="POST">
-	<input type="hidden" value="{{ user }}" name="user"/>
-	<input type="hidden" value="{{ checksum }}" name="checksum"/>
+{% block pageTitle %}Entrepôts de guilde{% endblock pageTitle %}
+
+{% block content %}
+	{% if addError %}
+		<div>
+			<p>Problème lors de la récupération des informations. Vérifiez la clé api et re-essayez.</p>
+		</div>
+	{% endif %}
+	{% for guild in guilds %}
+		<div>
+			<h2>{{ guild.name }}</h2>
+			<input type="text" value="{{ guild.apiKey }}" disabled/>
+			<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>
+		</div>
+	{% endfor %}
+	<hr/>
+	<form method="POST">
+		<input type="hidden" value="{{ user }}" name="user"/>
+		<input type="hidden" value="{{ checksum }}" name="checksum"/>
+		<div>
+			<h2>Ajouter un nouvel entrepôt*:</h2>
+			<input type="text" placeholder="Clé api" name="newApiKey"/>
+			<input type="submit" value="Enregistrer"/>
+		</div>
+	</form>
 	<div>
-		<p>Ajouter un entrepôt:</p>
-		<input type="text" placeholder="Clé api" name="newApiKey"/>
-		<input type="submit" value="Enregistrer"/>
+		* clé avec l'option "G03 Inventaire"
 	</div>
-</form>
-<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
 {% endblock %}

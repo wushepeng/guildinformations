@@ -1,26 +1,35 @@
 {% extends "content.html.twig" %}
 
+{% block title %}
+	{{ parent() }} - Rechercher un objet
+{% endblock title %}
+
+{% block pageTitle %}Rechercher un objet{% endblock pageTitle %}
+
 {% block content %}
 	{% include 'inventoryMenu.app.html.twig' %}
 
 	{% block inventoryContent %}
 		{% if grade != "Member" %}
-			<form method="POST">
-				<input type="text" name="search"/>
-				<input type="submit" value="Chercher"/>
-			</form>
-			{% for guild in searchResult %}
-				<h2>{{ guild.guild.name }}</h2>
-				<div>
-				{% for item in guild.items %}
-					{% if item.error is not null %}
-						<p>Problème de clé</p>
-					{% else %}
-						<img src="{{ item.iconUrl }}" style="border: 1px solid #333;" title="{{ item.stack }}x{{ item.name }} (Q{{ item.quality }}{{ item.details }})"/>
-					{% endif %}
+			<div class="top">
+				<form method="POST">
+					<p>Entrez votre recherche:</p>
+					<input type="text" name="search"/>
+					<input type="submit" value="Chercher"/>
+				</form>
+				{% for guild in searchResult %}
+					<h2>{{ guild.guild.name }}</h2>
+					<div>
+					{% for item in guild.items %}
+						{% if item.error is not null %}
+							<p>Problème de clé</p>
+						{% else %}
+							<img src="{{ item.iconUrl }}" style="border: 1px solid #333;" title="{{ item.stack }}x{{ item.name }} (Q{{ item.quality }}{{ item.details }})"/>
+						{% endif %}
+					{% endfor %}
+					</div>
 				{% endfor %}
-				</div>
-			{% endfor %}
+			</div>
 		{% endif %}
 	{% endblock %}
 {% endblock %}

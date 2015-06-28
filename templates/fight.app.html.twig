@@ -1,5 +1,11 @@
 {% extends "skills.app.html.twig" %}
 
+{% block title %}
+	{{ parent() }} - Niveaux de Combat
+{% endblock title %}
+
+{% block pageTitle %}Niveaux de Combat{% endblock pageTitle %}
+
 {% block skillContent %}
 	<h2>Niveau de combat</h2>
 	{% for homin in homins %}

@@ -24,6 +24,10 @@ a, a:visited {
 	background-color: black;
 }
 
+.top {
+	margin-top: 15px;
+}
+
 .right {
 	float: right;
 }

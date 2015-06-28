@@ -40,7 +40,7 @@ abstract class AbstractResource
             'host'     => 'localhost',
             'dbname'   => 'guildinf',
             'user'     => 'root',
-            'password' => 'root',
+            'password' => 'db',
         );
 
         return EntityManager::create($connectionOptions, $config);

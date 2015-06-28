@@ -1,5 +1,11 @@
 {% extends "skills.app.html.twig" %}
 
+{% block title %}
+	{{ parent() }} - Niveaux d'Artisanat
+{% endblock title %}
+
+{% block pageTitle %}Niveaux d'Artisanat{% endblock pageTitle %}
+
 {% block skillContent %}
 	<h2>Niveau d'artisanat</h2>
 	{% for homin in homins %}
