@@ -1,5 +1,11 @@
 {% extends "content.html.twig" %}
 
+{% block title %}
+	{{ parent() }} - Clé Api
+{% endblock title %}
+
+{% block pageTitle %}Clé Api{% endblock pageTitle %}
+
 {% block content %}
 {% if error is not null %}
 	<p>Votre clé est invalide, veuillez la mettre à jour.</p>
@@ -7,7 +13,7 @@
 <form method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
-	Votre clé API personnelle : <br/>
+	Entrez clé Api*: <br/>
 	<input type="text" value="{{ apiKey }}" name="apiKey"/>
 	{% set value = "Mettre à jour" %}
 	{% if apiKey is null %}
@@ -15,5 +21,8 @@
 	{% endif %}
 	<input type="submit" value="{{ value }}"/>
 </form>
+<div>
+	* clé avec l'option P02 Compétences
+</div>
 <a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
 {% endblock %}

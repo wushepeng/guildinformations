@@ -31,3 +31,7 @@ a, a:visited {
 .padding {
 	padding: 3px 5px;
 }
+
+#content {
+	margin-top: 20px;
+}
