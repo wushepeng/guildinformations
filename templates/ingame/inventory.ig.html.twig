@@ -19,7 +19,7 @@
 	</form>
 	<h2>{{ guild.name }}</h2>
 	<div>
-	{% if items.error %}
+	{% if items.error is not null %}
 		<p>Problème de clé</p>
 	{% else %}
 		{% for item in items %}

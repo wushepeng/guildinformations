@@ -6,9 +6,16 @@ function searchItem($searchText, $guildId, $grade) {
 	foreach($allItems as $key => $value) {
 		$found = array();
 		foreach($value['items'] as $item) {
-			$pos = stripos($item['name'], $searchText);
-			if($pos!==false) {
-				array_push($found, $item);
+			if(isset($item['error'])) {
+				if(empty($found)) {
+					array_push($found, array('error' => $item));
+				}
+			}
+			else {
+				$pos = stripos($item['name'], $searchText);
+				if($pos!==false) {
+					array_push($found, $item);
+				}
 			}
 		}
 		if(!empty($found)) {

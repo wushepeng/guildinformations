@@ -297,7 +297,9 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', funct
 		}
 	}
 	$guildItems = getGuildItems($guild['apiKey']);
-	usort($guildItems, 'sortByType');
+	if(!isset($guildItems['error'])) {
+		usort($guildItems, 'sortByType');
+	}
 	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
 	$data = array(
 		'user' => $user,
@@ -344,21 +346,21 @@ $app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', func
 		}
 	}
 	$guildItems = getGuildItems($guild['apiKey']);
-	$sortType = $app->request()->params('type');
-	$sortQuality = $app->request()->params('quality');
-	$sort = "";
-	if(($sortType==null && $sortQuality==null) || ($sortType!=null && $sortQuality!=null)) {
-		usort($guildItems, 'sortByType');
-		$sort = "type";
-	}
-	else {
-		if($sortType!=null) {
+	$sort = "type";
+	if(!isset($guildItems['error'])) {
+		$sortType = $app->request()->params('type');
+		$sortQuality = $app->request()->params('quality');
+		if(($sortType==null && $sortQuality==null) || ($sortType!=null && $sortQuality!=null)) {
 			usort($guildItems, 'sortByType');
-			$sort = "type";
 		}
-		if($sortQuality!=null) {
-			usort($guildItems, 'sortByQuality');
-			$sort = "quality";
+		else {
+			if($sortType!=null) {
+				usort($guildItems, 'sortByType');
+			}
+			if($sortQuality!=null) {
+				usort($guildItems, 'sortByQuality');
+				$sort = "quality";
+			}
 		}
 	}
 	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));

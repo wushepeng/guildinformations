@@ -13,7 +13,11 @@
 				<h2>{{ guild.guild.name }}</h2>
 				<div>
 				{% for item in guild.items %}
-					<img src="{{ item.iconUrl }}" style="border: 1px solid #333;" title="{{ item.stack }}x{{ item.name }} (Q{{ item.quality }}{{ item.details }})"/>
+					{% if item.error is not null %}
+						<p>Problème de clé</p>
+					{% else %}
+						<img src="{{ item.iconUrl }}" style="border: 1px solid #333;" title="{{ item.stack }}x{{ item.name }} (Q{{ item.quality }}{{ item.details }})"/>
+					{% endif %}
 				{% endfor %}
 				</div>
 			{% endfor %}
