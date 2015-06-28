@@ -1,6 +1,6 @@
 <?php
 
-function searchItem($searchText, $guildId, $grade) {
+/*function searchItem($searchText, $guildId, $grade) {
 	$allItems = getItems($guildId, $grade);
 	$searchResult = array();
 	foreach($allItems as $key => $value) {
@@ -9,6 +9,33 @@ function searchItem($searchText, $guildId, $grade) {
 			if(isset($item['error'])) {
 				if(empty($found)) {
 					array_push($found, array('error' => $item));
+				}
+			}
+			else {
+				$pos = stripos($item['name'], $searchText);
+				if($pos!==false) {
+					array_push($found, $item);
+				}
+			}
+		}
+		if(!empty($found)) {
+			array_push($searchResult, array('guild' => $allItems[$key]['guild'], 'items' => $found));
+		}
+	}
+	return $searchResult;
+}*/
+
+function searchItem($searchText, $guildId, $grade) {
+	$allItems = getItems($guildId, $grade);
+	$searchResult = array();
+	$errors = array();
+	foreach($allItems as $key => $value) {
+		$found = array();
+		foreach($value['items'] as $item) {
+			if(isset($item['error'])) {
+				if(!isset($errors[$allItems[$key]['guild']['id']])) {
+					array_push($found, array('error' => $item));
+					$errors[$allItems[$key]['guild']['id']] = true;
 				}
 			}
 			else {
@@ -35,9 +62,7 @@ function getItems($guildId, $grade) {
 		$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($guildId);
 		foreach($guilds as $guild) {
 			$guildItems = getGuildItems($guild['apiKey']);
-			if(!isset($guildItems['error'])) {
-				array_push($stuff, array('guild' => $guild, 'items' => $guildItems));
-			}
+			array_push($stuff, array('guild' => $guild, 'items' => $guildItems));
 		}
 	}
 	return $stuff;
