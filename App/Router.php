@@ -51,7 +51,8 @@ $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource,
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	// index en plus: timestamp, app_url, race, civilisation, cult, civ, organization, guild_icon, lang
 	$hominResource->put($hominId, $hominName, null, $guildId);
@@ -83,7 +84,8 @@ $app->get('/ryzom/app/homin/apiKey(/)', 'checkRequest', 'isGuilded', function() 
 		'checksum' => $checksum,
 		'apiKey' => $homin['apiKey'],
 		'error' => $app->request()->params('error'),
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -121,7 +123,8 @@ $app->get('/ryzom/app/guild/apiKey(/)', 'checkRequest', 'isGuilded', function() 
 		'user' => $user,
 		'checksum' => $checksum,
 		'apiKey' => $guild['apiKey'],
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -162,7 +165,8 @@ $app->get('/ryzom/app/guild/configuration(/)', 'checkRequest', 'isGuilded', func
 		'user' => $user,
 		'checksum' => $checksum,
 		'guilds' => $guilds,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -230,7 +234,8 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() use
 		'user' => $user,
 		'checksum' => $checksum,
 		'guilds' => $guilds,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -263,7 +268,8 @@ $app->post('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() us
 		'checksum' => $checksum,
 		'guilds' => $guilds,
 		'searchResult' => $searchResult,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -313,7 +319,8 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', funct
 		'guilds' => $guilds,
 		'items' => $guildItems,
 		'sort' => 'type',
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -377,7 +384,8 @@ $app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', func
 		'guilds' => $guilds,
 		'items' => $guildItems,
 		'sort' => $sort,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -399,7 +407,8 @@ $app->get('/ryzom/app/skills(/)', 'checkRequest', 'isGuilded', function() use ($
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -432,7 +441,8 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', 'isGuilded', function(
 		'user' => $user,
 		'checksum' => $checksum,
 		'homins' => $homins,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -474,7 +484,8 @@ $app->get('/ryzom/app/skills/craft(/)', 'checkRequest', 'isGuilded', function() 
 		'user' => $user,
 		'checksum' => $checksum,
 		'homins' => $homins,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -507,7 +518,8 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() 
 		'user' => $user,
 		'checksum' => $checksum,
 		'homins' => $homins,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -549,7 +561,8 @@ $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', 'isGuilded', function() 
 		'user' => $user,
 		'checksum' => $checksum,
 		'homins' => $homins,
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
@@ -605,7 +618,8 @@ $app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', 'isGuilded', func
 		'user' => $user,
 		'checksum' => $checksum,
 		'lvls' => array('craft' => $clevels, 'fight' => $flevels),
-		'grade' => $userData['grade']
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
 	);
 	$ig = $app->request()->params('ig');
 	if($ig!=null) {
