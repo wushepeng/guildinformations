@@ -12,12 +12,54 @@ body {
 	min-height: 300px;
 	margin-left: auto;
 	margin-right: auto;
-	text-align: left
+	text-align: left;
 }
 
 a, a:visited {
 	color: orange;
 	font-size: 13px
+}
+
+.skill-table {
+	border-collapse: collapse;
+	text-align: center;
+	margin: auto;
+}
+
+.skill-table tr:first-child {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.skill-table tr:first-child td {
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.skill-table tr:nth-of-type(2n) {
+	background-color: #3366CC;
+}
+
+.skill-table tr:first-child~tr {
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+}
+
+.skill-table tr:first-child~tr td:first-child {
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.skill-table tr:first-child~tr td:last-child {
+	border-right: 1px solid white;
+}
+
+.center {
+	margin: auto;
 }
 
 .black {
