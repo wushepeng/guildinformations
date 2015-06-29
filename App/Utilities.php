@@ -1,30 +1,5 @@
 <?php
 
-/*function searchItem($searchText, $guildId, $grade) {
-	$allItems = getItems($guildId, $grade);
-	$searchResult = array();
-	foreach($allItems as $key => $value) {
-		$found = array();
-		foreach($value['items'] as $item) {
-			if(isset($item['error'])) {
-				if(empty($found)) {
-					array_push($found, array('error' => $item));
-				}
-			}
-			else {
-				$pos = stripos($item['name'], $searchText);
-				if($pos!==false) {
-					array_push($found, $item);
-				}
-			}
-		}
-		if(!empty($found)) {
-			array_push($searchResult, array('guild' => $allItems[$key]['guild'], 'items' => $found));
-		}
-	}
-	return $searchResult;
-}*/
-
 function searchItem($searchText, $guildId, $grade) {
 	$allItems = getItems($guildId, $grade);
 	$searchResult = array();
@@ -149,6 +124,44 @@ function sortByQuality($a, $b) {
 			}
 		}
 		return $value;
+	}
+}
+
+function getHominMaxLevels($apiKey) {
+	$skillTree = ryzom_skilltree();
+	$xml = ryzom_character_api($apiKey);
+	if(isset($xml[$apiKey])) {
+		$infos = $xml[$apiKey];
+		if($infos === false || isset($infos->error)) {
+			$error = array('error' => true, 'message' => "Character Key Error:", 'code' => -2);
+			if(isset($infos->error)) {
+				$error['code'] = (int) $infos->error['code'];
+				$error['message'] .= (string) $infos->error;
+			}
+			return $error;
+		}
+		$skills = (Array) $infos->skills;
+		$lvl;
+		foreach($skills as $name => $value) {
+			if($value<$skillTree[$name]['max'] || $value==250) {
+				$lvl[$name] = $value;
+			}
+		}
+		/* retourne que les compétences de fin de branche (250)
+		foreach($skillTree as $name => $value) {
+			if($value['max']==250) {
+				$lvl[$value['skill_id']] = generalTrad($value['skill_id']);
+			}
+		}*/
+		return $lvl;
+	}
+	else {
+		$error = array('error' => true, 'message' => "Character Key Error:", 'code' => -2);
+		if(isset($infos->error)) {
+			$error['code'] = (int) $xml->error['code'];
+			$error['message'] .= (string) $xml->error;
+		}
+		return $error;
 	}
 }
 
