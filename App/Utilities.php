@@ -527,6 +527,94 @@ function getCLevels($apiKey, $branch) {
 	return $levels;
 }
 
+function getMLevels($apiKey) {
+	$allLevels = getHominMaxLevels($apiKey);
+	if(isset($allLevels['error'])) {
+		return $allLevels;
+	}
+	$levels = array(
+		'heal' => -1,
+		'neutra' => -1,
+		'debi' => -1,
+		'off' => -1
+	);
+	foreach($allLevels as $code => $level) {
+		if(stripos($code, "smda")!==false) {
+			$levels['neutra'] = $level;
+		}
+		else if(stripos($code, "smdh")!==false) {
+			$levels['heal'] = $level;
+		}
+		else if(stripos($code, "smoa")!==false) {
+			$levels['debi'] = $level;
+		}
+		else if(stripos($code, "smoe")!==false) {
+			$levels['off'] = $level;
+		}
+		else {
+			if($code == "smo" || $code == "smd") {
+				if($code == "smo") {
+					$levels['debi'] = $level;
+					$levels['off'] = $level;
+				}
+				else {
+					$levels['heal'] = $level;
+					$levels['neutra'] = $level;
+				}
+			}
+			else if($code == "sm") {
+				$levels['heal'] = $level;
+				$levels['neutra'] = $level;
+				$levels['debi'] = $level;
+				$levels['off'] = $level;
+			}
+
+		}
+	}
+	return $levels;
+}
+
+function getHLevels($apiKey) {
+	$allLevels = getHominMaxLevels($apiKey);
+	if(isset($allLevels['error'])) {
+		return $allLevels;
+	}
+	$levels = array(
+		'desert' => -1,
+		'forest' => -1,
+		'jungle' => -1,
+		'lakes' => -1,
+		'primes' => -1
+	);
+	foreach($allLevels as $code => $level) {
+		if(stripos($code, "shfd")!==false) {
+			$levels['desert'] = $level;
+		}
+		else if(stripos($code, "shff")!==false) {
+			$levels['forest'] = $level;
+		}
+		else if(stripos($code, "shfj")!==false) {
+			$levels['jungle'] = $level;
+		}
+		else if(stripos($code, "shfl")!==false) {
+			$levels['lakes'] = $level;
+		}
+		else if(stripos($code, "shfp")!==false) {
+			$levels['primes'] = $level;
+		}
+		else {
+			if($code == "shf" || $code == "sh") {
+				$levels['desert'] = $level;
+				$levels['forest'] = $level;
+				$levels['jungle'] = $level;
+				$levels['lakes'] = $level;
+				$levels['primes'] = $level;
+			}
+		}
+	}
+	return $levels;
+}
+
 function getHominMaxLevels($apiKey) {
 	$skillTree = ryzom_skilltree();
 	$xml = ryzom_character_api($apiKey);

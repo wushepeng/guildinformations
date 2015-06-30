@@ -428,8 +428,17 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', 'isGuilded', function(
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
-	foreach($guildMembers as $homin) {
+	/*foreach($guildMembers as $homin) {
 		$lvl = getHominLevels($homin['apiKey'], 'h');
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
+	}*/
+	foreach($guildMembers as $homin) {
+		$lvl = getHLevels($homin['apiKey'], 7);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -777,8 +786,17 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() 
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
-	foreach($guildMembers as $homin) {
+	/*foreach($guildMembers as $homin) {
 		$lvl = getHominLevels($homin['apiKey'], 'm');
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
+	}*/
+	foreach($guildMembers as $homin) {
+		$lvl = getMLevels($homin['apiKey'], 7);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
