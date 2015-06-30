@@ -4,22 +4,12 @@
 	{{ parent() }} - Niveaux d'Artisanat
 {% endblock title %}
 
-{% block pageTitle %}Niveaux d'Artisanat{% endblock pageTitle %}
+{% block pageTitle %}
+	Niveaux d'Artisanat
+{% endblock pageTitle %}
 
 {% block skillContent %}
-	<h2>Niveau d'artisanat</h2>
-	{% for homin in homins %}
-		<div>
-			<h4>{{ homin.name }}</h4>
-		{% if homin.error %}
-			<p>Problème de clé</p>
-		{% else %}
-			{% for lvls in homin.lvls %}
-				{% if lvls.visible == true %}
-					<p>{{ lvls.name }}: {{ lvls.value }}</p>
-				{% endif %}
-			{% endfor %}
-		{% endif %}
-		</div>
-	{% endfor %}
+	{% include "craftMenu.app.html.twig" %}
+	
+	{% block craftSkill %}{% endblock %}
 {% endblock %}

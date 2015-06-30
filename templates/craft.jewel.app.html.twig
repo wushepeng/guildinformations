@@ -1,0 +1,45 @@
+{% extends "craft.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Niveaux d'Artisanat en bijoux
+{% endblock title %}
+
+{% block pageTitle %}
+	Niveaux d'Artisanat en bijoux
+{% endblock pageTitle %}
+
+{% block craftSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>Nom</td>
+				<td>Anneau de cheville</td>
+				<td>Bracelet</td>
+				<td>Diadème</td>
+				<td>Boucle d'oreille</td>
+				<td>Pendentif</td>
+				<td>Bague</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td>{{ homin.lvls.bijouCheville }}</td>
+				<td>{{ homin.lvls.bijouPoignet }}</td>
+				<td>{{ homin.lvls.bijouTete }}</td>
+				<td>{{ homin.lvls.bijouOreille }}</td>
+				<td>{{ homin.lvls.bijouCou }}</td>
+				<td>{{ homin.lvls.bijouDoigt }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

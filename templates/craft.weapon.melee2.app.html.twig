@@ -1,0 +1,42 @@
+{% extends "craft.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Niveaux d'Artisanat en armes à deux mains
+{% endblock title %}
+
+{% block pageTitle %}
+	Niveaux d'Artisanat en armes à deux mains
+{% endblock pageTitle %}
+
+{% block craftSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>Nom</td>
+				<td>Hache</td>
+				<td>Massue</td>
+				<td>Pique</td>
+				<td>Epée</td>
+				<td>Amplificateur magique</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td>{{ homin.lvls.arme2Hache }}</td>
+				<td>{{ homin.lvls.arme2Massue }}</td>
+				<td>{{ homin.lvls.arme2Pique }}</td>
+				<td>{{ homin.lvls.arme2Epee }}</td>
+				<td>{{ homin.lvls.arme2Ampli }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

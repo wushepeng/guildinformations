@@ -1,0 +1,42 @@
+{% extends "craft.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Niveaux d'Artisanat en armures légères
+{% endblock title %}
+
+{% block pageTitle %}
+	Niveaux d'Artisanat en armures légères
+{% endblock pageTitle %}
+
+{% block craftSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>Nom</td>
+				<td>Bottes</td>
+				<td>Gants</td>
+				<td>Pantalon</td>
+				<td>Manches</td>
+				<td>Gilet</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td>{{ homin.lvls.armureLPied }}</td>
+				<td>{{ homin.lvls.armureLMain }}</td>
+				<td>{{ homin.lvls.armureLJambe }}</td>
+				<td>{{ homin.lvls.armureLBras }}</td>
+				<td>{{ homin.lvls.armureLVentre }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

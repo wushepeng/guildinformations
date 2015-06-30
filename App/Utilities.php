@@ -266,6 +266,267 @@ function getFLevels($apiKey, $branch) {
 	return $levels;
 }
 
+function getCLevels($apiKey, $branch) {
+	$allLevels = getHominMaxLevels($apiKey);
+	if(isset($allLevels['error'])) {
+		return $allLevels;
+	}
+	$levels = array(
+		'bijouCheville' => -1,
+		'bijouPoignet' => -1,
+		'bijouTete' => -1,
+		'bijouOreille' => -1,
+		'bijouCou' => -1,
+		'bijouDoigt' => -1,
+		'armureBBouclier' => -1,
+		'armureBRondache' => -1,
+		'armureHPied' => -1,
+		'armureHMain' => -1,
+		'armureHTete' => -1,
+		'armureHJambe' => -1,
+		'armureHBras' => -1,
+		'armureHVentre' => -1,
+		'armureMPied' => -1,
+		'armureMMain' => -1,
+		'armureMJambe' => -1,
+		'armureMBras' => -1,
+		'armureMVentre' => -1,
+		'armureLPied' => -1,
+		'armureLMain' => -1,
+		'armureLJambe' => -1,
+		'armureLBras' => -1,
+		'armureLVentre' => -1,
+		'arme1Hache' => -1,
+		'arme1Dague' => -1,
+		'arme1Massue' => -1,
+		'arme1Lance' => -1,
+		'arme1Epee' => -1,
+		'arme1Baton' => -1,
+		'arme2Hache' => -1,
+		'arme2Massue' => -1,
+		'arme2Pique' => -1,
+		'arme2Epee' => -1,
+		'arme2Ampli' => -1,
+		'armeTirHandgun' => -1,
+		'armeTirSubmachinegun' => -1,
+		'armeTirLg' => -1,
+		'armeTirShotgun' => -1
+	);
+	foreach($allLevels as $code => $level) {
+		switch($branch) {
+			case 0: // armures légères
+				if(stripos($code, "scalb")!==false) {
+					$levels['armureLPied'] = $level;
+				}
+				else if(stripos($code, "scalg")!==false) {
+					$levels['armureLMain'] = $level;
+				}
+				else if(stripos($code, "scalp")!==false) {
+					$levels['armureLJambe'] = $level;
+				}
+				else if(stripos($code, "scals")!==false) {
+					$levels['armureLBras'] = $level;
+				}
+				else if(stripos($code, "scalv")!==false) {
+					$levels['armureLVentre'] = $level;
+				}
+				else {
+					if($code == "scal" || $code == "sca" || $code == "sc") {
+						$levels['armureLPied'] = $level;
+						$levels['armureLMain'] = $level;
+						$levels['armureLJambe'] = $level;
+						$levels['armureLBras'] = $level;
+						$levels['armureLVentre'] = $level;
+					}
+				}
+				break;
+			case 1: // armures moyennes
+				if(stripos($code, "scamb")!==false) {
+					$levels['armureMPied'] = $level;
+				}
+				else if(stripos($code, "scamg")!==false) {
+					$levels['armureMMain'] = $level;
+				}
+				else if(stripos($code, "scamp")!==false) {
+					$levels['armureMJambe'] = $level;
+				}
+				else if(stripos($code, "scams")!==false) {
+					$levels['armureMBras'] = $level;
+				}
+				else if(stripos($code, "scamv")!==false) {
+					$levels['armureMVentre'] = $level;
+				}
+				else {
+					if($code == "scam" || $code == "sca" || $code == "sc") {
+						$levels['armureMPied'] = $level;
+						$levels['armureMMain'] = $level;
+						$levels['armureMJambe'] = $level;
+						$levels['armureMBras'] = $level;
+						$levels['armureMVentre'] = $level;
+					}
+				}
+				break;
+			case 2: // armures lourdes
+				if(stripos($code, "scahb")!==false) {
+					$levels['armureHPied'] = $level;
+				}
+				else if(stripos($code, "scahg")!==false) {
+					$levels['armureHMain'] = $level;
+				}
+				else if(stripos($code, "scahh")!==false) {
+					$levels['armureHTete'] = $level;
+				}
+				else if(stripos($code, "scahp")!==false) {
+					$levels['armureHJambe'] = $level;
+				}
+				else if(stripos($code, "scahs")!==false) {
+					$levels['armureHBras'] = $level;
+				}
+				else if(stripos($code, "scahv")!==false) {
+					$levels['armureHVentre'] = $level;
+				}
+				else {
+					if($code == "scah" || $code == "sca" || $code == "sc") {
+						$levels['armureHPied'] = $level;
+						$levels['armureHMain'] = $level;
+						$levels['armureHTete'] = $level;
+						$levels['armureHJambe'] = $level;
+						$levels['armureHBras'] = $level;
+						$levels['armureHVentre'] = $level;
+					}
+				}
+				break;
+			case 3: // bouclier
+				if(stripos($code, "scasb")!==false) {
+					$levels['armureBRondache'] = $level;
+				}
+				else if(stripos($code, "scass")!==false) {
+					$levels['armureBBouclier'] = $level;
+				}
+				else {
+					if($code == "scas" || $code == "sca" || $code == "sc") {
+						$levels['armureBRondache'] = $level;
+						$levels['armureBBouclier'] = $level;
+					}
+				}
+				break;
+			case 4: // bijoux
+				if(stripos($code, "scja")!==false) {
+					$levels['bijouCheville'] = $level;
+				}
+				else if(stripos($code, "scjb")!==false) {
+					$levels['bijouPoignet'] = $level;
+				}
+				else if(stripos($code, "scjd")!==false) {
+					$levels['bijouTete'] = $level;
+				}
+				else if(stripos($code, "scje")!==false) {
+					$levels['bijouOreille'] = $level;
+				}
+				else if(stripos($code, "scjp")!==false) {
+					$levels['bijouCou'] = $level;
+				}
+				else if(stripos($code, "scjr")!==false) {
+					$levels['bijouDoigt'] = $level;
+				}
+				else {
+					if($code == "scj" || $code =="sc") {
+						$levels['bijouCheville'] = $level;
+						$levels['bijouPoignet'] = $level;
+						$levels['bijouTete'] = $level;
+						$levels['bijouOreille'] = $level;
+						$levels['bijouCou'] = $level;
+						$levels['bijouDoigt'] = $level;
+					}
+				}
+				break;
+			case 5: // armes à une main
+				if(stripos($code, "scm1a")!==false) {
+					$levels['arme1Hache'] = $level;
+				}
+				else if(stripos($code, "scm1d")!==false) {
+					$levels['arme1Dague'] = $level;
+				}
+				else if(stripos($code, "scm1m")!==false) {
+					$levels['arme1Massue'] = $level;
+				}
+				else if(stripos($code, "scm1p")!==false) {
+					$levels['arme1Lance'] = $level;
+				}
+				else if(stripos($code, "scm1s")!==false) {
+					$levels['arme1Epee'] = $level;
+				}
+				else if(stripos($code, "scm1t")!==false) {
+					$levels['arme1Baton'] = $level;
+				}
+				else {
+					if($code == "scm1" || $code == "scm" || $code =="sc") {
+						$levels['arme1Hache'] = $level;
+						$levels['arme1Dague'] = $level;
+						$levels['arme1Massue'] = $level;
+						$levels['arme1Lance'] = $level;
+						$levels['arme1Epee'] = $level;
+						$levels['arme1Baton'] = $level;
+					}
+				}
+				break;
+			case 6: // armes à deux mains + amplificateurs magiques (tout seul dans combat rapproché sinon)
+				if(stripos($code, "scm2a")!==false) {
+					$levels['arme2Hache'] = $level;
+				}
+				else if(stripos($code, "scm2m")!==false) {
+					$levels['arme2Massue'] = $level;
+				}
+				else if(stripos($code, "scm2p")!==false) {
+					$levels['arme2Pique'] = $level;
+				}
+				else if(stripos($code, "scm2s")!==false) {
+					$levels['arme2Epee'] = $level;
+				}
+				else if(stripos($code, "scmc")!==false) {
+					$levels['arme2Ampli'] = $level;
+				}
+				else {
+					if($code == "scm2" || $code == "scm" || $code =="sc") {
+						$levels['arme2Hache'] = $level;
+						$levels['arme2Massue'] = $level;
+						$levels['arme2Pique'] = $level;
+						$levels['arme2Epee'] = $level;
+						if($code == "scm" || $code =="sc") {
+							$levels['arme2Ampli'] = $level;
+						}
+					}
+				}
+				break;
+			default: // armes de tir
+				if(stripos($code, "scr1")!==false) {
+					$levels['armeTirHandgun'] = $level;
+				}
+				else if(stripos($code, "scr2a")!==false) {
+					$levels['armeTirSubmachinegun'] = $level;
+				}
+				else if(stripos($code, "scr2l")!==false) {
+					$levels['armeTirLg'] = $level;
+				}
+				else if(stripos($code, "scr2r")!==false) {
+					$levels['armeTirShotgun'] = $level;
+				}
+				else {
+					if($code == "scr2" || $code == "scr" || $code =="sc") {
+						$levels['armeTirSubmachinegun'] = $level;
+						$levels['armeTirLg'] = $level;
+						$levels['armeTirShotgun'] = $level;
+						if($code == "scr" || $code =="sc") {
+							$levels['armeTirHandgun'] = $level;
+						}
+					}
+				}
+				break;
+		}
+	}
+	return $levels;
+}
+
 function getHominMaxLevels($apiKey) {
 	$skillTree = ryzom_skilltree();
 	$xml = ryzom_character_api($apiKey);
