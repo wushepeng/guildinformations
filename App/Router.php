@@ -531,7 +531,7 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() 
 })->name('ryzomApp-Skills/Magic');
 
 /*
- * Affichage des compétences de combat
+ * Affichage du menu compétences de combat
  */
 $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
 	$user = $app->request()->params('user');
@@ -572,6 +572,142 @@ $app->get('/ryzom/app/skills/fight(/)', 'checkRequest', 'isGuilded', function() 
 		echo $app->view->render("fight.app.html.twig", $data);
 	}
 })->name('ryzomApp-Skills/Fight');
+
+/*
+ * Affichage des compétences de combat à mains nues
+ */
+$app->get('/ryzom/app/skills/fight/melee0(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getFLevels($homin['apiKey'], 0);
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
+	}
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'homins' => $homins,
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/fight.melee0.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("fight.melee0.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Fight/Melee0');
+
+/*
+ * Affichage des compétences de combat à une main
+ */
+$app->get('/ryzom/app/skills/fight/melee1(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getFLevels($homin['apiKey'], 1);
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
+	}
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'homins' => $homins,
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/fight.melee1.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("fight.melee1.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Fight/Melee1');
+
+/*
+ * Affichage des compétences de combat à deux mains
+ */
+$app->get('/ryzom/app/skills/fight/melee2(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getFLevels($homin['apiKey'], 2);
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
+	}
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'homins' => $homins,
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/fight.melee2.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("fight.melee2.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Fight/Melee2');
+
+/*
+ * Affichage des compétences de combat à deux mains
+ */
+$app->get('/ryzom/app/skills/fight/range(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
+	$user = $app->request()->params('user');
+	$checksum = $app->request()->params('checksum');
+	$userData = unserialize(base64_decode($user));
+	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
+	$homins = array();
+	foreach($guildMembers as $homin) {
+		$lvl = getFLevels($homin['apiKey'], 3);
+		if(isset($lvl['error'])) {
+			array_push($homins, array('name' => $homin['name'], 'error' => true));
+		}
+		else {
+			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
+		}
+	}
+	$data = array(
+		'user' => $user,
+		'checksum' => $checksum,
+		'homins' => $homins,
+		'grade' => $userData['grade'],
+		'name' =>$userData['char_name']
+	);
+	$ig = $app->request()->params('ig');
+	if($ig!=null) {
+		echo $app->view->render("ingame/fight.range.ig.html.twig", $data);
+	}
+	else {
+		echo $app->view->render("fight.range.app.html.twig", $data);
+	}
+})->name('ryzomApp-Skills/Fight/Range');
 
 /*
  * Affichage de la page de configuration d'affichage des compétences

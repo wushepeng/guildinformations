@@ -1,0 +1,33 @@
+{% extends "fight.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Niveaux de Combat à mains nues
+{% endblock title %}
+
+{% block pageTitle %}
+	Niveaux de Combat à mains nues
+{% endblock pageTitle %}
+
+{% block fightSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>Nom</td>
+				<td>Dague</td>
+				<td>Corps à corps</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td>{{ homin.lvls.dague }}</td>
+				<td>{{ homin.lvls.mains }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

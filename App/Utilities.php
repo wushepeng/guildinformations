@@ -127,6 +127,145 @@ function sortByQuality($a, $b) {
 	}
 }
 
+function getFLevels($apiKey, $branch) {
+	$allLevels = getHominMaxLevels($apiKey);
+	if(isset($allLevels['error'])) {
+		return $allLevels;
+	}
+	$levels = array(
+		'mains' => -1,
+		'dague' => -1,
+		'masse1' => -1,
+		'baton1' => -1,
+		'lance1' => -1,
+		'hache1' => -1,
+		'epee1' => -1,
+		'epee2' => -1,
+		'hache2' => -1,
+		'pique2' => -1,
+		'masse2' => -1,
+		'handgun' => -1,
+		'shotgun' => -1,
+		'submachinegun' => -1,
+		'lg' => -1
+	);
+	foreach($allLevels as $code => $level) {
+		switch($branch) {
+			case 0: // corps à corps
+				if(stripos($code, "sfmcad")!==false) {
+					$levels['dague'] = $level;
+				}
+				else if(stripos($code, "sfmcah")!==false) {
+					$levels['mains'] = $level;
+				}
+				else {
+					if($code == "sfmca" || $code == "sfmc" || $code == "sfm" || $code == "sf") {
+						$levels['dague'] = $level;
+						$levels['mains'] = $level;
+					}
+				}
+				break;
+			case 1: // arme une main
+				if(stripos($code, "sfm1bm")!==false) {
+					$levels['masse1'] = $level;
+				}
+				else if(stripos($code, "sfm1bs")!==false) {
+					$levels['baton1'] = $level;
+				}
+				else if(stripos($code, "sfm1ps")!==false) {
+					$levels['lance1'] = $level;
+				}
+				else if(stripos($code, "sfm1sa")!==false) {
+					$levels['hache1'] = $level;
+				}
+				else if(stripos($code, "sfm1ss")!==false) {
+					$levels['epee1'] = $level;
+				}
+				else {
+					if($code == "sfm1b") {
+						$levels['masse1'] = $level;
+						$levels['baton1'] = $level;
+					}
+					else if($code == "sfm1p") {
+						$levels['lance1'] = $level;
+					}
+					else if($code == "sfm1s") {
+						$levels['hache1'] = $level;
+						$levels['epee1'] = $level;
+					}
+					else {
+						if($code == "sfm1" || $code == "sfm" || $code == "sf") {
+							$levels['masse1'] = $level;
+							$levels['baton1'] = $level;
+							$levels['lance1'] = $level;
+							$levels['hache1'] = $level;
+							$levels['epee1'] = $level;
+						}
+					}
+				}
+				break;
+			case 2: // arme deux mains
+				if(stripos($code, "sfm2b")!==false) {
+					$levels['masse2'] = $level;
+				}
+				else if(stripos($code, "sfm2p")!==false) {
+					$levels['pique2'] = $level;
+				}
+				else if(stripos($code, "sfm2sa")!==false) {
+					$levels['hache2'] = $level;
+				}
+				else if(stripos($code, "sfm2ss")!==false) {
+					$levels['epee2'] = $level;
+				}
+				else {
+					if($code == "sfm2s") {
+						$levels['hache2'] = $level;
+						$levels['epee2'] = $level;
+					}
+					else {
+						if($code == "sfm2" || $code == "sfm" || $code == "sf") {
+							$levels['epee2'] = $level;
+							$levels['hache2'] = $level;
+							$levels['pique2'] = $level;
+							$levels['masse2'] = $level;
+						}
+					}
+				}
+				break;
+			default: // arme à distance
+				if(stripos($code, "sfr1")!==false) {
+					$levels['handgun'] = $level;
+				}
+				else if(stripos($code, "sfr2aa")!==false) {
+					$levels['submachinegun'] = $level;
+				}
+				else if(stripos($code, "sfr2al")!==false) {
+					$levels['lg'] = $level;
+				}
+				else if(stripos($code, "sfr2ar")!==false) {
+					$levels['shotgun'] = $level;
+				}
+				else {
+					if($code == "sfr2a" || $code == "sfr2") {
+						$levels['submachinegun'] = $level;
+						$levels['lg'] = $level;
+						$levels['shotgun'] = $level;
+					}
+					else {
+						if($code == "sfr" || $code == "sf") {
+							$levels['submachinegun'] = $level;
+							$levels['lg'] = $level;
+							$levels['handgun'] = $level;
+							$levels['shotgun'] = $level;
+						}
+					}
+				}
+				break;
+		}
+	}
+	return $levels;
+}
+
 function getHominMaxLevels($apiKey) {
 	$skillTree = ryzom_skilltree();
 	$xml = ryzom_character_api($apiKey);
@@ -146,12 +285,14 @@ function getHominMaxLevels($apiKey) {
 			if($value<$skillTree[$name]['max'] || $value==250) {
 				$lvl[$name] = $value;
 			}
+			//echo $name.": ".generalTrad($name)."\n";
 		}
 		/* retourne que les compétences de fin de branche (250)
 		foreach($skillTree as $name => $value) {
 			if($value['max']==250) {
 				$lvl[$value['skill_id']] = generalTrad($value['skill_id']);
 			}
+			echo $name.": ".generalTrad($name)."\n";
 		}*/
 		return $lvl;
 	}

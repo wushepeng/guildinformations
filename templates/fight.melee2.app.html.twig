@@ -1,0 +1,39 @@
+{% extends "fight.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Niveaux de Combat à deux mains
+{% endblock title %}
+
+{% block pageTitle %}
+	Niveaux de Combat à deux mains
+{% endblock pageTitle %}
+
+{% block fightSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>Nom</td>
+				<td>Epée</td>
+				<td>Hache</td>
+				<td>Masse</td>
+				<td>Pique</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td>{{ homin.lvls.epee2 }}</td>
+				<td>{{ homin.lvls.hache2 }}</td>
+				<td>{{ homin.lvls.masse2 }}</td>
+				<td>{{ homin.lvls.pique2 }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

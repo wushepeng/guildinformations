@@ -4,22 +4,12 @@
 	{{ parent() }} - Niveaux de Combat
 {% endblock title %}
 
-{% block pageTitle %}Niveaux de Combat{% endblock pageTitle %}
+{% block pageTitle %}
+	Niveaux de Combat
+{% endblock pageTitle %}
 
 {% block skillContent %}
-	<h2>Niveau de combat</h2>
-	{% for homin in homins %}
-		<div>
-			<h4>{{ homin.name }}</h4>
-		{% if homin.error %}
-			<p>Problème de clé</p>
-		{% else %}
-			{% for lvls in homin.lvls %}
-				{% if lvls.visible == true %}
-					<p>{{ lvls.name }}: {{ lvls.value }}</p>
-				{% endif %}
-			{% endfor %}
-		{% endif %}
-		</div>
-	{% endfor %}
+	{% include "fightMenu.app.html.twig" %}
+	
+	{% block fightSkill %}{% endblock %}
 {% endblock %}

@@ -1,0 +1,42 @@
+{% extends "fight.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - Niveaux de Combat à une main
+{% endblock title %}
+
+{% block pageTitle %}
+	Niveaux de Combat à une main
+{% endblock pageTitle %}
+
+{% block fightSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>Nom</td>
+				<td>Bâton</td>
+				<td>Epée</td>
+				<td>Hache</td>
+				<td>Lance</td>
+				<td>Masse</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td>{{ homin.lvls.baton1 }}</td>
+				<td>{{ homin.lvls.epee1 }}</td>
+				<td>{{ homin.lvls.hache1 }}</td>
+				<td>{{ homin.lvls.lance1 }}</td>
+				<td>{{ homin.lvls.masse1 }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}
