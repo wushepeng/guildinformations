@@ -7,9 +7,6 @@
 				<span>
 					<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">Clé api</a>
 				</span>
-				<span>
-					 | <a href="{{ urlFor('ryzomApp-HominConfiguration') }}?checksum={{ checksum }}&user={{ user }}">Visibilité compétences</a>
-				</span>
 			{% if grade=="Leader" or grade=="HighOfficer" %}
 				<span>
 					 | <a href="{{ urlFor('ryzomApp-GuildKey') }}?checksum={{ checksum }}&user={{ user }}">Clé de guilde</a>

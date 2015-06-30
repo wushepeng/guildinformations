@@ -79,14 +79,6 @@ CREATE TABLE `gi_Homins` (
   `guildId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `gi_SkillConfigs`;
-CREATE TABLE `gi_SkillConfigs` (
-  `hominId` int(11) NOT NULL,
-  `skillCode` varchar(10) NOT NULL,
-  `visible` tinyint(1) NOT NULL DEFAULT '1',
-  UNIQUE KEY `unique` (`hominId`,`skillCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
 Avant d'aller plus loin il vous faut vous connecter sur l'application [Ryzom](http://app.ryzom.com), et ajouter une nouvelle app dans l'AppZone. Entrez un nom, indiquez l'url `http://127.0.0.1/ryzom/app`, copiez la clé api et enregistrez.
@@ -130,7 +122,6 @@ Enjoy.
       * `GeneralConfig.php`: objet encapsulant les configurations de l'application
       * `Guild.php`: objet représentant une guilde
       * `Homin.php`: objet représentant un homin
-      * `SkillConfig.php`: préférences utilisateur pour l'affichage des compétences
     * `Repository/`: les requêtes sql customs sur les entités sont définies dans ce dossier
     * `Resource/`: CRUD pour chaque entité
     * `AbstractResource.php`: connexion de l'ORM à la base de données

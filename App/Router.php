@@ -428,17 +428,8 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', 'isGuilded', function(
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
-	/*foreach($guildMembers as $homin) {
-		$lvl = getHominLevels($homin['apiKey'], 'h');
-		if(isset($lvl['error'])) {
-			array_push($homins, array('name' => $homin['name'], 'error' => true));
-		}
-		else {
-			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
-		}
-	}*/
 	foreach($guildMembers as $homin) {
-		$lvl = getHLevels($homin['apiKey'], 7);
+		$lvl = getHarvestLevels($homin['apiKey'], 7);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -465,34 +456,14 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', 'isGuilded', function(
 /*
  * Affichage des compétences d'artisanat
  */
-$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft(/)', 'checkRequest', 'isGuilded', function() use ($app) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
-	$homins = array();
-	foreach($guildMembers as $homin) {
-		$lvl = getHominLevels($homin['apiKey'], 'c');
-		if(isset($lvl['error'])) {
-			array_push($homins, array('name' => $homin['name'], 'error' => true));
-		}
-		else {
-			$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
-			$levels = array();
-			foreach($lvl as $comp) {
-				foreach($confs as $conf) {
-					if($conf['skillCode']==$comp['code']) {
-						array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-					}
-				}
-			}
-			array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
-		}
-	}
+	// @TODO
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'homins' => $homins,
 		'grade' => $userData['grade'],
 		'name' =>$userData['char_name']
 	);
@@ -508,14 +479,14 @@ $app->get('/ryzom/app/skills/craft(/)', 'checkRequest', 'isGuilded', function() 
 /*
  * Affichage des compétences d'artisanat en boucliers
  */
-$app->get('/ryzom/app/skills/craft/shield(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/shield(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 3);
+		$lvl = getCraftLevels($homin['apiKey'], 3);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -542,14 +513,14 @@ $app->get('/ryzom/app/skills/craft/shield(/)', 'checkRequest', 'isGuilded', func
 /*
  * Affichage des compétences d'artisanat en armures légères
  */
-$app->get('/ryzom/app/skills/craft/armor/light(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/armor/light(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 0);
+		$lvl = getCraftLevels($homin['apiKey'], 0);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -576,14 +547,14 @@ $app->get('/ryzom/app/skills/craft/armor/light(/)', 'checkRequest', 'isGuilded',
 /*
  * Affichage des compétences d'artisanat en armures moyennes
  */
-$app->get('/ryzom/app/skills/craft/armor/medium(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/armor/medium(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 1);
+		$lvl = getCraftLevels($homin['apiKey'], 1);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -610,14 +581,14 @@ $app->get('/ryzom/app/skills/craft/armor/medium(/)', 'checkRequest', 'isGuilded'
 /*
  * Affichage des compétences d'artisanat en armures lourdes
  */
-$app->get('/ryzom/app/skills/craft/armor/heavy(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/armor/heavy(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 2);
+		$lvl = getCraftLevels($homin['apiKey'], 2);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -644,14 +615,14 @@ $app->get('/ryzom/app/skills/craft/armor/heavy(/)', 'checkRequest', 'isGuilded',
 /*
  * Affichage des compétences d'artisanat en bijoux
  */
-$app->get('/ryzom/app/skills/craft/jewel(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/jewel(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 4);
+		$lvl = getCraftLevels($homin['apiKey'], 4);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -678,14 +649,14 @@ $app->get('/ryzom/app/skills/craft/jewel(/)', 'checkRequest', 'isGuilded', funct
 /*
  * Affichage des compétences d'artisanat en armes à une main
  */
-$app->get('/ryzom/app/skills/craft/weapon/melee1(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/weapon/melee1(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 5);
+		$lvl = getCraftLevels($homin['apiKey'], 5);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -712,14 +683,14 @@ $app->get('/ryzom/app/skills/craft/weapon/melee1(/)', 'checkRequest', 'isGuilded
 /*
  * Affichage des compétences d'artisanat en armes à deux mains
  */
-$app->get('/ryzom/app/skills/craft/weapon/melee2(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/weapon/melee2(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 6);
+		$lvl = getCraftLevels($homin['apiKey'], 6);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -746,14 +717,14 @@ $app->get('/ryzom/app/skills/craft/weapon/melee2(/)', 'checkRequest', 'isGuilded
 /*
  * Affichage des compétences d'artisanat en armes à distance
  */
-$app->get('/ryzom/app/skills/craft/weapon/range(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/craft/weapon/range(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getCLevels($homin['apiKey'], 7);
+		$lvl = getCraftLevels($homin['apiKey'], 7);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -786,17 +757,8 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() 
 	$userData = unserialize(base64_decode($user));
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
-	/*foreach($guildMembers as $homin) {
-		$lvl = getHominLevels($homin['apiKey'], 'm');
-		if(isset($lvl['error'])) {
-			array_push($homins, array('name' => $homin['name'], 'error' => true));
-		}
-		else {
-			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
-		}
-	}*/
 	foreach($guildMembers as $homin) {
-		$lvl = getMLevels($homin['apiKey'], 7);
+		$lvl = getMagicLevels($homin['apiKey'], 7);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -823,34 +785,14 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() 
 /*
  * Affichage du menu compétences de combat
  */
-$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
+$app->get('/ryzom/app/skills/fight(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
-	$homins = array();
-	foreach($guildMembers as $homin) {
-		$lvl = getHominLevels($homin['apiKey'], 'f');
-		if(isset($lvl['error'])) {
-			array_push($homins, array('name' => $homin['name'], 'error' => true));
-		}
-		else {
-			$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($homin['id']);
-			$levels = array();
-			foreach($lvl as $comp) {
-				foreach($confs as $conf) {
-					if($conf['skillCode']==$comp['code']) {
-						array_push($levels, array('value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-					}
-				}
-			}
-			array_push($homins, array('name' => $homin['name'], 'lvls' => $levels));
-		}
-	}
+	// @TODO
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'homins' => $homins,
 		'grade' => $userData['grade'],
 		'name' =>$userData['char_name']
 	);
@@ -873,7 +815,7 @@ $app->get('/ryzom/app/skills/fight/melee0(/)', 'checkRequest', 'isGuilded', func
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getFLevels($homin['apiKey'], 0);
+		$lvl = getFightLevels($homin['apiKey'], 0);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -907,7 +849,7 @@ $app->get('/ryzom/app/skills/fight/melee1(/)', 'checkRequest', 'isGuilded', func
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getFLevels($homin['apiKey'], 1);
+		$lvl = getFightLevels($homin['apiKey'], 1);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -941,7 +883,7 @@ $app->get('/ryzom/app/skills/fight/melee2(/)', 'checkRequest', 'isGuilded', func
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getFLevels($homin['apiKey'], 2);
+		$lvl = getFightLevels($homin['apiKey'], 2);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -966,7 +908,7 @@ $app->get('/ryzom/app/skills/fight/melee2(/)', 'checkRequest', 'isGuilded', func
 })->name('ryzomApp-Skills/Fight/Melee2');
 
 /*
- * Affichage des compétences de combat à deux mains
+ * Affichage des compétences de combat à distance
  */
 $app->get('/ryzom/app/skills/fight/range(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource) {
 	$user = $app->request()->params('user');
@@ -975,7 +917,7 @@ $app->get('/ryzom/app/skills/fight/range(/)', 'checkRequest', 'isGuilded', funct
 	$guildMembers = $hominResource->getEntityManager()->getRepository('\App\Entity\Homin')->getGuildMemberKeys($userData['guild_id']);
 	$homins = array();
 	foreach($guildMembers as $homin) {
-		$lvl = getFLevels($homin['apiKey'], 3);
+		$lvl = getFightLevels($homin['apiKey'], 3);
 		if(isset($lvl['error'])) {
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
@@ -998,100 +940,6 @@ $app->get('/ryzom/app/skills/fight/range(/)', 'checkRequest', 'isGuilded', funct
 		echo $app->view->render("fight.range.app.html.twig", $data);
 	}
 })->name('ryzomApp-Skills/Fight/Range');
-
-/*
- * Affichage de la page de configuration d'affichage des compétences
- */
-$app->get('/ryzom/app/homin/configuration(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
-	$user = $app->request()->params('user');
-	$checksum = $app->request()->params('checksum');
-	$userData = unserialize(base64_decode($user));
-	$homin = $hominResource->get($userData['id']);
-	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
-	$craftLvl = getHominLevels($homin['apiKey'], 'c');
-	$fightLvl = getHominLevels($homin['apiKey'], 'f');
-	if(isset($craftLvl['error']) || isset($fightLvl['error'])) {
-		$message = isset($craftLvl['error'])?$craftLvl['message']:$fightLvl['message'];
-		$app->redirect('/ryzom/app/homin/apiKey?checksum='.$checksum.'&user='.$user."&error=".$message);
-	}
-	$clevels = array();
-	$flevels = array();
-	if(empty($confs)) {
-		foreach($craftLvl as $comp) {
-			array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => true, 'name' => generalTrad($comp['code'])));
-		}
-		foreach($fightLvl as $comp) {
-			array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => true, 'name' => generalTrad($comp['code'])));
-		}
-	}
-	else {
-		foreach($craftLvl as $comp) {
-			foreach($confs as $conf) {
-				if($conf['skillCode']==$comp['code']) {
-					array_push($clevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-				}
-			}
-		}
-		foreach($fightLvl as $comp) {
-			foreach($confs as $conf) {
-				if($conf['skillCode']==$comp['code']) {
-					array_push($flevels, array('code' => $comp['code'], 'value' => $comp['value'], 'visible' => $conf['visible'], 'name' => generalTrad($comp['code'])));
-				}
-			}
-		}
-	}
-	$data = array(
-		'user' => $user,
-		'checksum' => $checksum,
-		'lvls' => array('craft' => $clevels, 'fight' => $flevels),
-		'grade' => $userData['grade'],
-		'name' =>$userData['char_name']
-	);
-	$ig = $app->request()->params('ig');
-	if($ig!=null) {
-		echo $app->view->render("ingame/skillConf.ig.html.twig", $data);
-	}
-	else {
-		echo $app->view->render("skillConf.app.html.twig", $data);
-	}
-})->name('ryzomApp-HominConfiguration');
-
-/*
- * Création/mise à jour de la configuration pour l'affichage des compétences
- */
-$app->post('/ryzom/app/homin/configuration(/)', 'checkRequest', 'isGuilded', function() use ($app, $hominResource, $skillConfigResource) {
-	$user = $app->request()->params('user');
-	$checksum = $app->request()->params('checksum');
-	$userData = unserialize(base64_decode($user));
-	$codes = getAllSkillCodes();
-	$homin = $hominResource->get($userData['id']);
-	$confs = $skillConfigResource->getEntityManager()->getRepository('\App\Entity\SkillConfig')->getSkillConfig($userData['id']);
-	foreach($codes as $code) {
-		if(empty($confs)) {
-			$param = $app->request()->params($code);
-			if($param!=null) {
-				$skillConfigResource->put($userData['id'], $code, true);
-			}
-			else {
-				$skillConfigResource->put($userData['id'], $code, false);
-			}
-		}
-		else {
-			foreach($confs as $conf) {
-				if($conf['skillCode']==$code) {
-					$param = $app->request()->params($code);
-					if($param!=null) {
-						$conf['visible']==true?:$skillConfigResource->put($userData['id'], $code, true);
-					}
-					else {
-						$conf['visible']==false?:$skillConfigResource->put($userData['id'], $code, false);
-					}
-				}
-			}
-		}
-	}
-	$app->redirect('/ryzom/app/homin/configuration?checksum='.$checksum.'&user='.$user);
-})->name('ryzomApp-HominConfiguration.post');
 
 /*
  * Route d'affichage pour les erreurs critiques

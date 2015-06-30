@@ -22,7 +22,6 @@ $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 $generalConfigResource = new \App\Resource\GeneralConfigResource();
 $guildResource = new \App\Resource\GuildResource();
 $hominResource = new \App\Resource\HominResource();
-$skillConfigResource = new \App\Resource\SkillConfigResource();
 
 $generalConf = $generalConfigResource->getEntityManager()->getRepository('\App\Entity\GeneralConfig')-> getGeneralConfig();
 define('RYAPI_APP_KEY',$generalConf['appKey']);
