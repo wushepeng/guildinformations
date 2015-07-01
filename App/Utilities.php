@@ -127,6 +127,14 @@ function sortByQuality($a, $b) {
 	}
 }
 
+function roundLevels($lvls) {
+	$levels = $lvls;
+	foreach($lvls as $name => $value) {
+		$levels[$name] = floor((floor($value) / 25))*25;
+	}
+	return $levels;
+}
+
 function getFightLevels($apiKey, $branch) {
 	$allLevels = getHominMaxLevels($apiKey);
 	if(isset($allLevels['error'])) {

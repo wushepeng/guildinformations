@@ -51,7 +51,7 @@ $app->get('/ryzom/app(/)', 'checkRequest', function() use ($app, $hominResource,
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'grade' => $userData['grade'],
+		'grade' => $grade,
 		'name' =>$userData['char_name']
 	);
 	// index en plus: timestamp, app_url, race, civilisation, cult, civ, organization, guild_icon, lang
@@ -434,6 +434,7 @@ $app->get('/ryzom/app/skills/harvest(/)', 'checkRequest', 'isGuilded', function(
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -491,6 +492,7 @@ $app->get('/ryzom/app/skills/craft/shield(/)', 'checkRequest', 'isGuilded', func
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -525,6 +527,7 @@ $app->get('/ryzom/app/skills/craft/armor/light(/)', 'checkRequest', 'isGuilded',
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -559,6 +562,7 @@ $app->get('/ryzom/app/skills/craft/armor/medium(/)', 'checkRequest', 'isGuilded'
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -593,6 +597,7 @@ $app->get('/ryzom/app/skills/craft/armor/heavy(/)', 'checkRequest', 'isGuilded',
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -627,6 +632,7 @@ $app->get('/ryzom/app/skills/craft/jewel(/)', 'checkRequest', 'isGuilded', funct
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -661,6 +667,7 @@ $app->get('/ryzom/app/skills/craft/weapon/melee1(/)', 'checkRequest', 'isGuilded
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -695,6 +702,7 @@ $app->get('/ryzom/app/skills/craft/weapon/melee2(/)', 'checkRequest', 'isGuilded
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -729,6 +737,7 @@ $app->get('/ryzom/app/skills/craft/weapon/range(/)', 'checkRequest', 'isGuilded'
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -763,6 +772,7 @@ $app->get('/ryzom/app/skills/magic(/)', 'checkRequest', 'isGuilded', function() 
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -820,6 +830,7 @@ $app->get('/ryzom/app/skills/fight/melee0(/)', 'checkRequest', 'isGuilded', func
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -854,6 +865,7 @@ $app->get('/ryzom/app/skills/fight/melee1(/)', 'checkRequest', 'isGuilded', func
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -888,6 +900,7 @@ $app->get('/ryzom/app/skills/fight/melee2(/)', 'checkRequest', 'isGuilded', func
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
@@ -922,6 +935,7 @@ $app->get('/ryzom/app/skills/fight/range(/)', 'checkRequest', 'isGuilded', funct
 			array_push($homins, array('name' => $homin['name'], 'error' => true));
 		}
 		else {
+			$lvl = $homin['name']==$userData['char_name']?$lvl:roundLevels($lvl);
 			array_push($homins, array('name' => $homin['name'], 'lvls' => $lvl));
 		}
 	}
