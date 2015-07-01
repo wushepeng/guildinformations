@@ -31,12 +31,12 @@
 				<td>X</td>
 				<td>X</td>
 			{% else %}
-				<td>{{ homin.lvls.bijouCheville }}</td>
-				<td>{{ homin.lvls.bijouPoignet }}</td>
-				<td>{{ homin.lvls.bijouTete }}</td>
-				<td>{{ homin.lvls.bijouOreille }}</td>
-				<td>{{ homin.lvls.bijouCou }}</td>
-				<td>{{ homin.lvls.bijouDoigt }}</td>
+				<td class="lvl-{{ homin.lvls.bijouCheville }}">{{ homin.lvls.bijouCheville }}</td>
+				<td class="lvl-{{ homin.lvls.bijouPoignet }}">{{ homin.lvls.bijouPoignet }}</td>
+				<td class="lvl-{{ homin.lvls.bijouTete }}">{{ homin.lvls.bijouTete }}</td>
+				<td class="lvl-{{ homin.lvls.bijouOreille }}">{{ homin.lvls.bijouOreille }}</td>
+				<td class="lvl-{{ homin.lvls.bijouCou }}">{{ homin.lvls.bijouCou }}</td>
+				<td class="lvl-{{ homin.lvls.bijouDoigt }}">{{ homin.lvls.bijouDoigt }}</td>
 			{% endif %}
 			</tr>
 		{% endfor %}

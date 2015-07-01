@@ -25,10 +25,10 @@
 				<td>X</td>
 				<td>X</td>
 			{% else %}
-				<td>{{ homin.lvls.heal }}</td>
-				<td>{{ homin.lvls.neutra }}</td>
-				<td>{{ homin.lvls.off }}</td>
-				<td>{{ homin.lvls.debi }}</td>
+				<td class="lvl-{{ homin.lvls.heal }}">{{ homin.lvls.heal }}</td>
+				<td class="lvl-{{ homin.lvls.neutra }}">{{ homin.lvls.neutra }}</td>
+				<td class="lvl-{{ homin.lvls.off }}">{{ homin.lvls.off }}</td>
+				<td class="lvl-{{ homin.lvls.debi }}">{{ homin.lvls.debi }}</td>
 			{% endif %}
 			</tr>
 		{% endfor %}

@@ -27,10 +27,10 @@
 				<td>X</td>
 				<td>X</td>
 			{% else %}
-				<td>{{ homin.lvls.shotgun }}</td>
-				<td>{{ homin.lvls.lg }}</td>
-				<td>{{ homin.lvls.submachinegun }}</td>
-				<td>{{ homin.lvls.handgun }}</td>
+				<td class="lvl-{{ homin.lvls.shotgun }}">{{ homin.lvls.shotgun }}</td>
+				<td class="lvl-{{ homin.lvls.lg }}">{{ homin.lvls.lg }}</td>
+				<td class="lvl-{{ homin.lvls.submachinegun }}">{{ homin.lvls.submachinegun }}</td>
+				<td class="lvl-{{ homin.lvls.handgun }}">{{ homin.lvls.handgun }}</td>
 			{% endif %}
 			</tr>
 		{% endfor %}

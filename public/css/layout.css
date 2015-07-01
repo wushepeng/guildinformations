@@ -1,3 +1,5 @@
+/*****General rules*****/
+
 body {
 	background-image: url(/images/background.jpg);
 	background-repeat: no-repeat;
@@ -15,10 +17,16 @@ body {
 	text-align: left;
 }
 
+#content {
+	margin-top: 20px;
+}
+
 a, a:visited {
 	color: orange;
 	font-size: 13px
 }
+
+/*****Sill tables rules*****/
 
 .skill-table {
 	border-collapse: collapse;
@@ -58,6 +66,52 @@ a, a:visited {
 	border-right: 1px solid white;
 }
 
+.lvl-0 {
+	color: #ff0000;
+}
+
+.lvl-25 {
+	color: #ff2200;
+}
+
+.lvl-50 {
+	color: #cc2200;
+}
+
+.lvl-75 {
+	color: #cc4400;
+}
+
+.lvl-100 {
+	color: #aa4400;
+}
+
+.lvl-125 {
+	color: #aa6600;
+}
+
+.lvl-150 {
+	color: #886600;
+}
+
+.lvl-175 {
+	color: #668800;
+}
+
+.lvl-200 {
+	color: #44aa00;
+}
+
+.lvl-225 {
+	color: #22cc00;
+}
+
+.lvl-250 {
+	color: #00ff00;
+}
+
+/*****Helpers*****/
+
 .center {
 	margin: auto;
 }
@@ -76,8 +130,4 @@ a, a:visited {
 
 .padding {
 	padding: 3px 5px;
-}
-
-#content {
-	margin-top: 20px;
 }

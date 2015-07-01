@@ -23,8 +23,8 @@
 				<td>X</td>
 				<td>X</td>
 			{% else %}
-				<td>{{ homin.lvls.dague }}</td>
-				<td>{{ homin.lvls.mains }}</td>
+				<td class="lvl-{{ homin.lvls.dague }}">{{ homin.lvls.dague }}</td>
+				<td class="lvl-{{ homin.lvls.mains }}">{{ homin.lvls.mains }}</td>
 			{% endif %}
 			</tr>
 		{% endfor %}

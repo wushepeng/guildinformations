@@ -29,11 +29,11 @@
 				<td>X</td>
 				<td>X</td>
 			{% else %}
-				<td>{{ homin.lvls.arme2Hache }}</td>
-				<td>{{ homin.lvls.arme2Massue }}</td>
-				<td>{{ homin.lvls.arme2Pique }}</td>
-				<td>{{ homin.lvls.arme2Epee }}</td>
-				<td>{{ homin.lvls.arme2Ampli }}</td>
+				<td class="lvl-{{ homin.lvls.arme2Hache }}">{{ homin.lvls.arme2Hache }}</td>
+				<td class="lvl-{{ homin.lvls.arme2Massue }}">{{ homin.lvls.arme2Massue }}</td>
+				<td class="lvl-{{ homin.lvls.arme2Pique }}">{{ homin.lvls.arme2Pique }}</td>
+				<td class="lvl-{{ homin.lvls.arme2Epee }}">{{ homin.lvls.arme2Epee }}</td>
+				<td class="lvl-{{ homin.lvls.arme2Ampli }}">{{ homin.lvls.arme2Ampli }}</td>
 			{% endif %}
 			</tr>
 		{% endfor %}
