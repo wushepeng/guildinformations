@@ -1,20 +1,27 @@
 {% extends "ingame/skills.ig.html.twig" %}
 
 {% block skillContent %}
-	<h2>Niveau de forage</h2>
-	<table>
-		<tr>
-			<td>Nom</td>
-			<td>Forage en désert</td>
-			<td>Forage en forêt</td>
-			<td>Forage en jungle</td>
-			<td>Forage lacustre</td>
-			<td>Forage en primes racines</td>
+	<h5>Niveaux de forage</h5>
+	<table width="100%">
+		<tr align="center" valign="middle">
+			<td height="18"><font size="15">Nom</font></td>
+			<td><font size="15">Forage en désert</font></td>
+			<td><font size="15">Forage en forêt</font></td>
+			<td><font size="15">Forage en jungle</font></td>
+			<td><font size="15">Forage lacustre</font></td>
+			<td><font size="15">Forage en primes racines</font></td>
 		</tr>
+		{% set count = 0 %}
 	{% for homin in homins %}
-		<tr>
-			<td>{{ homin.name }}</td>
+		{% set count = count+1 %}
+		{% set color = "#66330080" %}
+		{% if count%2 == 0 %}
+			{% set color = "#33333380" %}
+		{% endif %}
+		<tr align="center" bgcolor="{{ color }}" valign="middle">
+			<td height="15"><font size="12">{{ homin.name }}</font></td>
 		{% if homin.error %}
+			<td>X</td>
 			<td>X</td>
 			<td>X</td>
 			<td>X</td>

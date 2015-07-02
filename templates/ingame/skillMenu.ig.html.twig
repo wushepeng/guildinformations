@@ -1,8 +1,13 @@
 {% block skillMenu %}
-	<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
-	<a href="{{ urlFor('ryzomApp-Skills/Harvest') }}?checksum={{ checksum }}&user={{ user }}">Forage</a>
-	<a href="{{ urlFor('ryzomApp-Skills/Craft') }}?checksum={{ checksum }}&user={{ user }}">Artisanat</a>
-	<a href="{{ urlFor('ryzomApp-Skills/Magic') }}?checksum={{ checksum }}&user={{ user }}">Magie</a>
-	<a href="{{ urlFor('ryzomApp-Skills/Fight') }}?checksum={{ checksum }}&user={{ user }}">Combat</a>
-	<a href="{{ urlFor('ryzomApp-Skills') }}?checksum={{ checksum }}&user={{ user }}">Retour</a>
+	<h3>Niveaux de la guilde</h3>
+	<table bgcolor="#000000" border="0" width="100%">
+		<tr valign="middle">
+			<td height="20">
+				<a href="{{ urlFor('ryzomApp-Skills/Harvest') }}?checksum={{ checksum }}&user={{ user }}">Forage</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft') }}?checksum={{ checksum }}&user={{ user }}">Artisanat</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Magic') }}?checksum={{ checksum }}&user={{ user }}">Magie</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight') }}?checksum={{ checksum }}&user={{ user }}">Combat</a>
+			</td>
+		</tr>
+	</table>
 {% endblock %}

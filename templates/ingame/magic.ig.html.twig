@@ -1,19 +1,25 @@
 {% extends "ingame/skills.ig.html.twig" %}
 
 {% block skillContent %}
-	<h2>Niveau de magie</h2>
-	<table>
-		<tr>
-			<td>Nom</td>
-			<td>Curative</td>
-			<td>Neutralisante</td>
-			<td>Élémentaire</td>
-			<td>Débilitante</td>
+	<h5>Niveaux de magie</h5>
+	<table width="100%">
+		<tr align="center" valign="middle">
+			<td height="18"><font size="15">Nom</font></td>
+			<td height="18"><font size="15">Magie Curative</font></td>
+			<td height="18"><font size="15">Magie Neutralisante</font></td>
+			<td height="18"><font size="15">Magie Élémentaire</font></td>
+			<td height="18"><font size="15">Magie Débilitante</font></td>
 		</tr>
+		{% set count = 0 %}
 	{% for homin in homins %}
-		<tr>
-			<td>{{ homin.name }}</td>
-			{% if homin.error %}
+		{% set count = count+1 %}
+		{% set color = "#66330080" %}
+		{% if count%2 == 0 %}
+			{% set color = "#33333380" %}
+		{% endif %}
+		<tr align="center" bgcolor="{{ color }}" valign="middle">
+			<td height="15"><font size="12">{{ homin.name }}</font></td>
+		{% if homin.error %}
 			<td>X</td>
 			<td>X</td>
 			<td>X</td>
