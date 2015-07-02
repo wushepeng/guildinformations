@@ -11,11 +11,20 @@
 		{% else %}
 			{% set checkQuality = 'checked="checked"' %}
 		{% endif %}
-		<input type="checkbox" name="type" {{ checkType }}/>Type
-		<input type="checkbox" name="quality" {{ checkQuality }}/>Qualité
-		<input type="submit" value="Trier"/>
-		<p>Ne cocher qu'une case, sinon le tri par défaut sera utilisé</p>
-		<!-- Le bouton "radio" n'est pas supporté dans le navigateur ingame -->
+		<table boreder="0" width="100%">
+			<tr valgin="middle">
+				<td align="right">
+					<input type="checkbox" name="type" {{ checkType }}/> Type
+					 <input type="checkbox" name="quality" {{ checkQuality }}/> Qualité
+					 <pre><input type="submit" value="Trier"/>    </pre>
+				</td>
+			</tr>
+			<tr valign="middle">
+				<td align="right" height="9">
+					(Ne cocher qu'une case, sinon le tri par défaut sera utilisé)
+				</td>
+			</tr>
+		</table>
 	</form>
 	<h2>{{ guild.name }}</h2>
 	<div>
