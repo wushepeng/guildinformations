@@ -4,13 +4,17 @@
 <form action="{{ urlFor('ryzomApp-GuildKey.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
-	Votre clé de guilde : <br/>
-	<input type="text" value="{{ apiKey }}" name="apiKey"/>
+	<h5>Entrez votre clé api* de guilde : </h5>
+<pre>    <input type="text" value="{{ apiKey }}" name="apiKey" size="155"/></pre>
+	<br>
+	<br>
 	{% set value = "Mettre à jour" %}
 	{% if apiKey is null %}
 		{% set value = "Enregistrer" %}
 	{% endif %}
-	<input type="submit" value="{{ value }}"/>
+<pre>    <input type="submit" value="{{ value }}"/></pre>
 </form>
-<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+<br>
+<br>
+<pre>    * clé avec l'option "G03 Inventaire"</pre>
 {% endblock %}

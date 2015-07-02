@@ -1,26 +1,35 @@
 {% extends "ingame/content.ig.html.twig" %}
 
 {% block content %}
-{% if addError %}
-	<div>
-		<p>Problème lors de la récupération des informations. Vérifiez la clé api et re-essayez.</p>
-	</div>
-{% endif %}
+<br>
 {% for guild in guilds %}
-	<div>
-		<p>{{ guild.name }}</p>
-		<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>
-	</div>
+	<table border="0" width="100%">
+		<tr valign="middle">
+			<td align="center">
+				<font size="14">{{ guild.name }}</font>
+			</td>
+		</tr>
+		<tr valign="middle">
+			<td align="center">
+				(<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>)
+			</td>
+		</tr>
+	</table>
+	<br>
 {% endfor %}
 
 <form action="{{ urlFor('ryzomApp-GuildConfiguration.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
 	<div>
-		<p>Ajouter un entrepot: </p>
-		<input type="text" name="newApiKey"/>
-		<input type="submit" value="Enregistrer"/>
+		<h5>Ajouter un entrepot*: </h5>
+		<pre>    <input type="text" name="newApiKey"/></pre>
+		<br>
+		<br>
+		<pre>    <input type="submit" value="Enregistrer"/></pre>
 	</div>
 </form>
-<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+<br>
+<br>
+<pre>    * clé api avec l'option "G03 Inventaire"</pre>
 {% endblock %}

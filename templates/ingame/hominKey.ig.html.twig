@@ -2,18 +2,22 @@
 
 {% block content %}
 {% if error is not null %}
-	<p>Votre clé est invalide, veuillez la mettre à jour.</p>
+	<p>Votre clé est invalide, veuillez la mettre à jour.<br></p>
 {% endif %}
 <form action="{{ urlFor('ryzomApp-HominKey.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
-	Votre clé API personnelle : <br/>
-	<input type="text" value="{{ apiKey }}" name="apiKey"/>
+	<h5>Entrez votré clé api* :</h5>
+<pre>    <input type="text" value="{{ apiKey }}" name="apiKey" size="155"/></pre>
 	{% set value = "Mettre à jour" %}
 	{% if apiKey is null %}
 		{% set value = "Enregistrer" %}
 	{% endif %}
-	<input type="submit" value="{{ value }}"/>
+	<br>
+	<br>
+<pre>    <input type="submit" value="{{ value }}"/></pre>
 </form>
-<a href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">Retour accueil</a>
+<br>
+<br>
+<pre>    * clé avec l'option "P02 Compétences"</pre>
 {% endblock %}
