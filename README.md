@@ -138,6 +138,10 @@ Enjoy.
     * `cache/`: ce dossier est utilisé par le moteur de templates (requiert les droits d'écriture)
     * `ingame/`: on trouve ici les vues utilisées pour l'affichage dans le jeu
     * `*.html.twig`: les vues pour l'affichage depuis le navigateur web
+  * `LICENSE`: license
+  * `README.md`: le présent fichier
+  * `composer.json`: les  dépendances du projet
+  * `migrate-database-v1-to-v2.sql`: script à utiliser pour migrer la base de données de la version 1 à la v2
 
 ###Documentations
 
