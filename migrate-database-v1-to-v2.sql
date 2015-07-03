@@ -24,13 +24,16 @@ CREATE TABLE `gi_Homins` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/* Dans l'ancienne base de donnés le champ nom, pour les guildes et les homins, peut être à null
+ * Si c'est le cas, on ajoute un nom par défaut, le nom étant mis à jour par la nouvelle application
+ */
 UPDATE `competences2`.`gi_guilde_api`
 SET `nomguilde` = "theNameWillBeUpdatedByTheApp"
-WHERE `nomguilde` == NULL;
+WHERE `nomguilde` IS NULL;
 
 UPDATE `competences2`.`gi_perso_api`
 SET `nomperso` = "theNameWillBeUpdatedByTheApp"
-WHERE `nomperso` == NULL;
+WHERE `nomperso` IS NULL;
 
 INSERT INTO `gi_GeneralConfig`
 VALUES ('_APPKEY_', '_APPURL_', 0);
