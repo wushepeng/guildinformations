@@ -1,6 +1,8 @@
 DROP DATABASE IF EXISTS `guildInf_test`;
 CREATE DATABASE `guildInf_test`;
 
+USE `guildInf_test`;
+
 DROP TABLE IF EXISTS `guildInf_test`.`gi_GeneralConfig`;
 CREATE TABLE `guildInf_test`.`gi_GeneralConfig` (
   `RYAPI_APP_KEY` varchar(41) NOT NULL,
@@ -39,3 +41,7 @@ INSERT INTO `guildInf_test`.`gi_Homins` (`id`, `name`, `apiKey`, `guildId`)
 SELECT `p`.`idperso`, `p`.`nomperso`, `p`.`apikey`, `p`.`mainguild`
 FROM `competences`.`gi_perso_api` AS `p`
 WHERE `p`.`idperso` > 0;
+
+CREATE USER 'guildInfAdmin'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON `guildInf_test`.* TO 'guildInfAdmin'@'localhost';
+FLUSH PRIVILEGES;
