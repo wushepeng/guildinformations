@@ -25,10 +25,14 @@ CREATE TABLE `gi_Homins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `gi_GeneralConfig`
-SELECT * FROM `competences`.`gi_general_config`;
+VALUES ('_APPKEY_', '_APPURL_', 0);
 
-INSERT INTO `gi_Guild`
-SELECT * FROM `competences`.`gi_guilde_api`;
+INSERT INTO `gi_Guilds` (`id`, 'theNameWillBeUpdatedByTheApp', `apiKey`, `mainGuildId`)
+SELECT `g`.`idguilde` AS `id`, `g`.`apikey` AS `apiKey`, `g`.`mainguild` AS `mainGuildId`
+FROM `competences`.`gi_guilde_api` AS `g`
+WHERE `g`.`idguilde` != NULL;
 
-INSERT INTO `gi_Homins`
-SELECT * FROM `competences`.`gi_perso_api`;
+INSERT INTO `gi_Homins` (`id`, 'theNameWillBeUpdatedByTheApp', `apiKey`, `guildId`)
+SELECT `p`.`idperso` AS `id`, `p`.`apikey` AS `apiKey`, `p`.`mainguild` AS `guildId`
+FROM `competences`.`gi_perso_api` AS `p`
+WHERE `p`.`idperso` != NULL;
