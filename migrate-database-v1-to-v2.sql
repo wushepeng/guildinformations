@@ -36,11 +36,11 @@ INSERT INTO `gi_GeneralConfig`
 VALUES ('_APPKEY_', '_APPURL_', 0);
 
 INSERT INTO `gi_Guilds` (`id`, `name`, `apiKey`, `mainGuildId`)
-SELECT `g`.`idguilde` AS `id`, `g`.`nomguilde` AS `name`, `g`.`apikey` AS `apiKey`, `g`.`mainguild` AS `mainGuildId`
+SELECT `g`.`idguilde`, `g`.`nomguilde`, `g`.`apikey`, `g`.`mainguild`
 FROM `competences2`.`gi_guilde_api` AS `g`
-WHERE `g`.`idguilde` != NULL;
+WHERE `g`.`idguilde` > 0;
 
 INSERT INTO `gi_Homins` (`id`, `name`, `apiKey`, `guildId`)
-SELECT `p`.`idperso` AS `id`, `p`.`nomperso` AS `name`, `p`.`apikey` AS `apiKey`, `p`.`mainguild` AS `guildId`
+SELECT `p`.`idperso`, `p`.`nomperso`, `p`.`apikey`, `p`.`mainguild`
 FROM `competences2`.`gi_perso_api` AS `p`
-WHERE `p`.`idperso` != NULL;
+WHERE `p`.`idperso` > 0;
