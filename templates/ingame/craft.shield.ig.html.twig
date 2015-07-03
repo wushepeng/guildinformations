@@ -1,12 +1,12 @@
-{% extends "ingame/fight.ig.html.twig" %}
+{% extends "ingame/craft.ig.html.twig" %}
 
-{% block fightSkill %}
-	<h5>Niveaux en Combat à mains nues</h5>
+{% block craftSkill %}
+	<h5>Niveaux d'Artisanat en boucliers</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
 			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Dague</font></td>
-			<td><font size="15">Corps à corps</font></td>
+			<td><font size="15">Grand bouclier</font></td>
+			<td><font size="15">Rondache</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}
@@ -21,8 +21,8 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.dague }}</td>
-			<td>{{ homin.lvls.mains }}</td>
+			<td>{{ homin.lvls.armureBBouclier }}</td>
+			<td>{{ homin.lvls.armureBRondache }}</td>
 		{% endif %}
 		</tr>
 	{% endfor %}

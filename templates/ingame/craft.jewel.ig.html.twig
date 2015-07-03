@@ -1,0 +1,42 @@
+{% extends "ingame/craft.ig.html.twig" %}
+
+{% block craftSkill %}
+	<h5>Niveaux d'Artisanat en bijoux</h5>
+	<table width="100%">
+		<tr align="center" valign="middle">
+			<td height="18"><font size="15">Nom</font></td>
+			<td><font size="15">Anneau de cheville</font></td>
+			<td><font size="15">Bracelet</font></td>
+			<td><font size="15">Diadème</font></td>
+			<td><font size="15">Boucle d'oreille</font></td>
+			<td><font size="15">Pendentif</font></td>
+			<td><font size="15">Bague</font></td>
+		</tr>
+		{% set count = 0 %}
+	{% for homin in homins %}
+		{% set count = count+1 %}
+		{% set color = "#66330080" %}
+		{% if count%2 == 0 %}
+			{% set color = "#33333380" %}
+		{% endif %}
+		<tr align="center" bgcolor="{{ color }}" valign="middle">
+			<td height="15"><font size="12">{{ homin.name }}</font></td>
+		{% if homin.error %}
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+		{% else %}
+			<td>{{ homin.lvls.bijouCheville }}</td>
+			<td>{{ homin.lvls.bijouPoignet }}</td>
+			<td>{{ homin.lvls.bijouTete }}</td>
+			<td>{{ homin.lvls.bijouOreille }}</td>
+			<td>{{ homin.lvls.bijouCou }}</td>
+			<td>{{ homin.lvls.bijouDoigt }}</td>
+		{% endif %}
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

@@ -1,12 +1,14 @@
 {% extends "ingame/fight.ig.html.twig" %}
 
 {% block fightSkill %}
-	<h5>Niveaux en Combat à mains nues</h5>
+	<h5>Niveaux en Combat à distance</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
 			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Dague</font></td>
-			<td><font size="15">Corps à corps</font></td>
+			<td><font size="15">Fusil</font></td>
+			<td><font size="15">Lance-grenade</font></td>
+			<td><font size="15">Mitraillette</font></td>
+			<td><font size="15">Pistolet</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}
@@ -20,9 +22,13 @@
 		{% if homin.error %}
 			<td>X</td>
 			<td>X</td>
+			<td>X</td>
+			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.dague }}</td>
-			<td>{{ homin.lvls.mains }}</td>
+			<td>{{ homin.lvls.shotgun }}</td>
+			<td>{{ homin.lvls.lg }}</td>
+			<td>{{ homin.lvls.submachinegun }}</td>
+			<td>{{ homin.lvls.handgun }}</td>
 		{% endif %}
 		</tr>
 	{% endfor %}
