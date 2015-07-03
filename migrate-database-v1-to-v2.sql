@@ -42,6 +42,7 @@ SELECT `p`.`idperso`, `p`.`nomperso`, `p`.`apikey`, `p`.`mainguild`
 FROM `competences`.`gi_perso_api` AS `p`
 WHERE `p`.`idperso` > 0;
 
+DROP USER IF EXISTS 'guildInfAdmin'@'localhost';
 CREATE USER 'guildInfAdmin'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON `guildInf_test`.* TO 'guildInfAdmin'@'localhost';
 FLUSH PRIVILEGES;
