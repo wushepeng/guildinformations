@@ -24,15 +24,23 @@ CREATE TABLE `gi_Homins` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+UPDATE `competences2`.`gi_guilde_api`
+SET `nomguilde` = "theNameWillBeUpdatedByTheApp"
+WHERE `nomguilde` == NULL;
+
+UPDATE `competences2`.`gi_perso_api`
+SET `nomperso` = "theNameWillBeUpdatedByTheApp"
+WHERE `nomperso` == NULL;
+
 INSERT INTO `gi_GeneralConfig`
 VALUES ('_APPKEY_', '_APPURL_', 0);
 
-INSERT INTO `gi_Guilds` (`id`, 'theNameWillBeUpdatedByTheApp', `apiKey`, `mainGuildId`)
-SELECT `g`.`idguilde` AS `id`, `g`.`apikey` AS `apiKey`, `g`.`mainguild` AS `mainGuildId`
-FROM `competences`.`gi_guilde_api` AS `g`
+INSERT INTO `gi_Guilds` (`id`, `name`, `apiKey`, `mainGuildId`)
+SELECT `g`.`idguilde` AS `id`, `g`.`nomguilde` AS `name`, `g`.`apikey` AS `apiKey`, `g`.`mainguild` AS `mainGuildId`
+FROM `competences2`.`gi_guilde_api` AS `g`
 WHERE `g`.`idguilde` != NULL;
 
-INSERT INTO `gi_Homins` (`id`, 'theNameWillBeUpdatedByTheApp', `apiKey`, `guildId`)
-SELECT `p`.`idperso` AS `id`, `p`.`apikey` AS `apiKey`, `p`.`mainguild` AS `guildId`
-FROM `competences`.`gi_perso_api` AS `p`
+INSERT INTO `gi_Homins` (`id`, `name`, `apiKey`, `guildId`)
+SELECT `p`.`idperso` AS `id`, `p`.`nomperso` AS `name`, `p`.`apikey` AS `apiKey`, `p`.`mainguild` AS `guildId`
+FROM `competences2`.`gi_perso_api` AS `p`
 WHERE `p`.`idperso` != NULL;
