@@ -130,7 +130,12 @@ function sortByQuality($a, $b) {
 function roundLevels($lvls) {
 	$levels = $lvls;
 	foreach($lvls as $name => $value) {
-		$levels[$name] = floor((floor($value) / 25))*25;
+		if($value>=25) {
+			$levels[$name] = floor((floor($value) / 25))*25;
+		}
+		else {
+			$levels[$name] = "25-";
+		}
 	}
 	return $levels;
 }
