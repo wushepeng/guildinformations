@@ -42,7 +42,10 @@ SELECT `p`.`idperso`, `p`.`nomperso`, `p`.`apikey`, `p`.`mainguild`
 FROM `competences`.`gi_perso_api` AS `p`
 WHERE `p`.`idperso` > 0;
 
-DROP USER IF EXISTS 'guildInfAdmin'@'localhost';
+GRANT USAGE ON *.* TO 'guildInfAdmin'@'localhost'
+/* Mysql n'offre pas la possibilité de vérifier si un utilisateur existe ou non
+ * Le grant usage va le créer si jamais il n'existe pas, seule façon d'éviter une erreur à cette ligne lors d'une deuxième exécution du script */
+DROP USER 'guildInfAdmin'@'localhost';
 CREATE USER 'guildInfAdmin'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON `guildInf_test`.* TO 'guildInfAdmin'@'localhost';
 FLUSH PRIVILEGES;
