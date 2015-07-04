@@ -274,9 +274,6 @@ $app->post('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() us
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	if($userData['grade']=="Member") {
-		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
-	}
 	$search = $app->request()->params('search');
 	if($search==null || $search=="") {
 		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
