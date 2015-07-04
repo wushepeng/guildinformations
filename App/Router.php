@@ -8,14 +8,29 @@ function checkRequest(\Slim\Route $route) {
 	$checksum = $app->request()->params('checksum');
 	if($user==null || $checksum==null) {
 		$message = "L'application ne marche pas sur appels directs, veuillez passer par ryzom (ig ou webapp)";
+		$log = "what:param user or checksum missing | path:".$app->request->getPathInfo();
+		$app->log->warning($log);
 		$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
 	}
 	else {
 		$hashmac = hash_hmac('sha1', $user, RYAPI_APP_KEY);
 		if($hashmac!=$checksum) {
 			$message = "Erreur de somme de contrôle";
+			$log = "what:bad checksum | path:".$app->request->getPathInfo();
+			$app->log->warning($log);
 			$app->redirect($app->urlFor('ryzomApp-Error', array('message' => urlencode($message))));
 		}
+		$userData = unserialize(base64_decode($user));
+		$log = "id:".$userData['id']." | ";
+		$log .= "name:".$userData['char_name']." | ";
+		$log .= "guild:".$userData['guild_id']." | ";
+		$log .= "guildName:".$userData['guild_name']." | ";
+		$ig = $app->request()->params('ig');
+		if($ig!=null) {
+			$log = "ig:".$ig." | ";
+		}
+		$log .= "path:".$app->request->getPathInfo();
+		$app->log->info($log);
 	}
 }
 

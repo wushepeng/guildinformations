@@ -1,7 +1,8 @@
 /vendor/
 /templates/cache/*
 !/templates/cache/README.md
+/logs/*
+!/logs/README.md
 .DS_STORE
 composer.lock
 *~
-config.php

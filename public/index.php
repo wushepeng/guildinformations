@@ -6,7 +6,12 @@ require '../libs/ryzom_extra.php';
 // Prepare app
 $app = new \Slim\Slim(array(
     'templates.path' => '../templates',
+    'log.enabled' => true,
+    'log.level' => \Slim\Log::INFO
 ));
+
+// Prepare logger
+$app->getLog()->setWriter(new \App\Logger());
 
 // Prepare view
 $app->view(new \Slim\Views\Twig());
