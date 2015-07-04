@@ -125,10 +125,12 @@ Enjoy.
     * `Repository/`: les requêtes sql customs sur les entités sont définies dans ce dossier
     * `Resource/`: CRUD pour chaque entité
     * `AbstractResource.php`: connexion de l'ORM à la base de données
+    * `Logger.php`: classe définissant le logger de l'application
     * `Router.php`: définition des routes de l'application
     * `Utilities.php`: fonctions utiles
   * `libs/`: les différentes librairies utilisées sont dans ce dossier
   * `locales/`: non utilisé pour le moment
+  * `logs/`: les logs seront écrits dans ce dossier
   * `public/`: dossier racine du site web
     * `css/`: ici les feuilles de style css
     * `images/`: ici les images
