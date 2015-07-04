@@ -5,10 +5,10 @@
 				<a href="{{ urlFor('ryzomApp-Inventory') }}?checksum={{ checksum }}&user={{ user }}">Chercher un objet</a>
 			</span>
 			<span>
-				 | Afficher:
+				 | Afficher: 
 			{% for guild in guilds %}
 				<span>
-					 - <a href="{{ urlFor('ryzomApp-Inventory/guild', {'guildId': guild.id}) }}?checksum={{ checksum }}&user={{ user }}">{{ guild.name }}</a>
+					<a href="{{ urlFor('ryzomApp-Inventory/guild', {'guildId': guild.id}) }}?checksum={{ checksum }}&user={{ user }}">{{ guild.name }}</a> - 
 				</span>
 			{% endfor %}
 			</span>

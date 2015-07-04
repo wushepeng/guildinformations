@@ -243,12 +243,18 @@ $app->get('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() use
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
-	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	$guildMenu = array();
+	array_push($guildMenu, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	if($userData['grade']=="HighOfficer" || $userData['grade']=="Leader") {
+		$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+		foreach($guilds as $guild) {
+			array_push($guildMenu, $guild);
+		}
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guilds' => $guilds,
+		'guilds' => $guildMenu,
 		'grade' => $userData['grade'],
 		'name' =>$userData['char_name']
 	);
@@ -268,8 +274,6 @@ $app->post('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() us
 	$user = $app->request()->params('user');
 	$checksum = $app->request()->params('checksum');
 	$userData = unserialize(base64_decode($user));
-	$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
-	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
 	if($userData['grade']=="Member") {
 		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
 	}
@@ -278,10 +282,18 @@ $app->post('/ryzom/app/inventory(/)', 'checkRequest', 'isGuilded', function() us
 		$app->redirect('/ryzom/app/inventory?checksum='.$checksum.'&user='.$user);
 	}
 	$searchResult = searchItem($search, $userData['guild_id'], $userData['grade']);
+	$guildMenu = array();
+	array_push($guildMenu, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	if($userData['grade']=="HighOfficer" || $userData['grade']=="Leader") {
+		$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+		foreach($guilds as $guild) {
+			array_push($guildMenu, $guild);
+		}
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guilds' => $guilds,
+		'guilds' => $guildMenu,
 		'searchResult' => $searchResult,
 		'grade' => $userData['grade'],
 		'name' =>$userData['char_name']
@@ -326,12 +338,19 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', funct
 	if(!isset($guildItems['error'])) {
 		usort($guildItems, 'sortByType');
 	}
-	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	$guildMenu = array();
+	array_push($guildMenu, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	if($userData['grade']=="HighOfficer" || $userData['grade']=="Leader") {
+		$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+		foreach($guilds as $guild) {
+			array_push($guildMenu, $guild);
+		}
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
 		'guild' => array('name' => $guild['name'], 'id' => $guildId),
-		'guilds' => $guilds,
+		'guilds' => $guildMenu,
 		'items' => $guildItems,
 		'sort' => 'type',
 		'grade' => $userData['grade'],
@@ -391,12 +410,19 @@ $app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', func
 			}
 		}
 	}
-	array_push($guilds, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	$guildMenu = array();
+	array_push($guildMenu, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
+	if($userData['grade']=="HighOfficer" || $userData['grade']=="Leader") {
+		$guilds = $guildResource->getEntityManager()->getRepository('\App\Entity\Guild')->getRelatedGuilds($userData['guild_id']);
+		foreach($guilds as $guild) {
+			array_push($guildMenu, $guild);
+		}
+	}
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
 		'guild' => array('name' => $guild['name'], 'id' => $guildId),
-		'guilds' => $guilds,
+		'guilds' => $guildMenu,
 		'items' => $guildItems,
 		'sort' => $sort,
 		'grade' => $userData['grade'],
