@@ -127,14 +127,14 @@ function sortByQuality($a, $b) {
 	}
 }
 
-function roundLevels($lvls) {
+function roundLevels($lvls, $round = 25) {
 	$levels = $lvls;
 	foreach($lvls as $name => $value) {
-		if($value>=25) {
-			$levels[$name] = floor((floor($value) / 25))*25;
+		if($value>=$round) {
+			$levels[$name] = floor((floor($value) / $round))*$round;
 		}
 		else {
-			$levels[$name] = "25-";
+			$levels[$name] = $round."-";
 		}
 	}
 	return $levels;
