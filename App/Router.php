@@ -335,6 +335,7 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', funct
 	if(!isset($guildItems['error'])) {
 		usort($guildItems, 'sortByType');
 	}
+	$guildName = $guild['name'];
 	$guildMenu = array();
 	array_push($guildMenu, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
 	if($userData['grade']=="HighOfficer" || $userData['grade']=="Leader") {
@@ -346,7 +347,7 @@ $app->get('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', funct
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guild' => array('name' => $guild['name'], 'id' => $guildId),
+		'guild' => array('name' => $guildName, 'id' => $guildId),
 		'guilds' => $guildMenu,
 		'items' => $guildItems,
 		'sort' => 'type',
@@ -407,6 +408,7 @@ $app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', func
 			}
 		}
 	}
+	$guildName = $guild['name'];
 	$guildMenu = array();
 	array_push($guildMenu, array('id' => $userData['guild_id'], 'name' => $userData['guild_name']));
 	if($userData['grade']=="HighOfficer" || $userData['grade']=="Leader") {
@@ -418,7 +420,7 @@ $app->post('/ryzom/app/inventory/:guildId(/)', 'checkRequest', 'isGuilded', func
 	$data = array(
 		'user' => $user,
 		'checksum' => $checksum,
-		'guild' => array('name' => $guild['name'], 'id' => $guildId),
+		'guild' => array('name' => $guildName, 'id' => $guildId),
 		'guilds' => $guildMenu,
 		'items' => $guildItems,
 		'sort' => $sort,
