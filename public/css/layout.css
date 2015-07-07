@@ -66,7 +66,7 @@ a, a:visited {
 	border-right: 1px solid white;
 }
 
-.lvl-25- {
+.lvl-25-, .lvl-10-, .lvl-20, .lvl-10 {
 	color: #ff0000;
 }
 
@@ -74,39 +74,39 @@ a, a:visited {
 	color: #ff2200;
 }
 
-.lvl-50 {
+.lvl-50, .lvl-40, .lvl-30 {
 	color: #cc2200;
 }
 
-.lvl-75 {
+.lvl-75, .lvl-70, .lvl-60 {
 	color: #cc4400;
 }
 
-.lvl-100 {
+.lvl-100, .lvl-90, .lvl-80 {
 	color: #aa4400;
 }
 
-.lvl-125 {
+.lvl-125, .lvl-120, .lvl-110 {
 	color: #aa6600;
 }
 
-.lvl-150 {
+.lvl-150, .lvl-140, .lvl-130 {
 	color: #886600;
 }
 
-.lvl-175 {
+.lvl-175, .lvl-170, .lvl-160 {
 	color: #668800;
 }
 
-.lvl-200 {
+.lvl-200, .lvl-190, .lvl-180 {
 	color: #44aa00;
 }
 
-.lvl-225 {
+.lvl-225, .lvl-220, .lvl-210 {
 	color: #22cc00;
 }
 
-.lvl-250 {
+.lvl-250, .lvl-240, .lvl-230 {
 	color: #00ff00;
 }
 
