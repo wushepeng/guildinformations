@@ -31,6 +31,7 @@ function checkRequest(\Slim\Route $route) {
 		}
 		$log .= "path:".$app->request->getPathInfo();
 		$app->log->info($log);
+		$app->translator->setLocale($userData['lang']);
 	}
 }
 

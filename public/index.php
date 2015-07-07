@@ -22,7 +22,16 @@ $app->view->parserOptions = array(
     'strict_variables' => false,
     'autoescape' => true
 );
-$app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
+$app->view->parserExtensions = array(
+	new \Slim\Views\TwigExtension(),
+	new \Dkesberg\Slim\Twig\Extension\TranslationExtension()
+);
+
+// Prepare translator
+$app->container->singleton('translator', function() {
+    return new \Illuminate\Translation\Translator(new \Illuminate\Translation\FileLoader(new \Illuminate\Filesystem\Filesystem(), __DIR__.'/../lang'), 'fr');
+});
+$app->translator->setFallback('fr');
 
 $generalConfigResource = new \App\Resource\GeneralConfigResource();
 $guildResource = new \App\Resource\GuildResource();
