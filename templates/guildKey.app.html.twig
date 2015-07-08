@@ -1,24 +1,24 @@
 {% extends "content.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Clé Api de guilde
+	{{ parent() }} - {{ translate('m.guild.key.apiKey') }}
 {% endblock title %}
 
-{% block pageTitle %}Clé Api de guilde{% endblock pageTitle %}
+{% block pageTitle %}{{ translate('m.guild.key.apiKey') }}{% endblock pageTitle %}
 
 {% block content %}
 	<form method="POST">
 		<input type="hidden" value="{{ user }}" name="user"/>
 		<input type="hidden" value="{{ checksum }}" name="checksum"/>
-		<p>Entrez votre clé api* de guilde:</p>
+		<p>{{ translate('m.guild.key.giveKey') }}*:</p>
 		<input type="text" value="{{ apiKey }}" name="apiKey"/>
-		{% set value = "Mettre à jour" %}
+		{% set value = translate('m.btn.maj') %}
 		{% if apiKey is null %}
-			{% set value = "Enregistrer" %}
+			{% set value = translate('m.btn.save') %}
 		{% endif %}
 		<input type="submit" value="{{ value }}"/>
 	</form>
 	<div>
-		* clé avec l'option "G03 Inventaire"
+		* {{ translate('m.guild.nota') }}
 	</div>
 {% endblock %}

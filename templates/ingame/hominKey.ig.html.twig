@@ -2,16 +2,16 @@
 
 {% block content %}
 {% if error is not null %}
-	<p>Votre clé est invalide, veuillez la mettre à jour.<br></p>
+	<p>{{ translate('m.homin.error') }}<br></p>
 {% endif %}
 <form action="{{ urlFor('ryzomApp-HominKey.post') }}" method="POST">
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
-	<h5>Entrez votré clé api* :</h5>
+	<h5>{{ translate('m.homin.giveKey') }}* :</h5>
 <pre>    <input type="text" value="{{ apiKey }}" name="apiKey" size="155"/></pre>
-	{% set value = "Mettre à jour" %}
+	{% set value = translate('m.btn.maj') %}
 	{% if apiKey is null %}
-		{% set value = "Enregistrer" %}
+		{% set value = translate('m.btn.save') %}
 	{% endif %}
 	<br>
 	<br>
@@ -19,5 +19,5 @@
 </form>
 <br>
 <br>
-<pre>    * clé avec l'option "P02 Compétences"</pre>
+<pre>    * {{ translate('m.homin.nota') }}</pre>
 {% endblock %}

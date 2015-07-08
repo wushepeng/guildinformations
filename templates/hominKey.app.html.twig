@@ -1,27 +1,27 @@
 {% extends "content.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Clé Api
+	{{ parent() }} - {{ translate('m.homin.apiKey') }}
 {% endblock title %}
 
-{% block pageTitle %}Clé Api{% endblock pageTitle %}
+{% block pageTitle %}{{ translate('m.homin.apiKey') }}{% endblock pageTitle %}
 
 {% block content %}
 	{% if error is not null %}
-		<p>Votre clé est invalide, veuillez la mettre à jour.</p>
+		<p>{{ translate('m.homin.error') }}</p>
 	{% endif %}
 	<form method="POST">
 		<input type="hidden" value="{{ user }}" name="user" />
 		<input type="hidden" value="{{ checksum }}" name="checksum" />
-		<p>Entrez votre clé api*: </p>
+		<p>{{ translate('m.homin.giveKey') }}*: </p>
 		<input type="text" value="{{ apiKey }}" name="apiKey"/>
-		{% set value = "Mettre à jour" %}
+		{% set value = translate('m.btn.maj') %}
 		{% if apiKey is null %}
-			{% set value = "Enregistrer" %}
+			{% set value = translate('m.btn.save') %}
 		{% endif %}
 		<input type="submit" value="{{ value }}"/>
 	</form>
 	<div>
-		* clé avec l'option "P02 Compétences"
+		* {{ translate('m.homin.nota') }}
 	</div>
 {% endblock %}

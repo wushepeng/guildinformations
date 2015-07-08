@@ -11,7 +11,7 @@
 		</tr>
 		<tr valign="middle">
 			<td align="center">
-				(<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">Supprimer</a>)
+				(<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.guild.conf.remove') }}</a>)
 			</td>
 		</tr>
 	</table>
@@ -22,14 +22,14 @@
 	<input type="hidden" value="{{ user }}" name="user" />
 	<input type="hidden" value="{{ checksum }}" name="checksum" />
 	<div>
-		<h5>Ajouter un entrepot*: </h5>
+		<h5>{{ translate('m.guild.conf.add') }}*: </h5>
 		<pre>    <input type="text" name="newApiKey"/></pre>
 		<br>
 		<br>
-		<pre>    <input type="submit" value="Enregistrer"/></pre>
+		<pre>    <input type="submit" value="{{ translate('m.btn.save') }}"/></pre>
 	</div>
 </form>
 <br>
 <br>
-<pre>    * clé api avec l'option "G03 Inventaire"</pre>
+<pre>    * {{ translate('m.guild.nota') }}</pre>
 {% endblock %}
