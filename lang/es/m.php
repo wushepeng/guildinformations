@@ -20,6 +20,10 @@ return array(
     'home.welcome' => '',
     'home.noGuild' => '',
     'home.backTo' => '',
+    'home.howTo' => '',
+    'home.code' => '',
+    'home.issue' => '',
+    'home.issue2' => '',
     // Homin key template
     'homin.apiKey' => '',
     'homin.error' => '',

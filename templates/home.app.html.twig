@@ -13,6 +13,14 @@
 			<p>{{ translate('m.home.backTo') }} <a href="http://app.ryzom.com">Ryzom</a>.</p>
 		</div>
 	{% else %}
-		<div><h2>{{ translate('m.home.welcome') }}</h2></div>
+		<div>
+			<h2>{{ translate('m.home.welcome') }}</h2>
+			<div>
+				<p>{{ translate('m.home.howTo') }}</p>
+				<p>{{ translate('m.home.code') }} <a href="https://github.com/wushepeng/guildinformations">GitHub</a>.</p>
+				<p>{{ translate('m.home.issue') }} <a href="https://github.com/wushepeng/guildinformations/issues/new">GitHub</a>.</p>
+				<p>{{ translate('m.home.issue2') }} <a href="http://app.ryzom.com/app_forum/index.php">GuildInf</a>.</p>
+			</div>
+		</div>
 	{% endif %}
 {% endblock content %}
