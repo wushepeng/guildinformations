@@ -1,22 +1,22 @@
 {% extends "fight.app.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Niveaux de Combat à distance
+	{{ parent() }} - {{ translate('m.skills.fight.range.title') }}
 {% endblock title %}
 
 {% block pageTitle %}
-	Niveaux de Combat à distance
+	{{ translate('m.skills.fight.range.title') }}
 {% endblock pageTitle %}
 
 {% block fightSkill %}
 	<div class="top">
 		<table class="skill-table">
 			<tr>
-				<td>Nom</td>
-				<td>Fusil</td>
-				<td>Lance-grenade</td>
-				<td>Mitraillette</td>
-				<td>Pistolet</td>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.fight.range.fusil') }}</td>
+				<td>{{ translate('m.skills.fight.range.lg') }}</td>
+				<td>{{ translate('m.skills.fight.range.mitra') }}</td>
+				<td>{{ translate('m.skills.fight.range.pistol') }}</td>
 			</tr>
 		{% for homin in homins %}
 			<tr>

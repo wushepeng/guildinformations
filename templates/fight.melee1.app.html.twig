@@ -1,23 +1,23 @@
 {% extends "fight.app.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Niveaux de Combat à une main
+	{{ parent() }} - {{ translate('m.skills.fight.melee1.title') }}
 {% endblock title %}
 
 {% block pageTitle %}
-	Niveaux de Combat à une main
+	{{ translate('m.skills.fight.melee1.title') }}
 {% endblock pageTitle %}
 
 {% block fightSkill %}
 	<div class="top">
 		<table class="skill-table">
 			<tr>
-				<td>Nom</td>
-				<td>Bâton</td>
-				<td>Epée</td>
-				<td>Hache</td>
-				<td>Lance</td>
-				<td>Masse</td>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.fight.melee1.baton') }}</td>
+				<td>{{ translate('m.skills.fight.melee1.epee') }}</td>
+				<td>{{ translate('m.skills.fight.melee1.hache') }}</td>
+				<td>{{ translate('m.skills.fight.melee1.lance') }}</td>
+				<td>{{ translate('m.skills.fight.melee1.masse') }}</td>
 			</tr>
 		{% for homin in homins %}
 			<tr>

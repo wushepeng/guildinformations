@@ -1,13 +1,13 @@
 {% block fightMenu %}
-	<h5>Spécialités</h5>
+	<h5>{{ translate('m.skills.fight.menuTitle') }}</h5>
 	<table bgcolor="#00003395" border="0" width="100%">
 		<tr valign="middle">
 			<td height="20">
-				<pre>    Afficher spécialité |</pre>
-				 <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee2') }}?checksum={{ checksum }}&user={{ user }}">Combat à deux mains</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee1') }}?checksum={{ checksum }}&user={{ user }}">Combat à une main</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee0') }}?checksum={{ checksum }}&user={{ user }}">Combat à mains nues</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Range') }}?checksum={{ checksum }}&user={{ user }}">Combat à distance</a>
+				<pre>    {{ translate('m.skills.fight.menu') }} |</pre>
+				 <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee2') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.melee2') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee1') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.melee1') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee0') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.melee0') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Range') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.range') }}</a>
 			</td>
 		</tr>
 	</table>

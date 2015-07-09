@@ -1,14 +1,14 @@
 {% extends "ingame/fight.ig.html.twig" %}
 
 {% block fightSkill %}
-	<h5>Niveaux en Combat à distance</h5>
+	<h5>{{ translate('m.skills.fight.range.title') }}</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
-			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Fusil</font></td>
-			<td><font size="15">Lance-grenade</font></td>
-			<td><font size="15">Mitraillette</font></td>
-			<td><font size="15">Pistolet</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.range.fusil') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.range.lg') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.range.mitra') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.range.pistol') }}</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}
