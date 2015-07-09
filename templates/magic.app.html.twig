@@ -1,20 +1,20 @@
 {% extends "skills.app.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Niveaux de Magie
+	{{ parent() }} - {{ translate('m.skills.magic.title') }}
 {% endblock title %}
 
-{% block pageTitle %}Niveaux de Magie{% endblock pageTitle %}
+{% block pageTitle %}{{ translate('m.skills.magic.title') }}{% endblock pageTitle %}
 
 {% block skillContent %}
 	<div class="top">
 		<table class="skill-table">
 			<tr>
-				<td>Nom</td>
-				<td>Magie Curative</td>
-				<td>Magie Neutralisante</td>
-				<td>Magie Élémentaire</td>
-				<td>Magie Débilitante</td>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.magic.heal') }}</td>
+				<td>{{ translate('m.skills.magic.neutra') }}</td>
+				<td>{{ translate('m.skills.magic.off') }}</td>
+				<td>{{ translate('m.skills.magic.debi') }}</td>
 			</tr>
 		{% for homin in homins %}
 			<tr>

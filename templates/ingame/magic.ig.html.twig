@@ -1,14 +1,14 @@
 {% extends "ingame/skills.ig.html.twig" %}
 
 {% block skillContent %}
-	<h5>Niveaux de magie</h5>
+	<h5>{{ translate('m.skills.magic.title') }}</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
-			<td height="18"><font size="15">Nom</font></td>
-			<td height="18"><font size="15">Magie Curative</font></td>
-			<td height="18"><font size="15">Magie Neutralisante</font></td>
-			<td height="18"><font size="15">Magie Élémentaire</font></td>
-			<td height="18"><font size="15">Magie Débilitante</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.heal') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.neutra') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.off') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.debi') }}</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}

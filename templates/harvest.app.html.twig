@@ -1,21 +1,21 @@
 {% extends "skills.app.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Niveaux de Forage
+	{{ parent() }} - {{ translate('m.skills.harvest.title') }}
 {% endblock title %}
 
-{% block pageTitle %}Niveaux de Forage{% endblock pageTitle %}
+{% block pageTitle %}{{ translate('m.skills.harvest.title') }}{% endblock pageTitle %}
 
 {% block skillContent %}
 	<div class="top">
 		<table class="skill-table">
 			<tr>
-				<td>Nom</td>
-				<td>Forage en désert</td>
-				<td>Forage en forêt</td>
-				<td>Forage en jungle</td>
-				<td>Forage lacustre</td>
-				<td>Forage en primes racines</td>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.harvest.desert') }}</td>
+				<td>{{ translate('m.skills.harvest.forest') }}</td>
+				<td>{{ translate('m.skills.harvest.jungle') }}</td>
+				<td>{{ translate('m.skills.harvest.lakes') }}</td>
+				<td>{{ translate('m.skills.harvest.primes') }}</td>
 			</tr>
 		{% for homin in homins %}
 			<tr>

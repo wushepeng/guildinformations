@@ -1,13 +1,13 @@
 {% block skillMenu %}
-	<h3>Niveaux de la guilde</h3>
+	<h3>{{ translate('m.skills.mainTitle') }}</h3>
 	<table bgcolor="#000000" border="0" width="100%">
 		<tr valign="middle">
 			<td height="20">
-				Afficher compétences |
-				 <a href="{{ urlFor('ryzomApp-Skills/Harvest') }}?checksum={{ checksum }}&user={{ user }}">Forage</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft') }}?checksum={{ checksum }}&user={{ user }}">Artisanat</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Magic') }}?checksum={{ checksum }}&user={{ user }}">Magie</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Fight') }}?checksum={{ checksum }}&user={{ user }}">Combat</a>
+				{{ translate('m.skills.menu') }} |
+				 <a href="{{ urlFor('ryzomApp-Skills/Harvest') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.harvest') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Magic') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.magic') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight') }}</a>
 			</td>
 		</tr>
 	</table>

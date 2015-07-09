@@ -1,8 +1,8 @@
 <?php
 
 /*
-French translations
-*/
+ * French translations
+ */
 
 return array(
 	// Layout template
@@ -51,7 +51,26 @@ return array(
     'inventory.detail.quality' => 'Qualité',
     'inventory.detail.sort' => 'Trier',
     'inventory.detail.nota' => 'Ne cocher qu\'une case, sinon le tri par défaut sera utilisé',
-    'inventory.error' => 'Problème de clé'
+    'inventory.error' => 'Problème de clé',
+    //  Skills templates
+    'skills.mainTitle' => 'Niveaux de la guilde',
+    'skills.menu' => 'Afficher compétences',
+    'skills.harvest' => 'Forage',
+    'skills.craft' => 'Artisanat',
+    'skills.magic' => 'Magie',
+    'skills.fight' => 'Combat',
+    'skills.name' => 'Nom',
+    'skills.magic.title' => 'Niveaux de Magie',
+    'skills.magic.heal' => 'Magie Curative',
+    'skills.magic.neutra' => 'Magie Neutralisante',
+    'skills.magic.off' => 'Magie Élémentaire',
+    'skills.magic.debi' => 'Magie Débilitante',
+    'skills.harvest.title' => 'Niveaux de Forage',
+    'skills.harvest.desert' => 'Forage en désert',
+    'skills.harvest.forest' => 'Forage en forêt',
+    'skills.harvest.jungle' => 'Forage en jungle',
+    'skills.harvest.lakes' => 'Forage lacustre',
+    'skills.harvest.primes' => 'Forage en primes racines'
 );
 
 ?>
