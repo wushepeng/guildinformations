@@ -58,6 +58,12 @@ function getGuildItems($guildKey) {
 		$items = array();
 		foreach($infos->room->item as $item) {
 			$url = ryzom_item_icon_url((string) $item->sheet, (int) $item->craftparameters->color, (int) $item->quality, (int) $item->stack);
+			$urlParams = array( // needed for ingame templates
+				'sheetId' => (string) $item->sheet,
+				'color' => (int) $item->craftparameters->color,
+				'quality' => (int) $item->quality,
+				'stack' => (int) $item->stack
+			);
 			$stack = (int) $item->stack;
 			$name = ryzom_translate((string) $item->sheet, 'fr', 0);
 			$quality = (int) $item->quality;
@@ -65,7 +71,7 @@ function getGuildItems($guildKey) {
 			foreach((array) $item->craftparameters as $nom => $detail) {
 				$details .= " - ".$nom." : ".$detail;
 			}
-			array_push($items, array('iconUrl' => $url, 'name' => $name, 'quality' => $quality, 'stack'=> $stack, 'details' => $details));
+			array_push($items, array('iconUrl' => $url, 'iconUrlParams' => $urlParams, 'name' => $name, 'quality' => $quality, 'stack'=> $stack, 'details' => $details));
 		}
 		return $items;
 	}

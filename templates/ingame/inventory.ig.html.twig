@@ -32,7 +32,7 @@
 		<p>{{ translate('m.inventory.error') }}</p>
 	{% else %}
 		{% for item in items %}
-			<img src="{{ item.iconUrl }}"/>&nbsp;
+			&nbsp;<img src="http://api.ryzom.com/item_icon.php?sheetid={{ item.iconUrlParams.sheetId }}&c={{ item.iconUrlParams.color }}&q={{ item.iconUrlParams.quality }}&s={{ item.iconUrlParams.stack }}&sap=-1&destroyed=0&label=1"/>&nbsp;
 		{% endfor %}
 	{% endif %}
 	</div>
