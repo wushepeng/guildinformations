@@ -11,17 +11,17 @@
 		{% else %}
 			{% set checkQuality = 'checked="checked"' %}
 		{% endif %}
-		<table boreder="0" width="100%">
-			<tr valgin="middle">
+		<table border="0" width="100%">
+			<tr valign="middle">
 				<td align="right">
-					<input type="checkbox" name="type" {{ checkType }}/> Type
-					 <input type="checkbox" name="quality" {{ checkQuality }}/> Qualité
-					 <pre><input type="submit" value="Trier"/>    </pre>
+					<input type="checkbox" name="type" {{ checkType }}/> {{ translate('m.inventory.detail.kind') }}
+					 <input type="checkbox" name="quality" {{ checkQuality }}/> {{ translate('m.inventory.detail.quality') }}
+					 <pre><input type="submit" value="{{ translate('m.inventory.detail.sort') }}"/>    </pre>
 				</td>
 			</tr>
 			<tr valign="middle">
 				<td align="right" height="9">
-					(Ne cocher qu'une case, sinon le tri par défaut sera utilisé)
+					({{ translate('m.inventory.detail.nota') }})
 				</td>
 			</tr>
 		</table>
@@ -29,7 +29,7 @@
 	<h2>{{ guild.name }}</h2>
 	<div>
 	{% if items.error is not null %}
-		<p>Problème de clé</p>
+		<p>{{ translate('m.inventory.error') }}</p>
 	{% else %}
 		{% for item in items %}
 			<img src="{{ item.iconUrl }}"/>&nbsp;

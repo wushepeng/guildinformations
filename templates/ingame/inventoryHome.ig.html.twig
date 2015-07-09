@@ -7,18 +7,18 @@
 		<form action="{{ urlFor('ryzomApp-Inventory') }}" method="POST">
 			<input type="hidden" value="{{ user }}" name="user"/>
 			<input type="hidden" value="{{ checksum }}" name="checksum"/>
-			<h5>Entrez votre recherche:</h5>
+			<h5>{{ translate('m.inventory.home.searchText') }}:</h5>
 			<pre>    <input type="text" name="search" size="155"/></pre>
 			<br>
 			<br>
-			<pre>    <input type="submit" value="Chercher"/></pre>
+			<pre>    <input type="submit" value="{{ translate('m.inventory.home.search') }}"/></pre>
 		</form>
 		{% for guild in searchResult %}
 			<h2>{{ guild.guild.name }}</h2>
 			<div>
 			{% for item in guild.items %}
 				{% if item.error is not null %}
-					<p>Problème de clé</p>
+					<p>{{ translate('m.inventory.error') }}</p>
 					<br>
 					<br>
 				{% else %}

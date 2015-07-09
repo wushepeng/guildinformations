@@ -38,7 +38,20 @@ return array(
     'guild.nota' => 'clé avec l\'option "G03 Inventaire"',
     // Shared by homin key, guild key & conf templates
     'btn.save' => 'Enregistrer',
-    'btn.maj' => 'Mettre à jour'
+    'btn.maj' => 'Mettre à jour',
+    // Inventory templates
+    'inventory.menu.title' => 'Inventaire',
+    'inventory.menu.search' => 'Chercher un objet',
+    'inventory.menu.display' => 'Afficher',
+    'inventory.home.title' => 'Rechercher un objet',
+    'inventory.home.searchText' => 'Entrez votre recherche',
+    'inventory.home.search' => 'Chercher',
+    'inventory.detail.title' => 'Inventaire de la guilde',
+    'inventory.detail.kind' => 'Type',
+    'inventory.detail.quality' => 'Qualité',
+    'inventory.detail.sort' => 'Trier',
+    'inventory.detail.nota' => 'Ne cocher qu\'une case, sinon le tri par défaut sera utilisé',
+    'inventory.error' => 'Problème de clé'
 );
 
 ?>

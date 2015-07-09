@@ -1,10 +1,10 @@
 {% extends "content.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Rechercher un objet
+	{{ parent() }} - {{ translate('m.inventory.home.title') }}
 {% endblock title %}
 
-{% block pageTitle %}Rechercher un objet{% endblock pageTitle %}
+{% block pageTitle %}{{ translate('m.inventory.home.title') }}{% endblock pageTitle %}
 
 {% block content %}
 	{% include 'inventoryMenu.app.html.twig' %}
@@ -12,16 +12,16 @@
 	{% block inventoryContent %}
 		<div class="top">
 			<form method="POST">
-				<p>Entrez votre recherche:</p>
+				<p>{{ translate('m.inventory.home.searchText') }}:</p>
 				<input type="text" name="search"/>
-				<input type="submit" value="Chercher"/>
+				<input type="submit" value="{{ translate('m.inventory.home.search') }}"/>
 			</form>
 			{% for guild in searchResult %}
 				<h2>{{ guild.guild.name }}</h2>
 				<div>
 				{% for item in guild.items %}
 					{% if item.error is not null %}
-						<p>Problème de clé</p>
+						<p>{{ translate('m.inventory.error') }}</p>
 					{% else %}
 						<img src="{{ item.iconUrl }}" style="border: 1px solid #333;" title="{{ item.stack }}x{{ item.name }} (Q{{ item.quality }}{{ item.details }})"/>
 					{% endif %}
