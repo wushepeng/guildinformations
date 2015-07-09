@@ -18,7 +18,7 @@ return array(
 	// Home template
 	'home.title' => 'Accueil',
     'home.welcome' => 'Bonjour',
-    'home.noGuild' => "L'application est réservée aux membres d'une guilde.",
+    'home.noGuild' => 'L\'application est réservée aux membres d\'une guilde.',
     'home.backTo' => 'Retour sur',
     // Homin key template
     'homin.apiKey' => 'Clé Api',

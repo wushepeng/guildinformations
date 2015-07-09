@@ -1,7 +1,7 @@
 <?php
 
 /*
- * English translations
+ * Russian translations
  */
 
 return array(

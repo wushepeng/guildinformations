@@ -128,8 +128,8 @@ Enjoy.
     * `Logger.php`: classe définissant le logger de l'application
     * `Router.php`: définition des routes de l'application
     * `Utilities.php`: fonctions utiles
+  * `lang/`: contient tous les textes utilisés dans l'application, pour chaque langage supporté
   * `libs/`: les différentes librairies utilisées sont dans ce dossier
-  * `locales/`: non utilisé pour le moment
   * `logs/`: les logs seront écrits dans ce dossier
   * `public/`: dossier racine du site web
     * `css/`: ici les feuilles de style css
