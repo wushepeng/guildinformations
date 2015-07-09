@@ -1,15 +1,15 @@
 {% extends "ingame/craft.ig.html.twig" %}
 
 {% block craftSkill %}
-	<h5>Niveaux d'Artisanat en armures légères</h5>
+	<h5>{{ translate('m.skills.craft.armor.light') }}</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
-			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Bottes</font></td>
-			<td><font size="15">Gants</font></td>
-			<td><font size="15">Pantalon</font></td>
-			<td><font size="15">Manches</font></td>
-			<td><font size="15">Gilet</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.armor.botte') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.armor.gant') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.armor.pantalon') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.armor.manche') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.armor.gilet') }}</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}

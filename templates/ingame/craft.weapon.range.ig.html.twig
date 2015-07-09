@@ -1,14 +1,14 @@
 {% extends "ingame/craft.ig.html.twig" %}
 
 {% block craftSkill %}
-	<h5>Niveaux d'Artisanat en armes à distance</h5>
+	<h5>{{ translate('m.skills.craft.weapon.range') }}</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
-			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Pistolet</font></td>
-			<td><font size="15">Mitrailleuse</font></td>
-			<td><font size="15">Lance-Grenades</font></td>
-			<td><font size="15">Fusil</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.range.pistol') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.range.mitra') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.range.lg') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.range.fusil') }}</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}

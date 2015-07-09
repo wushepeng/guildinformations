@@ -1,16 +1,16 @@
 {% extends "ingame/craft.ig.html.twig" %}
 
 {% block craftSkill %}
-	<h5>Niveaux d'Artisanat en armes à une main</h5>
+	<h5>{{ translate('m.skills.craft.weapon.melee1') }}</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
-			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Hache</font></td>
-			<td><font size="15">Dague</font></td>
-			<td><font size="15">Massue</font></td>
-			<td><font size="15">Lance</font></td>
-			<td><font size="15">Epée</font></td>
-			<td><font size="15">Bâton</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.hache') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.dague') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.massue') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.lance') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.epee') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.baton') }}</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}

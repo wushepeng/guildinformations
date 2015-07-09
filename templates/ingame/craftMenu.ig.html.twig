@@ -1,24 +1,24 @@
 {% block craftMenu %}
-	<h5>Spécialités</h5>
+	<h5>{{ translate('m.skills.craft.menu') }}</h5>
 	<table bgcolor="#00003395" border="0" width="100%">
 		<tr valign="middle">
 			<td height="20">
-				<pre>    Créer armures |</pre>
-				 <a href="{{ urlFor('ryzomApp-Skills/Craft/Shield') }}?checksum={{ checksum }}&user={{ user }}">Boucliers</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/LightArmor') }}?checksum={{ checksum }}&user={{ user }}">Légères</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/MediumArmor') }}?checksum={{ checksum }}&user={{ user }}">Moyennes</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/HeavyArmor') }}?checksum={{ checksum }}&user={{ user }}">Lourdes</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/Jewel') }}?checksum={{ checksum }}&user={{ user }}">Bijoux</a>
+				<pre>    {{ translate('m.skills.craft.menu.armorTitle') }} |</pre>
+				 <a href="{{ urlFor('ryzomApp-Skills/Craft/Shield') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.shield') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/LightArmor') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.light') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/MediumArmor') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.medium') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/HeavyArmor') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.heavy') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/Jewel') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.jewel') }}</a>
 			</td>
 		</tr>
 	</table>
 	<table bgcolor="#00003395" border="0" width="100%">
 		<tr valign="middle">
 			<td height="20">
-				<pre>    Créer armes   |</pre>
-				 <a href="{{ urlFor('ryzomApp-Skills/Craft/Melee1Weapon') }}?checksum={{ checksum }}&user={{ user }}">Armes à une main</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/Melee2Weapon') }}?checksum={{ checksum }}&user={{ user }}">Armes à deux mains</a>
-				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/RangeWeapon') }}?checksum={{ checksum }}&user={{ user }}">Armes à distance</a>
+				<pre>    {{ translate('m.skills.craft.menu.weaponTitle') }}   |</pre>
+				 <a href="{{ urlFor('ryzomApp-Skills/Craft/Melee1Weapon') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.melee1') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/Melee2Weapon') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.melee2') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft/RangeWeapon') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft.menu.range') }}</a>
 			</td>
 		</tr>
 	</table>

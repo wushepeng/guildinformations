@@ -1,16 +1,16 @@
 {% extends "ingame/craft.ig.html.twig" %}
 
 {% block craftSkill %}
-	<h5>Niveaux d'Artisanat en bijoux</h5>
+	<h5>{{ translate('m.skills.craft.jewel') }}</h5>
 	<table width="100%">
 		<tr align="center" valign="middle">
-			<td height="18"><font size="15">Nom</font></td>
-			<td><font size="15">Anneau de cheville</font></td>
-			<td><font size="15">Bracelet</font></td>
-			<td><font size="15">Diadème</font></td>
-			<td><font size="15">Boucle d'oreille</font></td>
-			<td><font size="15">Pendentif</font></td>
-			<td><font size="15">Bague</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.jewel.anneau') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.jewel.bracelet') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.jewel.diademe') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.jewel.boucle') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.jewel.pendentif') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.jewel.bague') }}</font></td>
 		</tr>
 		{% set count = 0 %}
 	{% for homin in homins %}

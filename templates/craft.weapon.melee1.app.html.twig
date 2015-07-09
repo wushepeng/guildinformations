@@ -1,24 +1,24 @@
 {% extends "craft.app.html.twig" %}
 
 {% block title %}
-	{{ parent() }} - Niveaux d'Artisanat en armes à une main
+	{{ parent() }} - {{ translate('m.skills.craft.weapon.melee1') }}
 {% endblock title %}
 
 {% block pageTitle %}
-	Niveaux d'Artisanat en armes à une main
+	{{ translate('m.skills.craft.weapon.melee1') }}
 {% endblock pageTitle %}
 
 {% block craftSkill %}
 	<div class="top">
 		<table class="skill-table">
 			<tr>
-				<td>Nom</td>
-				<td>Hache</td>
-				<td>Dague</td>
-				<td>Massue</td>
-				<td>Lance</td>
-				<td>Epée</td>
-				<td>Bâton</td>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.melee1.hache') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.melee1.dague') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.melee1.massue') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.melee1.lance') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.melee1.epee') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.melee1.baton') }}</td>
 			</tr>
 		{% for homin in homins %}
 			<tr>
