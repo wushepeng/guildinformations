@@ -22,7 +22,7 @@ return array(
     'home.backTo' => 'Retour sur',
     'home.howTo' => 'Afin d\'utiliser toutes les fonctionnalités de l\'application, il faut ajouter sa clé api et avoir renseigné, par le chef ou un officier supérieur, la clé api de guilde.',
     'home.code' => 'Le code source de l\'application peut être consulté sur',
-    'home.issue' => 'Si vous trouvez un bug ou avez tout simplement une idée à proposer, vous pouvez créer un nouveau ticket sur',
+    'home.issue' => 'Si vous trouvez un bug, une erreur d\'ortographe, ou avez tout simplement une idée à proposer, vous pouvez créer un nouveau ticket sur',
     'home.issue2' => 'Ou si vous n\'avez pas de compte GitHub, et ne voulez pas en créer un, postez un nouveau message sur la discussion de',
     // Homin key template
     'homin.apiKey' => 'Clé Api',
