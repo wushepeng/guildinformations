@@ -6,20 +6,20 @@
 
 return array(
 	// Layout template
-	'layout.mainTitle' => '',
-	'layout.ryzomApp' => '',
-	'layout.home' => '',
+	'layout.mainTitle' => 'Auskunft über Gilden',
+	'layout.ryzomApp' => 'Ryzom App',
+	'layout.home' => 'Home',
 	//Content template
-	'content.apiKey' => '',
-	'content.guildApiKey' => '',
-	'content.warehouses' => '',
-	'content.inventory' => '',
-	'content.skills' => '',
+	'content.apiKey' => 'API Shclüssel',
+	'content.guildApiKey' => 'Gild API Shclüssel',
+	'content.warehouses' => 'Laderhaüser leiten',
+	'content.inventory' => 'Inventar',
+	'content.skills' => 'Sachkenntis der Mitglieder',
 	// Home template
-	'home.title' => '',
-    'home.welcome' => '',
-    'home.noGuild' => '',
-    'home.backTo' => '',
+	'home.title' => 'Home',
+    'home.welcome' => 'Guten tag ',
+    'home.noGuild' => 'Die Anwendung ist nur für Gilden Mitglieder',
+    'home.backTo' => 'zurück',
     'home.howTo' => '',
     'home.code' => '',
     'home.issue' => '',
