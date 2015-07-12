@@ -10,8 +10,8 @@ return array(
 	'layout.ryzomApp' => 'Ryzom App',
 	'layout.home' => 'Home',
 	//Content template
-	'content.apiKey' => 'API Shclüssel',
-	'content.guildApiKey' => 'Gild API Shclüssel',
+	'content.apiKey' => 'API Key',
+	'content.guildApiKey' => 'Gild API Key',
 	'content.warehouses' => 'Laderhaüser leiten',
 	'content.inventory' => 'Inventar',
 	'content.skills' => 'Sachkenntis der Mitglieder',
