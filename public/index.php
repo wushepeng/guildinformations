@@ -24,7 +24,8 @@ $app->view->parserOptions = array(
 );
 $app->view->parserExtensions = array(
 	new \Slim\Views\TwigExtension(),
-	new \Dkesberg\Slim\Twig\Extension\TranslationExtension()
+	new \Dkesberg\Slim\Twig\Extension\TranslationExtension(),
+    new \App\TwigExtension\GuildInfTwigExtension()
 );
 
 // Prepare translator

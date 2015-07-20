@@ -27,11 +27,11 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.desert }}</td>
-			<td>{{ homin.lvls.forest }}</td>
-			<td>{{ homin.lvls.jungle }}</td>
-			<td>{{ homin.lvls.lakes }}</td>
-			<td>{{ homin.lvls.primes }}</td>
+			<td><font color="{{ getColor(homin.lvls.desert) }}">{{ homin.lvls.desert }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.forest) }}">{{ homin.lvls.forest }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.jungle) }}">{{ homin.lvls.jungle }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.lakes) }}">{{ homin.lvls.lakes }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.primes) }}">{{ homin.lvls.primes }}</font></td>
 		{% endif %}
 		</tr>
 	{% endfor %}

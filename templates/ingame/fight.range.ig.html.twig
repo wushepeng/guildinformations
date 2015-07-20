@@ -25,10 +25,10 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.shotgun }}</td>
-			<td>{{ homin.lvls.lg }}</td>
-			<td>{{ homin.lvls.submachinegun }}</td>
-			<td>{{ homin.lvls.handgun }}</td>
+			<td><font color="{{ getColor(homin.lvls.shotgun) }}">{{ homin.lvls.shotgun }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.lg) }}">{{ homin.lvls.lg }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.submachinegun) }}">{{ homin.lvls.submachinegun }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.handgun) }}">{{ homin.lvls.handgun }}</font></td>
 		{% endif %}
 		</tr>
 	{% endfor %}

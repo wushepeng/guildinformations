@@ -25,10 +25,10 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.epee2 }}</td>
-			<td>{{ homin.lvls.hache2 }}</td>
-			<td>{{ homin.lvls.masse2 }}</td>
-			<td>{{ homin.lvls.pique2 }}</td>
+			<td><font color="{{ getColor(homin.lvls.epee2) }}">{{ homin.lvls.epee2 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.hache2) }}">{{ homin.lvls.hache2 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.masse2) }}">{{ homin.lvls.masse2 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.pique2) }}">{{ homin.lvls.pique2 }}</font></td>
 		{% endif %}
 		</tr>
 	{% endfor %}

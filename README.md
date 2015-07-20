@@ -124,6 +124,7 @@ Enjoy.
       * `Homin.php`: objet représentant un homin
     * `Repository/`: les requêtes sql customs sur les entités sont définies dans ce dossier
     * `Resource/`: CRUD pour chaque entité
+    * `TwigExtension/`: fonctions personnelles utilisées dans Twig
     * `AbstractResource.php`: connexion de l'ORM à la base de données
     * `Logger.php`: classe définissant le logger de l'application
     * `Router.php`: définition des routes de l'application

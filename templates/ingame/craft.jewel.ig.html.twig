@@ -29,12 +29,12 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.bijouCheville }}</td>
-			<td>{{ homin.lvls.bijouPoignet }}</td>
-			<td>{{ homin.lvls.bijouTete }}</td>
-			<td>{{ homin.lvls.bijouOreille }}</td>
-			<td>{{ homin.lvls.bijouCou }}</td>
-			<td>{{ homin.lvls.bijouDoigt }}</td>
+			<td><font color="{{ getColor(homin.lvls.bijouCheville) }}">{{ homin.lvls.bijouCheville }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.bijouPoignet) }}">{{ homin.lvls.bijouPoignet }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.bijouTete) }}">{{ homin.lvls.bijouTete }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.bijouOreille) }}">{{ homin.lvls.bijouOreille }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.bijouCou) }}">{{ homin.lvls.bijouCou }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.bijouDoigt) }}">{{ homin.lvls.bijouDoigt }}</font></td>
 		{% endif %}
 		</tr>
 	{% endfor %}

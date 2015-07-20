@@ -21,8 +21,8 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.dague }}</td>
-			<td>{{ homin.lvls.mains }}</td>
+			<td><font color="{{ getColor(homin.lvls.dague) }}">{{ homin.lvls.dague }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.mains) }}">{{ homin.lvls.mains }}</font></td>
 		{% endif %}
 		</tr>
 	{% endfor %}

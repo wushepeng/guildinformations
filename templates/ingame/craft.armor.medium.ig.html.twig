@@ -27,11 +27,11 @@
 			<td>X</td>
 			<td>X</td>
 		{% else %}
-			<td>{{ homin.lvls.armureMPied }}</td>
-			<td>{{ homin.lvls.armureMMain }}</td>
-			<td>{{ homin.lvls.armureMJambe }}</td>
-			<td>{{ homin.lvls.armureMBras }}</td>
-			<td>{{ homin.lvls.armureMVentre }}</td>
+			<td><font color="{{ getColor(homin.lvls.armureMPied) }}">{{ homin.lvls.armureMPied }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.armureMMain) }}">{{ homin.lvls.armureMMain }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.armureMJambe) }}">{{ homin.lvls.armureMJambe }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.armureMBras) }}">{{ homin.lvls.armureMBras }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.armureMVentre) }}">{{ homin.lvls.armureMVentre }}</font></td>
 		{% endif %}
 		</tr>
 	{% endfor %}
