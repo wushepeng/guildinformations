@@ -1,0 +1,22 @@
+{% extends "ingame/content.ig.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.home.title') }}
+{% endblock title %}
+
+{% block content %}
+	{% if grade=="NoGuild" %}
+		<div>
+			<p>{{ translate('m.home.noGuild') }}<br></p>
+			<p>{{ translate('m.home.backTo') }} <a href="http://app.ryzom.com">Ryzom</a>.<br></p>
+		</div>
+	{% else %}
+		<h2>{{ translate('m.home.welcome') }}</h2>
+		<div>
+			<p>{{ translate('m.home.howTo') }}<br></p>
+			<p>{{ translate('m.home.code') }} <a href="https://github.com/wushepeng/guildinformations">GitHub</a>.<br></p>
+			<p>{{ translate('m.home.issue') }} <a href="https://github.com/wushepeng/guildinformations/issues/new">GitHub</a>.<br></p>
+			<p>{{ translate('m.home.issue2') }} <a href="http://app.ryzom.com/app_forum/index.php">GuildInf</a>.<br></p>
+		</div>
+	{% endif %}
+{% endblock content %}

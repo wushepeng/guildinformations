@@ -1,0 +1,39 @@
+{% extends "ingame/fight.ig.html.twig" %}
+
+{% block fightSkill %}
+	<h5>{{ translate('m.skills.fight.melee1.title') }}</h5>
+	<table width="100%">
+		<tr align="center" valign="middle">
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.melee1.baton') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.melee1.epee') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.melee1.hache') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.melee1.lance') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.fight.melee1.masse') }}</font></td>
+		</tr>
+		{% set count = 0 %}
+	{% for homin in homins %}
+		{% set count = count+1 %}
+		{% set color = "#66330080" %}
+		{% if count%2 == 0 %}
+			{% set color = "#33333380" %}
+		{% endif %}
+		<tr align="center" bgcolor="{{ color }}" valign="middle">
+			<td height="15"><font size="12">{{ homin.name }}</font></td>
+		{% if homin.error %}
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+		{% else %}
+			<td><font color="{{ getColor(homin.lvls.baton1) }}">{{ homin.lvls.baton1 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.epee1) }}">{{ homin.lvls.epee1 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.hache1) }}">{{ homin.lvls.hache1 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.lance1) }}">{{ homin.lvls.lance1 }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.masse1) }}">{{ homin.lvls.masse1 }}</font></td>
+		{% endif %}
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

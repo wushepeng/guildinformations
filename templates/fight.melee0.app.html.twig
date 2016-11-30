@@ -1,0 +1,33 @@
+{% extends "fight.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.fight.melee0.title') }}
+{% endblock title %}
+
+{% block pageTitle %}
+	{{ translate('m.skills.fight.melee0.title') }}
+{% endblock pageTitle %}
+
+{% block fightSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.fight.melee0.dague') }}</td>
+				<td>{{ translate('m.skills.fight.melee0.cac') }}</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td class="lvl-{{ homin.lvls.dague }}">{{ homin.lvls.dague }}</td>
+				<td class="lvl-{{ homin.lvls.mains }}">{{ homin.lvls.mains }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

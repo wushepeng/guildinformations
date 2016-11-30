@@ -1,0 +1,20 @@
+{% block fightMenu %}
+	<hr/>
+	<div class="padding black top">
+		<span>
+			{{ translate('m.skills.fight.menu') }} | 
+			 <span>
+				<a href="{{ urlFor('ryzomApp-Skills/Fight/Melee2') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.melee2') }}</a>
+			</span>
+			<span>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee1') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.melee1') }}</a>
+			</span>
+			<span>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Melee0') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.melee0') }}</a>
+			</span>
+			<span>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight/Range') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight.range') }}</a>
+			</span>
+		</span>
+	</div>
+{% endblock %}

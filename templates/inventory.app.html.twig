@@ -1,0 +1,34 @@
+{% extends "inventoryHome.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.inventory.detail.title') }} {{ guild.name }}
+{% endblock title %}
+
+{% block pageTitle %}{{ translate('m.inventory.detail.title') }} {{ guild.name }}{% endblock pageTitle %}
+
+{% block inventoryContent %}
+	<form method="POST">
+		{% set checkType = '' %}
+		{% set checkQuality = '' %}
+		{% if sort == 'type' %}
+			{% set checkType = 'checked="checked"' %}
+		{% else %}
+			{% set checkQuality = 'checked="checked"' %}
+		{% endif %}
+		<input type="checkbox" name="type" {{ checkType }}/>{{ translate('m.inventory.detail.kind') }}
+		<input type="checkbox" name="quality" {{ checkQuality }}/>{{ translate('m.inventory.detail.quality') }}
+		<input type="submit" value="{{ translate('m.inventory.detail.sort') }}"/>
+		<p>{{ translate('m.inventory.detail.nota') }}</p>
+		<!-- @TODO: sur la page web on peut faire un peu de javascript pour simuler le comportement radio -->
+	</form>
+	<h2>{{ guild.name }}</h2>
+	<div>
+	{% if items.error is not null %}
+		<p>{{ translate('m.inventory.error') }}</p>
+	{% else %}
+		{% for item in items %}
+			<img src="{{ item.iconUrl }}" style="border: 1px solid #333;" title="{{ item.stack }}x{{ item.name }} (Q{{ item.quality }}{{ item.details }})"/>
+		{% endfor %}
+	{% endif %}
+	</div>
+{% endblock %}

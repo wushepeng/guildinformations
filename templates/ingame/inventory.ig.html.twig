@@ -1,0 +1,39 @@
+{% extends "ingame/inventoryHome.ig.html.twig" %}
+
+{% block inventoryContent %}
+	<form action="{{ urlFor('ryzomApp-Inventory/guild.post', {'guildId': guild.id}) }}" method="POST">
+		<input type="hidden" value="{{ user }}" name="user"/>
+		<input type="hidden" value="{{ checksum }}" name="checksum"/>
+		{% set checkType = '' %}
+		{% set checkQuality = '' %}
+		{% if sort == 'type' %}
+			{% set checkType = 'checked="checked"' %}
+		{% else %}
+			{% set checkQuality = 'checked="checked"' %}
+		{% endif %}
+		<table border="0" width="100%">
+			<tr valign="middle">
+				<td align="right">
+					<input type="checkbox" name="type" {{ checkType }}/> {{ translate('m.inventory.detail.kind') }}
+					 <input type="checkbox" name="quality" {{ checkQuality }}/> {{ translate('m.inventory.detail.quality') }}
+					 <pre><input type="submit" value="{{ translate('m.inventory.detail.sort') }}"/>    </pre>
+				</td>
+			</tr>
+			<tr valign="middle">
+				<td align="right" height="9">
+					({{ translate('m.inventory.detail.nota') }})
+				</td>
+			</tr>
+		</table>
+	</form>
+	<h2>{{ guild.name }}</h2>
+	<div>
+	{% if items.error is not null %}
+		<p>{{ translate('m.inventory.error') }}</p>
+	{% else %}
+		{% for item in items %}
+			&nbsp;<img src="http://api.ryzom.com/item_icon.php?sheetid={{ item.iconUrlParams.sheetId }}&c={{ item.iconUrlParams.color }}&q={{ item.iconUrlParams.quality }}&s={{ item.iconUrlParams.stack }}&sap=-1&destroyed=0&label=1"/>&nbsp;
+		{% endfor %}
+	{% endif %}
+	</div>
+{% endblock %}

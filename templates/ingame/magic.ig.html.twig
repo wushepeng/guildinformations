@@ -1,0 +1,36 @@
+{% extends "ingame/skills.ig.html.twig" %}
+
+{% block skillContent %}
+	<h5>{{ translate('m.skills.magic.title') }}</h5>
+	<table width="100%">
+		<tr align="center" valign="middle">
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.heal') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.neutra') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.off') }}</font></td>
+			<td height="18"><font size="15">{{ translate('m.skills.magic.debi') }}</font></td>
+		</tr>
+		{% set count = 0 %}
+	{% for homin in homins %}
+		{% set count = count+1 %}
+		{% set color = "#66330080" %}
+		{% if count%2 == 0 %}
+			{% set color = "#33333380" %}
+		{% endif %}
+		<tr align="center" bgcolor="{{ color }}" valign="middle">
+			<td height="15"><font size="12">{{ homin.name }}</font></td>
+		{% if homin.error %}
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+		{% else %}
+			<td><font color="{{ getColor(homin.lvls.heal) }}">{{ homin.lvls.heal }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.neutra) }}">{{ homin.lvls.neutra }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.off) }}">{{ homin.lvls.off }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.debi) }}">{{ homin.lvls.debi }}</font></td>
+		{% endif %}
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "craft.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.craft.weapon.range') }}
+{% endblock title %}
+
+{% block pageTitle %}
+	{{ translate('m.skills.craft.weapon.range') }}
+{% endblock pageTitle %}
+
+{% block craftSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.range.pistol') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.range.mitra') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.range.lg') }}</td>
+				<td>{{ translate('m.skills.craft.weapon.range.fusil') }}</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td class="lvl-{{ homin.lvls.armeTirHandgun }}">{{ homin.lvls.armeTirHandgun }}</td>
+				<td class="lvl-{{ homin.lvls.armeTirSubmachinegun }}">{{ homin.lvls.armeTirSubmachinegun }}</td>
+				<td class="lvl-{{ homin.lvls.armeTirLg }}">{{ homin.lvls.armeTirLg }}</td>
+				<td class="lvl-{{ homin.lvls.armeTirShotgun }}">{{ homin.lvls.armeTirShotgun }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

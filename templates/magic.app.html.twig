@@ -1,0 +1,37 @@
+{% extends "skills.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.magic.title') }}
+{% endblock title %}
+
+{% block pageTitle %}{{ translate('m.skills.magic.title') }}{% endblock pageTitle %}
+
+{% block skillContent %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.magic.heal') }}</td>
+				<td>{{ translate('m.skills.magic.neutra') }}</td>
+				<td>{{ translate('m.skills.magic.off') }}</td>
+				<td>{{ translate('m.skills.magic.debi') }}</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td class="lvl-{{ homin.lvls.heal }}">{{ homin.lvls.heal }}</td>
+				<td class="lvl-{{ homin.lvls.neutra }}">{{ homin.lvls.neutra }}</td>
+				<td class="lvl-{{ homin.lvls.off }}">{{ homin.lvls.off }}</td>
+				<td class="lvl-{{ homin.lvls.debi }}">{{ homin.lvls.debi }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

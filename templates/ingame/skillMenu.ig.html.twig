@@ -1,0 +1,14 @@
+{% block skillMenu %}
+	<h3>{{ translate('m.skills.mainTitle') }}</h3>
+	<table bgcolor="#000000" border="0" width="100%">
+		<tr valign="middle">
+			<td height="20">
+				{{ translate('m.skills.menu') }} |
+				 <a href="{{ urlFor('ryzomApp-Skills/Harvest') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.harvest') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Craft') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.craft') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Magic') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.magic') }}</a>
+				 - <a href="{{ urlFor('ryzomApp-Skills/Fight') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.skills.fight') }}</a>
+			</td>
+		</tr>
+	</table>
+{% endblock %}

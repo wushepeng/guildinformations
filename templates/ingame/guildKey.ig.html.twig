@@ -1,0 +1,20 @@
+{% extends "ingame/content.ig.html.twig" %}
+
+{% block content %}
+<form action="{{ urlFor('ryzomApp-GuildKey.post') }}" method="POST">
+	<input type="hidden" value="{{ user }}" name="user" />
+	<input type="hidden" value="{{ checksum }}" name="checksum" />
+	<h5>{{ translate('m.guild.key.giveKey') }}*:</h5>
+<pre>    <input type="text" value="{{ apiKey }}" name="apiKey" size="155"/></pre>
+	<br>
+	<br>
+	{% set value = translate('m.btn.maj') %}
+	{% if apiKey is null %}
+		{% set value = translate('m.btn.save') %}
+	{% endif %}
+<pre>    <input type="submit" value="{{ value }}"/></pre>
+</form>
+<br>
+<br>
+<pre>    * {{ translate('m.guild.nota') }}</pre>
+{% endblock %}

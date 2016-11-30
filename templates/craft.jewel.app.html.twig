@@ -1,0 +1,45 @@
+{% extends "craft.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.craft.jewel') }}
+{% endblock title %}
+
+{% block pageTitle %}
+	{{ translate('m.skills.craft.jewel') }}
+{% endblock pageTitle %}
+
+{% block craftSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.craft.jewel.anneau') }}</td>
+				<td>{{ translate('m.skills.craft.jewel.bracelet') }}</td>
+				<td>{{ translate('m.skills.craft.jewel.diademe') }}</td>
+				<td>{{ translate('m.skills.craft.jewel.boucle') }}</td>
+				<td>{{ translate('m.skills.craft.jewel.pendentif') }}</td>
+				<td>{{ translate('m.skills.craft.jewel.bague') }}</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td class="lvl-{{ homin.lvls.bijouCheville }}">{{ homin.lvls.bijouCheville }}</td>
+				<td class="lvl-{{ homin.lvls.bijouPoignet }}">{{ homin.lvls.bijouPoignet }}</td>
+				<td class="lvl-{{ homin.lvls.bijouTete }}">{{ homin.lvls.bijouTete }}</td>
+				<td class="lvl-{{ homin.lvls.bijouOreille }}">{{ homin.lvls.bijouOreille }}</td>
+				<td class="lvl-{{ homin.lvls.bijouCou }}">{{ homin.lvls.bijouCou }}</td>
+				<td class="lvl-{{ homin.lvls.bijouDoigt }}">{{ homin.lvls.bijouDoigt }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

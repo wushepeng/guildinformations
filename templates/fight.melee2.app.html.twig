@@ -1,0 +1,39 @@
+{% extends "fight.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.fight.melee2.title') }}
+{% endblock title %}
+
+{% block pageTitle %}
+	{{ translate('m.skills.fight.melee2.title') }}
+{% endblock pageTitle %}
+
+{% block fightSkill %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.fight.melee2.epee') }}</td>
+				<td>{{ translate('m.skills.fight.melee2.hache') }}</td>
+				<td>{{ translate('m.skills.fight.melee2.masse') }}</td>
+				<td>{{ translate('m.skills.fight.melee2.pique') }}</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td class="lvl-{{ homin.lvls.epee2 }}">{{ homin.lvls.epee2 }}</td>
+				<td class="lvl-{{ homin.lvls.hache2 }}">{{ homin.lvls.hache2 }}</td>
+				<td class="lvl-{{ homin.lvls.masse2 }}">{{ homin.lvls.masse2 }}</td>
+				<td class="lvl-{{ homin.lvls.pique2 }}">{{ homin.lvls.pique2 }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

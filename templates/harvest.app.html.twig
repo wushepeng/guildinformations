@@ -1,0 +1,40 @@
+{% extends "skills.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.harvest.title') }}
+{% endblock title %}
+
+{% block pageTitle %}{{ translate('m.skills.harvest.title') }}{% endblock pageTitle %}
+
+{% block skillContent %}
+	<div class="top">
+		<table class="skill-table">
+			<tr>
+				<td>{{ translate('m.skills.name') }}</td>
+				<td>{{ translate('m.skills.harvest.desert') }}</td>
+				<td>{{ translate('m.skills.harvest.forest') }}</td>
+				<td>{{ translate('m.skills.harvest.jungle') }}</td>
+				<td>{{ translate('m.skills.harvest.lakes') }}</td>
+				<td>{{ translate('m.skills.harvest.primes') }}</td>
+			</tr>
+		{% for homin in homins %}
+			<tr>
+				<td>{{ homin.name }}</td>
+			{% if homin.error %}
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+				<td>X</td>
+			{% else %}
+				<td class="lvl-{{ homin.lvls.desert }}">{{ homin.lvls.desert }}</td>
+				<td class="lvl-{{ homin.lvls.forest }}">{{ homin.lvls.forest }}</td>
+				<td class="lvl-{{ homin.lvls.jungle }}">{{ homin.lvls.jungle }}</td>
+				<td class="lvl-{{ homin.lvls.lakes }}">{{ homin.lvls.lakes }}</td>
+				<td class="lvl-{{ homin.lvls.primes }}">{{ homin.lvls.primes }}</td>
+			{% endif %}
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+{% endblock %}

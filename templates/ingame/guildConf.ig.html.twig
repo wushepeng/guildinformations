@@ -1,0 +1,35 @@
+{% extends "ingame/content.ig.html.twig" %}
+
+{% block content %}
+<br>
+{% for guild in guilds %}
+	<table border="0" width="100%">
+		<tr valign="middle">
+			<td align="center">
+				<font size="14">{{ guild.name }}</font>
+			</td>
+		</tr>
+		<tr valign="middle">
+			<td align="center">
+				(<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.guild.conf.remove') }}</a>)
+			</td>
+		</tr>
+	</table>
+	<br>
+{% endfor %}
+
+<form action="{{ urlFor('ryzomApp-GuildConfiguration.post') }}" method="POST">
+	<input type="hidden" value="{{ user }}" name="user" />
+	<input type="hidden" value="{{ checksum }}" name="checksum" />
+	<div>
+		<h5>{{ translate('m.guild.conf.add') }}*: </h5>
+		<pre>    <input type="text" name="newApiKey"/></pre>
+		<br>
+		<br>
+		<pre>    <input type="submit" value="{{ translate('m.btn.save') }}"/></pre>
+	</div>
+</form>
+<br>
+<br>
+<pre>    * {{ translate('m.guild.nota') }}</pre>
+{% endblock %}

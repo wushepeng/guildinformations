@@ -1,0 +1,27 @@
+{% extends "content.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.homin.apiKey') }}
+{% endblock title %}
+
+{% block pageTitle %}{{ translate('m.homin.apiKey') }}{% endblock pageTitle %}
+
+{% block content %}
+	{% if error is not null %}
+		<p>{{ translate('m.homin.error') }}</p>
+	{% endif %}
+	<form method="POST">
+		<input type="hidden" value="{{ user }}" name="user" />
+		<input type="hidden" value="{{ checksum }}" name="checksum" />
+		<p>{{ translate('m.homin.giveKey') }}*: </p>
+		<input type="text" value="{{ apiKey }}" name="apiKey"/>
+		{% set value = translate('m.btn.maj') %}
+		{% if apiKey is null %}
+			{% set value = translate('m.btn.save') %}
+		{% endif %}
+		<input type="submit" value="{{ value }}"/>
+	</form>
+	<div>
+		* {{ translate('m.homin.nota') }}
+	</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "content.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.guild.key.apiKey') }}
+{% endblock title %}
+
+{% block pageTitle %}{{ translate('m.guild.key.apiKey') }}{% endblock pageTitle %}
+
+{% block content %}
+	<form method="POST">
+		<input type="hidden" value="{{ user }}" name="user"/>
+		<input type="hidden" value="{{ checksum }}" name="checksum"/>
+		<p>{{ translate('m.guild.key.giveKey') }}*:</p>
+		<input type="text" value="{{ apiKey }}" name="apiKey"/>
+		{% set value = translate('m.btn.maj') %}
+		{% if apiKey is null %}
+			{% set value = translate('m.btn.save') %}
+		{% endif %}
+		<input type="submit" value="{{ value }}"/>
+	</form>
+	<div>
+		* {{ translate('m.guild.nota') }}
+	</div>
+{% endblock %}

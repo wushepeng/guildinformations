@@ -1,0 +1,31 @@
+{% extends "ingame/content.ig.html.twig" %}
+
+{% block content %}
+	{% include 'ingame/inventoryMenu.ig.html.twig' %}
+	
+	{% block inventoryContent %}
+		<form action="{{ urlFor('ryzomApp-Inventory') }}" method="POST">
+			<input type="hidden" value="{{ user }}" name="user"/>
+			<input type="hidden" value="{{ checksum }}" name="checksum"/>
+			<h5>{{ translate('m.inventory.home.searchText') }}:</h5>
+			<pre>    <input type="text" name="search" size="155"/></pre>
+			<br>
+			<br>
+			<pre>    <input type="submit" value="{{ translate('m.inventory.home.search') }}"/></pre>
+		</form>
+		{% for guild in searchResult %}
+			<h2>{{ guild.guild.name }}</h2>
+			<div>
+			{% for item in guild.items %}
+				{% if item.error is not null %}
+					<p>{{ translate('m.inventory.error') }}</p>
+					<br>
+					<br>
+				{% else %}
+					&nbsp;<img src="http://api.ryzom.com/item_icon.php?sheetid={{ item.iconUrlParams.sheetId }}&c={{ item.iconUrlParams.color }}&q={{ item.iconUrlParams.quality }}&s={{ item.iconUrlParams.stack }}&sap=-1&destroyed=0&label=1"/>&nbsp;
+				{% endif %}
+			{% endfor %}
+			</div>
+		{% endfor %}
+	{% endblock %}
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends "content.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.guild.conf.mainTitle') }}
+{% endblock title %}
+
+{% block pageTitle %}{{ translate('m.guild.conf.title') }}{% endblock pageTitle %}
+
+{% block content %}
+	{% if addError %}
+		<div>
+			<p>{{ translate('m.guild.conf.error') }}</p>
+		</div>
+	{% endif %}
+	{% for guild in guilds %}
+		<div>
+			<h2>{{ guild.name }}</h2>
+			<input type="text" value="{{ guild.apiKey }}" disabled/>
+			<a href="{{ urlFor('ryzomApp-GuildConfiguration.delete', {guildId: guild.id}) }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.guild.conf.remove') }}</a>
+		</div>
+	{% endfor %}
+	<hr/>
+	<form method="POST">
+		<input type="hidden" value="{{ user }}" name="user"/>
+		<input type="hidden" value="{{ checksum }}" name="checksum"/>
+		<div>
+			<h2>{{ translate('m.guild.conf.add') }}*:</h2>
+			<input type="text" placeholder="Clé api" name="newApiKey"/>
+			<input type="submit" value="{{ translate('m.btn.save') }}"/>
+		</div>
+	</form>
+	<div>
+		* {{ translate('m.guild.nota') }}
+	</div>
+{% endblock %}

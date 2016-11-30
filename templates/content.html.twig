@@ -1,0 +1,33 @@
+{% extends "layout.html.twig" %}
+
+{% block body %}
+	{% if grade != "NoGuild" %}
+		<div class="padding black">
+			<span class="right">
+				<span>
+					<a href="{{ urlFor('ryzomApp-HominKey') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.content.apiKey') }}</a>
+				</span>
+			{% if grade=="Leader" or grade=="HighOfficer" %}
+				<span>
+					 | <a href="{{ urlFor('ryzomApp-GuildKey') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.content.guildApiKey') }}</a>
+				</span>
+				<span>
+					 | <a href="{{ urlFor('ryzomApp-GuildConfiguration') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.content.warehouses') }}</a>
+				</span>
+			{% endif %}
+			</span>
+			<span>
+				<span>
+					<a href="{{ urlFor('ryzomApp-Inventory') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.content.inventory') }}</a>
+				</span>
+				<span>
+					 | <a href="{{ urlFor('ryzomApp-Skills') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.content.skills') }}</a>
+				</span>
+			</span>
+		</div>
+		<hr/>
+	{% endif %}
+	<div id="content">
+		{% block content %}{% endblock content %}
+	</div>
+{% endblock body %}

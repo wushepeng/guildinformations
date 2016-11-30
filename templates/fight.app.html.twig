@@ -1,0 +1,15 @@
+{% extends "skills.app.html.twig" %}
+
+{% block title %}
+	{{ parent() }} - {{ translate('m.skills.fight.title') }}
+{% endblock title %}
+
+{% block pageTitle %}
+	{{ translate('m.skills.fight.title') }}
+{% endblock pageTitle %}
+
+{% block skillContent %}
+	{% include "fightMenu.app.html.twig" %}
+	
+	{% block fightSkill %}{% endblock %}
+{% endblock %}

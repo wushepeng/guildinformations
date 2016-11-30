@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="http://api.ryzom.com/data/css/ryzom_ui.css"/>
+    <link href="/css/layout.css" rel="stylesheet" type="text/css"/>
+    <title>{% block title %}{{ translate('m.layout.mainTitle') }}{% endblock title %}</title>
+</head>
+<body>
+	<div id="main">
+		<div><!--langages--></div>
+		<div class="ryzom-ui ryzom-ui-header">
+			<div class="ryzom-ui-tl">
+				<div class="ryzom-ui-tr">
+					<div class="ryzom-ui-t">
+						{% block pageTitle %}{% endblock pageTitle %}
+						<span class="right">
+							{{ name }}
+							<a class="ryzom-ui-text-button" href="{{ urlFor('ryzomApp-Home') }}?checksum={{ checksum }}&user={{ user }}">{{ translate('m.layout.home') }}</a>
+							<a class="ryzom-ui-text-button" href="http://app.ryzom.com">{{ translate('m.layout.ryzomApp') }}</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="ryzom-ui-l">
+				<div class="ryzom-ui-r">
+					<div class="ryzom-ui-m">
+						<div class="ryzom-ui-body">
+							{% block body %}{% endblock body %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ryzom-ui-bl">
+				<div class="ryzom-ui-br">
+					<div class="ryzom-ui-b"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

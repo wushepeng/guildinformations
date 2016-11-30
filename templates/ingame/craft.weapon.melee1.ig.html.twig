@@ -1,0 +1,42 @@
+{% extends "ingame/craft.ig.html.twig" %}
+
+{% block craftSkill %}
+	<h5>{{ translate('m.skills.craft.weapon.melee1') }}</h5>
+	<table width="100%">
+		<tr align="center" valign="middle">
+			<td height="18"><font size="15">{{ translate('m.skills.name') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.hache') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.dague') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.massue') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.lance') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.epee') }}</font></td>
+			<td><font size="15">{{ translate('m.skills.craft.weapon.melee1.baton') }}</font></td>
+		</tr>
+		{% set count = 0 %}
+	{% for homin in homins %}
+		{% set count = count+1 %}
+		{% set color = "#66330080" %}
+		{% if count%2 == 0 %}
+			{% set color = "#33333380" %}
+		{% endif %}
+		<tr align="center" bgcolor="{{ color }}" valign="middle">
+			<td height="15"><font size="12">{{ homin.name }}</font></td>
+		{% if homin.error %}
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+			<td>X</td>
+		{% else %}
+			<td><font color="{{ getColor(homin.lvls.arme1Hache) }}">{{ homin.lvls.arme1Hache }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.arme1Dague) }}">{{ homin.lvls.arme1Dague }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.arme1Massue) }}">{{ homin.lvls.arme1Massue }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.arme1Lance) }}">{{ homin.lvls.arme1Lance }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.arme1Epee) }}">{{ homin.lvls.arme1Epee }}</font></td>
+			<td><font color="{{ getColor(homin.lvls.arme1Baton) }}">{{ homin.lvls.arme1Baton }}</font></td>
+		{% endif %}
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}
