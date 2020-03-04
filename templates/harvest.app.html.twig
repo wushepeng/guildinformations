@@ -18,22 +18,16 @@
 				<td>{{ translate('m.skills.harvest.primes') }}</td>
 			</tr>
 		{% for homin in homins %}
+			{% if not homin.error %}
 			<tr>
 				<td>{{ homin.name }}</td>
-			{% if homin.error %}
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-			{% else %}
 				<td class="lvl-{{ homin.lvls.desert }}">{{ homin.lvls.desert }}</td>
 				<td class="lvl-{{ homin.lvls.forest }}">{{ homin.lvls.forest }}</td>
 				<td class="lvl-{{ homin.lvls.jungle }}">{{ homin.lvls.jungle }}</td>
 				<td class="lvl-{{ homin.lvls.lakes }}">{{ homin.lvls.lakes }}</td>
 				<td class="lvl-{{ homin.lvls.primes }}">{{ homin.lvls.primes }}</td>
-			{% endif %}
 			</tr>
+			{% endif %}
 		{% endfor %}
 		</table>
 	</div>

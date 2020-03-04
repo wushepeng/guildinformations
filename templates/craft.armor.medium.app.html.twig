@@ -20,22 +20,16 @@
 				<td>{{ translate('m.skills.craft.armor.gilet') }}</td>
 			</tr>
 		{% for homin in homins %}
+			{% if not homin.error %}
 			<tr>
 				<td>{{ homin.name }}</td>
-			{% if homin.error %}
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-			{% else %}
 				<td class="lvl-{{ homin.lvls.armureMPied }}">{{ homin.lvls.armureMPied }}</td>
 				<td class="lvl-{{ homin.lvls.armureMMain }}">{{ homin.lvls.armureMMain }}</td>
 				<td class="lvl-{{ homin.lvls.armureMJambe }}">{{ homin.lvls.armureMJambe }}</td>
 				<td class="lvl-{{ homin.lvls.armureMBras }}">{{ homin.lvls.armureMBras }}</td>
 				<td class="lvl-{{ homin.lvls.armureMVentre }}">{{ homin.lvls.armureMVentre }}</td>
-			{% endif %}
 			</tr>
+			{% endif %}
 		{% endfor %}
 		</table>
 	</div>

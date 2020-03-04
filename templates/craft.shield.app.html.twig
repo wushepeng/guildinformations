@@ -17,16 +17,13 @@
 				<td>{{ translate('m.skills.craft.shield.rondache') }}</td>
 			</tr>
 		{% for homin in homins %}
+			{% if not homin.error %}
 			<tr>
 				<td>{{ homin.name }}</td>
-			{% if homin.error %}
-				<td>X</td>
-				<td>X</td>
-			{% else %}
 				<td class="lvl-{{ homin.lvls.armureBBouclier }}">{{ homin.lvls.armureBBouclier }}</td>
 				<td class="lvl-{{ homin.lvls.armureBRondache }}">{{ homin.lvls.armureBRondache }}</td>
-			{% endif %}
 			</tr>
+			{% endif %}
 		{% endfor %}
 		</table>
 	</div>

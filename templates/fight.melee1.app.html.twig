@@ -20,22 +20,16 @@
 				<td>{{ translate('m.skills.fight.melee1.masse') }}</td>
 			</tr>
 		{% for homin in homins %}
+			{% if not homin.error %}
 			<tr>
 				<td>{{ homin.name }}</td>
-			{% if homin.error %}
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-			{% else %}
 				<td class="lvl-{{ homin.lvls.baton1 }}">{{ homin.lvls.baton1 }}</td>
 				<td class="lvl-{{ homin.lvls.epee1 }}">{{ homin.lvls.epee1 }}</td>
 				<td class="lvl-{{ homin.lvls.hache1 }}">{{ homin.lvls.hache1 }}</td>
 				<td class="lvl-{{ homin.lvls.lance1 }}">{{ homin.lvls.lance1 }}</td>
 				<td class="lvl-{{ homin.lvls.masse1 }}">{{ homin.lvls.masse1 }}</td>
-			{% endif %}
 			</tr>
+			{% endif %}
 		{% endfor %}
 		</table>
 	</div>

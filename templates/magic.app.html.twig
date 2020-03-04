@@ -17,20 +17,15 @@
 				<td>{{ translate('m.skills.magic.debi') }}</td>
 			</tr>
 		{% for homin in homins %}
+			{% if not homin.error %}
 			<tr>
 				<td>{{ homin.name }}</td>
-			{% if homin.error %}
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-			{% else %}
 				<td class="lvl-{{ homin.lvls.heal }}">{{ homin.lvls.heal }}</td>
 				<td class="lvl-{{ homin.lvls.neutra }}">{{ homin.lvls.neutra }}</td>
 				<td class="lvl-{{ homin.lvls.off }}">{{ homin.lvls.off }}</td>
 				<td class="lvl-{{ homin.lvls.debi }}">{{ homin.lvls.debi }}</td>
-			{% endif %}
 			</tr>
+			{% endif %}
 		{% endfor %}
 		</table>
 	</div>

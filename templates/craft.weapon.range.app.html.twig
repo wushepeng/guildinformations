@@ -19,20 +19,15 @@
 				<td>{{ translate('m.skills.craft.weapon.range.fusil') }}</td>
 			</tr>
 		{% for homin in homins %}
+			{% if not homin.error %}
 			<tr>
 				<td>{{ homin.name }}</td>
-			{% if homin.error %}
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-				<td>X</td>
-			{% else %}
 				<td class="lvl-{{ homin.lvls.armeTirHandgun }}">{{ homin.lvls.armeTirHandgun }}</td>
 				<td class="lvl-{{ homin.lvls.armeTirSubmachinegun }}">{{ homin.lvls.armeTirSubmachinegun }}</td>
 				<td class="lvl-{{ homin.lvls.armeTirLg }}">{{ homin.lvls.armeTirLg }}</td>
 				<td class="lvl-{{ homin.lvls.armeTirShotgun }}">{{ homin.lvls.armeTirShotgun }}</td>
-			{% endif %}
 			</tr>
+			{% endif %}
 		{% endfor %}
 		</table>
 	</div>
